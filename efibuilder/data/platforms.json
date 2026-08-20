@@ -1311,12 +1311,25 @@
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html",
       "min_macos": "catalina",
       "smbios": {
-        "default": "MacBookPro16,3"
+        "default": "MacBookPro16,2",
+        "alternatives": [
+          "MacBookPro16,3",
+          "MacBookPro16,1",
+          "MacPro7,1"
+        ]
       },
       "ssdt": [
         {
           "file": "SSDT-EC-USBX-LAPTOP.aml",
           "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-RHUB.aml",
+          "reason": "Reset des controleurs USB (equivalent de SSDT-USB-Reset)"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte); la version pre-compilee Dortania ne demande pas de renommage _STA"
         },
         {
           "file": "SSDT-PNLF.aml",
@@ -1328,23 +1341,26 @@
         }
       ],
       "quirks": {
-        "Booter": {
-          "DevirtualiseMmio": false,
-          "EnableWriteUnprotector": false,
-          "RebuildAppleMemoryMap": true,
-          "SetupVirtualMap": true,
-          "SyncRuntimePermissions": true
-        },
         "Kernel": {
           "DummyPowerManagement": true,
+          "ProvideCurrentCpuInfo": true,
           "PanicNoKextDump": true,
           "PowerTimeoutKernelPanic": true,
-          "ProvideCurrentCpuInfo": true,
+          "LapicKernelPanic": true,
+          "DisableRtcChecksum": true,
           "XhciPortLimit": true
         },
         "UEFI": {
           "ReleaseUsbOwnership": true,
-          "UnblockFsConnect": false
+          "UnblockFsConnect": {
+            "value": true,
+            "when": {
+              "field": "motherboard_vendor",
+              "in": [
+                "hp"
+              ]
+            }
+          }
         }
       },
       "kernel_patches": "amd_vanilla",
@@ -1354,12 +1370,20 @@
         "note": "Le framebuffer des APU Vega est gere par NootedRed, pas par une ig-platform-id."
       },
       "notes": [
-        "Plateforme hors guide Dortania: elle s'appuie sur les patchs AMD_Vanilla et sur NootedRed (ChefKissInc) pour l'iGPU Vega.",
-        "NootedRed couvre les APU Vega d'Athlon Silver/Gold jusqu'aux Ryzen 5xxx et 7x30, de macOS 10.15 a macOS 26.",
-        "Le SMBIOS par defaut est un modele de portable pour obtenir la batterie et le rabat d'ecran; MacPro7,1 reste l'alternative si la gestion d'energie pose probleme.",
+        "Plateforme hors guide Dortania: patchs AMD_Vanilla + NootedRed (ChefKissInc) pour l'iGPU Vega.",
+        "NootedRed couvre les APU Vega d'Athlon Silver/Gold aux Ryzen 5xxx et 7x30, de macOS 10.15 a macOS 26, et remplace WhateverGreen pour l'APU.",
+        "Quirks et SMBIOS cales sur un HP 245 G8 (Athlon Silver 3050U) en fonctionnement.",
+        "LapicKernelPanic et DisableRtcChecksum sont necessaires sur beaucoup de portables AMD; UnblockFsConnect l'est sur les cartes HP.",
+        "Audio de l'APU: PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x6). Le layout se choisit avec --audio-layout (alcid).",
+        "Trackpad I2C recalcitrant: activez la fonction 'i2c-polling' pour ajouter -vi2c-force-polling.",
         "Pas d'AppleHV: VirtualBox, VMware, Docker et Parallels recents ne fonctionnent pas.",
-        "La gestion d'energie CPU reste sommaire (DummyPowerManagement): l'autonomie est nettement inferieure a Windows."
-      ]
+        "Gestion d'energie CPU sommaire (DummyPowerManagement): autonomie tres inferieure a Windows.",
+        "Un capteur de luminosite factice (SSDT-ALS0, genere par SSDTTime) est necessaire pour que SMCLightSensor remonte quelque chose: il n'existe pas en version pre-compilee."
+      ],
+      "boot_args": [
+        "npci=0x3000"
+      ],
+      "audio_path": "PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x6)"
     }
   ]
 }

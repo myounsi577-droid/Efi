@@ -71,7 +71,8 @@ class KextTests(unittest.TestCase):
         self.assertIn("SMCBatteryManager", ids)
         self.assertIn("ECEnabler", ids)
         self.assertIn("VoodooI2C", ids)
-        self.assertNotIn("VoodooPS2Controller", ids)
+        # Le clavier d'un portable reste en PS2 meme avec un trackpad I2C.
+        self.assertIn("VoodooPS2Controller", ids)
 
     def test_broadcom_wifi_dropped_after_ventura(self):
         ventura = Profile(platform="coffee-lake-desktop", macos="ventura", wifi="broadcom")
@@ -139,6 +140,29 @@ class CompatibilityTests(unittest.TestCase):
         ids = kext_ids(profile)
         self.assertIn("WhateverGreen", ids)
         self.assertNotIn("NootedRed", ids)
+
+    def test_amd_uses_forged_invariant_not_cputscsync(self):
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2)
+        ids = kext_ids(profile)
+        self.assertIn("ForgedInvariant", ids)
+        self.assertNotIn("CpuTscSync", ids)
+
+    def test_manual_kexts_are_reported_not_downloaded(self):
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2, wifi="realtek")
+        entry = next(e for e in kexts.select_kexts(profile)[0] if e["id"] == "rtw88")
+        self.assertTrue(entry["manual"])
+        self.assertIn("Feixiao", entry["source"])
+
+    def test_realtek_wifi_points_at_community_driver(self):
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2, wifi="realtek")
+        self.assertTrue(any("rtw88" in w for w in profile.validate()))
+
+    def test_hp_gets_unblockfsconnect(self):
+        hp = Profile(platform="amd-zen-laptop", motherboard_vendor="hp")
+        other = Profile(platform="amd-zen-laptop", motherboard_vendor="lenovo")
+        quirk = hp.platform_data["quirks"]["UEFI"]["UnblockFsConnect"]
+        self.assertTrue(hp.matches(quirk["when"]))
+        self.assertFalse(other.matches(quirk["when"]))
 
     def test_amd_desktop_is_not_blocked(self):
         profile = Profile(platform="amd-zen", chassis="desktop", cpu_cores=8)

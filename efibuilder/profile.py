@@ -22,7 +22,7 @@ WIFI_UNSUPPORTED = {
     "mediatek": "MediaTek / Ralink",
     "qualcomm": "Qualcomm Atheros recents (QCA61x4A, QCNFA765...)",
 }
-BLUETOOTH_CHOICES = ["none", "intel", "broadcom"]
+BLUETOOTH_CHOICES = ["none", "intel", "broadcom", "realtek"]
 TOUCHPAD_CHOICES = ["none", "ps2", "i2c"]
 DGPU_CHOICES = [
     "none", "amd-polaris", "amd-vega", "amd-navi", "amd-rdna2", "amd-apu",
@@ -31,7 +31,14 @@ DGPU_CHOICES = [
 FEATURE_CHOICES = [
     "ota", "sidecar", "hibernation", "cpufriend", "light-sensor", "rtc-fix",
     "no-avx2", "gui", "audio-chime", "linux-boot", "windows-boot",
+    "custom-smbios", "i2c-polling", "sata-legacy",
 ]
+# Niveaux de SIP exposes par --sip (valeur de csr-active-config).
+SIP_LEVELS = {
+    "enabled": "00000000",
+    "partial": "030A0000",
+    "disabled": "FF0F0000",
+}
 
 
 @dataclass
@@ -59,6 +66,8 @@ class Profile:
     touchpad: str = "none"
     nvme: bool = True
     smbios: str = ""                  # vide = valeur recommandee par la plateforme
+    processor_type: int = 0           # 0 = automatique (ex. 1537 sur portable AMD)
+    sip: str = "enabled"              # enabled | partial | disabled
     serials: bool = True              # generer numero de serie / MLB / UUID
     usb_map_kind: str = "none"        # none | usbtoolbox | usbmap
     usb_map_file: str = ""            # UserUSBMap.plist ou USBMap JSON
@@ -219,12 +228,17 @@ class Profile:
                 "(AMD_Vanilla + NootedRed) fait tourner ces machines. Attendez-vous a un "
                 "travail manuel sur la gestion d'energie CPU, la batterie et la veille, et "
                 "verifiez le comportement avant de vous fier a l'autonomie.")
-        if self.wifi in WIFI_UNSUPPORTED:
+        if self.wifi == "realtek":
             warnings.append(
-                f"Wi-Fi {WIFI_UNSUPPORTED[self.wifi]}: aucun pilote macOS n'existe pour ces "
-                f"cartes. La seule solution est de remplacer la carte M.2 par une Intel "
-                f"(AX200/AX210, via AirportItlwm) ou une Broadcom compatible, ou d'utiliser "
-                f"un dongle USB reconnu.")
+                "Wi-Fi Realtek PCIe: pas de pilote officiel, mais un portage communautaire du "
+                "pilote Linux rtw88 existe (Feixiao / RTL8821CEwifi). Il est en developpement "
+                "et doit etre compile a la main; l'alternative sure reste une carte Intel "
+                "AX200/AX210 ou un dongle USB reconnu.")
+        elif self.wifi in WIFI_UNSUPPORTED:
+            warnings.append(
+                f"Wi-Fi {WIFI_UNSUPPORTED[self.wifi]}: aucun pilote macOS connu. Remplacez la "
+                f"carte M.2 par une Intel (AX200/AX210, via AirportItlwm) ou une Broadcom "
+                f"compatible, ou utilisez un dongle USB reconnu.")
         if self.usb_map_kind == "none" and self.darwin >= 20:
             warnings.append(
                 "aucun mappage USB: XhciPortLimit n'est plus fiable a partir de macOS 11.3, "

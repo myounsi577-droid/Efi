@@ -93,12 +93,17 @@ def _install_usb_map(profile: Profile, kexts_dir: Path, warnings: list[str]) -> 
     if not source.exists():
         warnings.append(f"fichier de mappage USB introuvable: {source}")
         return []
-    if profile.usb_map_kind == "usbmap" and source.suffix == ".json":
-        spec = usbmap.load_spec(source)
-        spec.setdefault("model", profile.smbios_model)
-        bundle = usbmap.build_usbmap(spec, kexts_dir)
-    else:
-        bundle = usbmap.import_existing(source, kexts_dir)
+    try:
+        if profile.usb_map_kind == "usbmap" and source.suffix == ".json":
+            spec = usbmap.load_spec(source)
+            spec.setdefault("model", profile.smbios_model)
+            bundle = usbmap.build_usbmap(spec, kexts_dir)
+        else:
+            bundle = usbmap.import_existing(source, kexts_dir)
+    except BuildError as exc:
+        # Un mappage USB invalide ne doit pas faire perdre tout le reste du build.
+        warnings.append(f"mappage USB non installe: {exc}")
+        return []
     return [{
         "Arch": "x86_64",
         "BundlePath": bundle.name,

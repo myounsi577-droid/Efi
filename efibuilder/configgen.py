@@ -6,6 +6,7 @@ import plistlib
 from pathlib import Path
 
 from efibuilder.net import Downloader
+from efibuilder.profile import SIP_LEVELS
 from efibuilder.util import BuildError, hexdata, info, ok, step, warn
 
 AMD_VANILLA_REPO = "AMD-OSX/AMD_Vanilla"
@@ -104,7 +105,9 @@ def build_config(profile, sample: Path, acpi_add: list[dict], acpi_patch: list[d
     boot_args = _boot_args(profile)
     add = config["NVRAM"]["Add"].setdefault(NVRAM_GUID, {})
     add["boot-args"] = " ".join(boot_args)
-    add["csr-active-config"] = hexdata("00000000")
+    add["csr-active-config"] = hexdata(SIP_LEVELS.get(profile.sip, SIP_LEVELS["enabled"]))
+    if profile.sip != "enabled":
+        info(f"SIP: {profile.sip} (csr-active-config {SIP_LEVELS[profile.sip]})")
     add["prev-lang:kbd"] = b"fr-FR:1"
     add["run-efi-updater"] = "No"
     config["NVRAM"]["Delete"] = {NVRAM_GUID: ["boot-args", "csr-active-config"]}
@@ -113,6 +116,10 @@ def build_config(profile, sample: Path, acpi_add: list[dict], acpi_patch: list[d
     info(f"boot-args: {add['boot-args'] or '(aucun)'}")
 
     # -------------------------------------------------------- PlatformInfo
+    if "custom-smbios" in profile.features:
+        platform_info["UpdateSMBIOSMode"] = "Custom"
+        config["Kernel"]["Quirks"]["CustomSMBIOSGuid"] = True
+        info("UpdateSMBIOSMode=Custom + CustomSMBIOSGuid (SMBIOS ecrit en dur)")
     config["PlatformInfo"] = platform_info
 
     # ---------------------------------------------------------------- UEFI
@@ -261,6 +268,8 @@ def _boot_args(profile) -> list[str]:
         args.append("-ibtcompatbeta")
     if "no-avx2" in profile.features:
         args.append("-nokcmismatchpanic")
+    if "i2c-polling" in profile.features:
+        args.append("-vi2c-force-polling")
     for extra in profile.boot_args:
         if extra not in args:
             args.append(extra)

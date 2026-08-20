@@ -48,7 +48,7 @@ def platform_info(profile, macserial: Path | None) -> dict:
     generic = {
         "AdviseFeatures": False,
         "MaxBIOSVersion": False,
-        "ProcessorType": 0,
+        "ProcessorType": profile.processor_type,
         "SpoofVendor": True,
         "SystemMemoryStatus": "Auto",
         "SystemProductName": model,

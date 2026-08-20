@@ -96,9 +96,20 @@ Ils sont hors du périmètre du guide Dortania, mais la communauté les fait tou
 la plateforme `amd-zen-laptop` combine les patchs `AMD_Vanilla` et
 [NootedRed](https://github.com/ChefKissInc/NootedRed), qui accélère les iGPU Vega
 des Athlon Silver/Gold jusqu'aux Ryzen 5xxx, de macOS 10.15 à macOS 26.
-`WhateverGreen` est alors remplacé par `NootedRed` pour l'APU. L'outil le signale
-comme un chemin communautaire : gestion d'énergie CPU, batterie et veille
-demandent du travail manuel.
+`WhateverGreen` est alors remplacé par `NootedRed`, et `CpuTscSync` par
+`ForgedInvariant`.
+
+Ses quirks, son SMBIOS et ses boot-args sont calés sur un **HP 245 G8
+(Athlon Silver 3050U) en fonctionnement** : les trois sections `Quirks` générées
+sont identiques à celles de cet EFI de référence.
+
+### Kexts non téléchargeables
+
+Certains pilotes communautaires n'ont pas de release exploitable automatiquement
+(`rtw88` pour le Wi-Fi Realtek PCIe, `RealtekBluetoothFirmware`,
+`AppleMCEReporterDisabler`, `CtlnaAHCIPort`). L'outil ne les invente pas : il les
+sélectionne, explique leur rôle et indique où les récupérer, et le rapport les
+liste comme « à ajouter manuellement ».
 
 ## Commandes
 

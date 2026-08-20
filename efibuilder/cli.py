@@ -77,6 +77,10 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--touchpad", choices=TOUCHPAD_CHOICES, default="none")
     b.add_argument("--no-nvme", action="store_true", help="pas de SSD NVMe")
     b.add_argument("--smbios", default="", help="modele SMBIOS (vide = recommande)")
+    b.add_argument("--processor-type", type=int, default=0,
+                   help="ProcessorType SMBIOS (0 = auto; 1537 est courant sur portable AMD)")
+    b.add_argument("--sip", choices=["enabled", "partial", "disabled"], default="enabled",
+                   help="niveau de SIP ecrit dans csr-active-config")
     b.add_argument("--no-serials", action="store_true",
                    help="ne pas generer numero de serie / MLB / UUID")
     b.add_argument("--usb-map", type=Path, help="USBMap JSON, UserUSBMap.plist ou .kext")
@@ -193,6 +197,7 @@ def _profile_from_args(args) -> Profile:
         audio_layout=args.audio_layout, ethernet=args.ethernet, wifi=args.wifi,
         bluetooth=args.bluetooth, touchpad=args.touchpad, nvme=not args.no_nvme,
         smbios=args.smbios, serials=not args.no_serials,
+        processor_type=args.processor_type, sip=args.sip,
         usb_map_kind=args.usb_map_kind,
         usb_map_file=str(args.usb_map) if args.usb_map else "",
         features=features, boot_args=args.boot_arg, debug=args.debug,

@@ -220,14 +220,24 @@
       ],
       "order": 14,
       "when": {
-        "any": [
+        "all": [
           {
-            "field": "laptop",
-            "eq": true
+            "not": {
+              "field": "family",
+              "eq": "amd"
+            }
           },
           {
-            "field": "family",
-            "eq": "intel-hedt"
+            "any": [
+              {
+                "field": "laptop",
+                "eq": true
+              },
+              {
+                "field": "family",
+                "eq": "intel-hedt"
+              }
+            ]
           }
         ]
       },
@@ -466,7 +476,8 @@
         "field": "bluetooth",
         "in": [
           "intel",
-          "broadcom"
+          "broadcom",
+          "realtek"
         ]
       },
       "reason": "Contourne BlueTool sur macOS 11+ (obligatoire pour le Bluetooth non Apple)"
@@ -510,12 +521,21 @@
       ],
       "order": 60,
       "when": {
-        "field": "touchpad",
-        "in": [
-          "ps2"
+        "all": [
+          {
+            "field": "laptop",
+            "eq": true
+          },
+          {
+            "field": "touchpad",
+            "in": [
+              "ps2",
+              "i2c"
+            ]
+          }
         ]
       },
-      "reason": "Clavier / trackpad PS2 de portable"
+      "reason": "Clavier PS2 du portable (et trackpad si celui-ci est en PS2)"
     },
     {
       "id": "VoodooI2C",
@@ -611,6 +631,92 @@
         "eq": "amd"
       },
       "reason": "Capteurs et gestion d'energie CPU sur AMD Ryzen"
+    },
+    {
+      "id": "ForgedInvariant",
+      "repo": "ChefKissInc/ForgedInvariant",
+      "asset": "^ForgedInvariant-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "ForgedInvariant.kext"
+      ],
+      "order": 8,
+      "when": {
+        "field": "family",
+        "eq": "amd"
+      },
+      "reason": "Synchronisation du TSC sur AMD (equivalent de CpuTscSync)"
+    },
+    {
+      "id": "BrightnessKeys",
+      "repo": "acidanthera/BrightnessKeys",
+      "asset": "^BrightnessKeys-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "BrightnessKeys.kext"
+      ],
+      "order": 63,
+      "when": {
+        "field": "laptop",
+        "eq": true
+      },
+      "reason": "Touches de luminosite du clavier"
+    },
+    {
+      "id": "AppleMCEReporterDisabler",
+      "manual": true,
+      "order": 9,
+      "bundles": [
+        "AppleMCEReporterDisabler.kext"
+      ],
+      "source": "https://github.com/AMD-OSX/AMD_Vanilla (voir aussi les depots communautaires AMD)",
+      "when": {
+        "field": "family",
+        "eq": "amd"
+      },
+      "reason": "Evite les kernel panics AppleMCEReporter sur AMD et sur les SMBIOS Mac Pro / iMac Pro"
+    },
+    {
+      "id": "CtlnaAHCIPort",
+      "manual": true,
+      "order": 35,
+      "min_darwin": 20,
+      "bundles": [
+        "CtlnaAHCIPort.kext"
+      ],
+      "source": "https://github.com/dortania/OpenCore-Install-Guide (kext communautaire, souvent fourni avec les EFI AMD)",
+      "when": {
+        "field": "features",
+        "contains": "sata-legacy"
+      },
+      "reason": "Retablit la prise en charge de controleurs SATA non reconnus a partir de macOS 11"
+    },
+    {
+      "id": "rtw88",
+      "manual": true,
+      "order": 42,
+      "bundles": [
+        "rtw88.kext"
+      ],
+      "source": "https://github.com/thegwchr/Feixiao ou https://github.com/crangel660/RTL8821CEwifi.kext",
+      "when": {
+        "field": "wifi",
+        "eq": "realtek"
+      },
+      "reason": "Wi-Fi Realtek PCIe (RTL8821CE, RTL8822BE/CE, RTL8812AE, RTL8814AE), portage du pilote Linux rtw88",
+      "note": "Pilote communautaire en developpement: a recuperer et compiler soi-meme, la stabilite varie selon la carte."
+    },
+    {
+      "id": "RealtekBluetoothFirmware",
+      "manual": true,
+      "order": 48,
+      "bundles": [
+        "RealtekBluetoothFirmware.kext"
+      ],
+      "source": "depots communautaires (recherche 'RealtekBluetoothFirmware kext')",
+      "when": {
+        "field": "bluetooth",
+        "eq": "realtek"
+      },
+      "reason": "Chargement du firmware Bluetooth Realtek"
     }
   ]
 }

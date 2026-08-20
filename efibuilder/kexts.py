@@ -47,8 +47,17 @@ def install_kexts(profile, dl: Downloader, kexts_dir: Path) -> tuple[list[dict],
     chosen, warnings = select_kexts(profile)
     entries: list[dict] = []
     installed: set[str] = set()
+    manual: list[dict] = []
 
     for entry in chosen:
+        if entry.get("manual"):
+            manual.append(entry)
+            warnings.append(
+                f"{entry['bundles'][0]} n'est pas telechargeable automatiquement "
+                f"({entry.get('reason', '')}). A recuperer ici puis a deposer dans "
+                f"EFI/OC/Kexts: {entry.get('source', 'depot communautaire')}. "
+                f"Declarez-le ensuite dans Kernel -> Add.")
+            continue
         regex = entry.get("asset")
         if not regex:
             by_macos = entry.get("asset_by_macos", {})
@@ -80,8 +89,25 @@ def install_kexts(profile, dl: Downloader, kexts_dir: Path) -> tuple[list[dict],
             entries.extend(_kernel_entries(path, bundle, entry, profile))
             info(f"{bundle:<34} {resolved.tag:<10} {entry.get('reason', '')}")
 
+    _resolve_voodoo_input_conflict(entries)
     ok(f"{len(installed)} kexts installes dans {kexts_dir}")
+    if manual:
+        info(f"{len(manual)} kext(s) a ajouter manuellement: "
+             + ", ".join(e["bundles"][0] for e in manual))
     return entries, warnings
+
+
+def _resolve_voodoo_input_conflict(entries: list[dict]) -> None:
+    """VoodooI2C fournit deja VoodooInput: celui de VoodooPS2 ferait doublon."""
+    paths = {e["BundlePath"] for e in entries}
+    if not any(p.startswith("VoodooI2C.kext") for p in paths):
+        return
+    for entry in entries:
+        if entry["BundlePath"].endswith("VoodooPS2Controller.kext/Contents/PlugIns/"
+                                        "VoodooInput.kext"):
+            entry["Enabled"] = False
+            entry["Comment"] = "Desactive: VoodooI2C fournit deja VoodooInput"
+            info("VoodooInput de VoodooPS2 desactive (fourni par VoodooI2C)")
 
 
 def _kernel_entries(path: Path, bundle: str, catalog: dict, profile) -> list[dict]:
