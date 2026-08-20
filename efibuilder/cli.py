@@ -5,8 +5,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from efibuilder import (__version__, data_files, importer, oc, recovery, smbios,
-                        usbdisk, usbmap, wizard)
+from efibuilder import (__version__, data_files, importer, menu, oc, recovery,
+                        smbios, usbdisk, usbflash, usbmap, wizard)
 from efibuilder.build import build_efi, validate_config
 from efibuilder.net import Downloader, default_cache_dir
 from efibuilder.profile import (BLUETOOTH_CHOICES, DGPU_CHOICES, ETHERNET_CHOICES,
@@ -31,7 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
                "  efibuild usb --efi mon-efi/EFI --recovery mon-efi/com.apple.recovery.boot \\\n"
                "      -o cle-usb\n")
     parser.add_argument("--version", action="version", version=f"efibuild {__version__}")
-    sub = parser.add_subparsers(dest="command", required=True)
+    sub = parser.add_subparsers(dest="command")
 
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--cache", type=Path, default=default_cache_dir(),
@@ -138,6 +138,31 @@ def build_parser() -> argparse.ArgumentParser:
     l = sub.add_parser("list", help="lister les donnees de reference")
     l.add_argument("what", choices=["platforms", "macos", "smbios", "kexts", "features"])
     l.add_argument("--macos", help="pour 'smbios': filtrer sur une version de macOS")
+
+    # ------------------------------------------------------------------- menu
+    sub.add_parser("menu", help="menu interactif ou tout se choisit avec un numero "
+                                "(mode par defaut si aucune commande n'est donnee)")
+
+    # ------------------------------------------------------------------ flash
+    fl = sub.add_parser("flash",
+                        help="choisir une cle USB, sauvegarder son contenu, la formater "
+                             "en FAT32 et y copier l'EFI")
+    fl.add_argument("--efi", type=Path, help="dossier EFI a copier")
+    fl.add_argument("--recovery", type=Path, help="dossier com.apple.recovery.boot")
+    fl.add_argument("--device", help="identifiant de la cle (sinon liste numerotee)")
+    fl.add_argument("--backup-dir", type=Path, default=None,
+                    help="dossier du zip de sauvegarde (defaut: Telechargements)")
+    fl.add_argument("--no-backup", action="store_true",
+                    help="ne pas sauvegarder le contenu actuel de la cle")
+    fl.add_argument("--skip-format", action="store_true",
+                    help="copier sans formater (la cle doit deja etre en FAT32)")
+    fl.add_argument("--label", default="EFI", help="nom de volume apres formatage")
+    fl.add_argument("--list", action="store_true",
+                    help="lister les cles detectees et sortir")
+    fl.add_argument("--dry-run", action="store_true",
+                    help="afficher les commandes de formatage sans rien executer")
+    fl.add_argument("--yes", action="store_true",
+                    help="ne pas demander la confirmation tapee (usage script)")
 
     # ----------------------------------------------------------------- import
     im = sub.add_parser("import",
@@ -323,6 +348,84 @@ def cmd_list(args) -> int:
     return 0
 
 
+def cmd_menu(args) -> int:
+    return menu.main_menu()
+
+
+def cmd_flash(args) -> int:
+    usable, rejected = usbflash.usable_devices()
+    if rejected:
+        info("disques ecartes pour votre securite:")
+        for device, why in rejected:
+            info(f"  {device.identifier:<12} {device.model or '':<24} {why}")
+    if args.list or not usable:
+        if not usable:
+            warn("aucune cle USB amovible detectee.")
+            return 1
+        step("Cles USB detectees")
+        for device in usable:
+            info(device.label)
+        return 0
+
+    device = _select_device(usable, args.device)
+    if not args.efi:
+        raise BuildError("--efi est requis (dossier EFI a copier)")
+    if not args.efi.is_dir():
+        raise BuildError(f"dossier EFI introuvable: {args.efi}")
+
+    step("Recapitulatif")
+    info(f"cle  {device.identifier}  {device.model}")
+    info(f"EFI  {args.efi}")
+
+    if not args.no_backup and not args.skip_format:
+        usbflash.backup_device(device, args.backup_dir)
+
+    if args.skip_format:
+        if not device.mountpoints:
+            raise BuildError("la cle n'est montee nulle part: impossible de copier "
+                             "sans formatage")
+        usbflash.copy_payload(Path(device.mountpoints[0]), args.efi, args.recovery)
+        return 0
+
+    if args.dry_run:
+        usbflash.format_device(device, args.label, dry_run=True)
+        info("(simulation) copie de EFI/ puis de l'image de recuperation")
+        return 0
+
+    if not args.yes:
+        warn(f"TOUT le contenu de {device.identifier} va etre efface.")
+        typed = input(f"Tapez exactement '{device.identifier}' pour confirmer : ").strip()
+        if typed != device.identifier:
+            warn("confirmation incorrecte: rien n'a ete modifie.")
+            return 1
+
+    usbflash.format_device(device, args.label)
+    mount = usbflash.wait_for_mount(device, args.label)
+    usbflash.copy_payload(mount, args.efi, args.recovery)
+    ok(f"cle prete: {mount}")
+    return 0
+
+
+def _select_device(usable, requested: str | None):
+    if requested:
+        for device in usable:
+            if device.identifier == requested:
+                return device
+        raise BuildError(
+            f"{requested} n'est pas une cle USB amovible detectee. "
+            f"Disponibles: {', '.join(d.identifier for d in usable)}")
+    step("Cles USB detectees")
+    for index, device in enumerate(usable, 1):
+        info(f"{index:>2}. {device.label}")
+    while True:
+        raw = input(f"Numero de la cle [1-{len(usable)}], 0 pour annuler : ").strip()
+        if raw == "0":
+            raise BuildError("annule")
+        if raw.isdigit() and 1 <= int(raw) <= len(usable):
+            return usable[int(raw) - 1]
+        print(f"Entrez un numero entre 0 et {len(usable)}.")
+
+
 def cmd_import(args) -> int:
     config, source = importer.load_config(args.source)
     profile, notes = importer.import_profile(config, args.macos)
@@ -415,10 +518,13 @@ def cmd_validate(args) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.command is None:  # sans argument, on ouvre le menu numerote
+        return menu.main_menu()
     handlers = {
         "build": cmd_build, "wizard": cmd_wizard, "recovery": cmd_recovery,
         "usbmap": cmd_usbmap, "usb": cmd_usb, "list": cmd_list, "info": cmd_info,
         "check": cmd_check, "import": cmd_import,
+        "menu": cmd_menu, "flash": cmd_flash,
         "validate": cmd_validate,
     }
     try:

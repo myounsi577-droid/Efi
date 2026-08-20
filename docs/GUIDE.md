@@ -20,6 +20,18 @@ Puis :
 ./efibuild info coffee-lake-desktop  # voir SSDT, quirks et framebuffers
 ```
 
+## 0. Lancer l'outil
+
+| Système | Commande |
+|---|---|
+| Linux / macOS | `./efibuild` |
+| Windows | `efibuild.cmd` |
+| Partout (sans lanceur) | `python3 -m efibuilder` |
+
+Sans argument, le menu numéroté s'ouvre. Toutes les commandes décrites plus bas
+y sont accessibles, et l'inverse est vrai : le menu n'est qu'une façade sur la
+même CLI.
+
 ## 1 bis. Vérifier que la machine est compatible
 
 ```bash
@@ -113,6 +125,19 @@ La commande prépare un dossier et affiche les commandes de formatage adaptées 
 votre système ; **elle ne touche à aucun disque**. La clé doit être en FAT32
 avec une table de partition GPT, et contenir `EFI/` et `com.apple.recovery.boot/`
 à sa racine.
+
+## 5 bis. Écrire la clé automatiquement
+
+```bash
+./efibuild flash --efi mon-efi/EFI --recovery mon-efi/com.apple.recovery.boot
+```
+
+Séquence : liste numérotée des clés → sauvegarde zip dans Téléchargements →
+formatage FAT32/GPT → copie. Il faut retaper l'identifiant exact de la clé pour
+que l'effacement démarre.
+
+Droits nécessaires : administrateur sous Windows, `sudo` sous Linux
+(macOS n'en demande pas pour un disque externe).
 
 ## 6. Régler le BIOS
 

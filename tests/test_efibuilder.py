@@ -4,11 +4,13 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
-from efibuilder import acpi, configgen, data_files, importer, kexts, smbios, usbmap
+from efibuilder import (acpi, configgen, data_files, importer, kexts, menu,
+                        smbios, usbflash, usbmap)
 from efibuilder.profile import Profile
-from efibuilder.util import ascii_comment
+from efibuilder.util import BuildError, ascii_comment
 
 
 def ssdt_names(profile: Profile) -> list[str]:
@@ -267,6 +269,112 @@ class UsbMapTests(unittest.TestCase):
             self.assertEqual(
                 xhc["IOParentMatch"]["IOPropertyMatch"]["vendor-id"],
                 bytes.fromhex("86800000"))
+
+
+def fake_key(mountpoints=()) -> usbflash.UsbDevice:
+    return usbflash.UsbDevice("/dev/sdz", "Cle de test", 8 * 1024**3, "usb",
+                              removable=True, system=False, mountpoints=list(mountpoints))
+
+
+class UsbSafetyTests(unittest.TestCase):
+    def test_removable_key_is_accepted(self):
+        self.assertIsNone(fake_key().safety_problem())
+
+    def test_system_disk_is_refused(self):
+        disk = fake_key()
+        disk.system = True
+        self.assertIn("systeme", disk.safety_problem())
+
+    def test_internal_disk_is_refused(self):
+        disk = fake_key()
+        disk.removable = False
+        self.assertIn("amovible", disk.safety_problem())
+
+    def test_oversized_disk_is_refused(self):
+        disk = fake_key()
+        disk.size = 2 * 1024**4
+        self.assertIn("inhabituelle", disk.safety_problem())
+
+    def test_format_commands_per_system(self):
+        original = usbflash.SYSTEM
+        try:
+            for system, expected in (("Darwin", "diskutil"), ("Linux", "mkfs.vfat"),
+                                     ("Windows", "diskpart")):
+                usbflash.SYSTEM = system
+                joined = " ".join(" ".join(c) for c in usbflash.format_commands(fake_key()))
+                self.assertIn(expected, joined)
+        finally:
+            usbflash.SYSTEM = original
+
+    def test_windows_refuses_fat32_above_32gb(self):
+        original = usbflash.SYSTEM
+        usbflash.SYSTEM = "Windows"
+        try:
+            big = fake_key()
+            big.size = 64 * 1024**3
+            with self.assertRaises(BuildError):
+                usbflash.format_device(big, dry_run=True)
+        finally:
+            usbflash.SYSTEM = original
+
+    def test_backup_archives_the_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "CLE"
+            (root / "sub").mkdir(parents=True)
+            (root / "a.txt").write_text("donnees")
+            (root / "sub" / "b.bin").write_bytes(b"\x00" * 16)
+            archive = usbflash.backup_device(fake_key([str(root)]), Path(tmp) / "dl")
+            self.assertIsNotNone(archive)
+            with zipfile.ZipFile(archive) as zf:
+                self.assertEqual(sorted(zf.namelist()), ["CLE/a.txt", "CLE/sub/b.bin"])
+
+    def test_backup_without_mountpoint_is_skipped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertIsNone(usbflash.backup_device(fake_key(), Path(tmp)))
+
+    def test_copy_payload(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            efi = Path(tmp) / "EFI" / "OC"
+            efi.mkdir(parents=True)
+            (efi / "config.plist").write_text("<plist/>")
+            mount = Path(tmp) / "mount"
+            mount.mkdir()
+            usbflash.copy_payload(mount, Path(tmp) / "EFI", None)
+            self.assertTrue((mount / "EFI" / "OC" / "config.plist").exists())
+
+
+class MenuTests(unittest.TestCase):
+    def _with_input(self, answers, call):
+        import builtins
+        original = builtins.input
+        queue = list(answers)
+        builtins.input = lambda *a, **k: queue.pop(0)
+        try:
+            return call()
+        finally:
+            builtins.input = original
+
+    def test_choose_returns_index(self):
+        options = [("a", ""), ("b", ""), ("c", "")]
+        self.assertEqual(self._with_input(["2"], lambda: menu.choose("t", options)), 2)
+
+    def test_choose_uses_default_on_empty_input(self):
+        options = [("a", ""), ("b", "")]
+        self.assertEqual(
+            self._with_input([""], lambda: menu.choose("t", options, default=2)), 2)
+
+    def test_choose_rejects_out_of_range_then_accepts(self):
+        options = [("a", ""), ("b", "")]
+        self.assertEqual(self._with_input(["9", "x", "1"],
+                                          lambda: menu.choose("t", options)), 1)
+
+    def test_zero_cancels(self):
+        with self.assertRaises(menu.Cancelled):
+            self._with_input(["0"], lambda: menu.choose("t", [("a", "")]))
+
+    def test_pick_returns_value(self):
+        self.assertEqual(
+            self._with_input(["3"], lambda: menu.pick("t", ["x", "y", "z"], "x")), "z")
 
 
 class ProfileTests(unittest.TestCase):

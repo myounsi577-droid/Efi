@@ -13,6 +13,30 @@ Aucune dépendance : Python 3.9+ suffit.
 
 ## Démarrage rapide
 
+Lancez la commande sans argument : tout se choisit avec un numéro, rien à retenir.
+
+```bash
+./efibuild            # macOS / Linux
+efibuild.cmd          # Windows
+```
+
+```
+  1.  Construire un EFI pour ma machine
+  2.  Repartir d'un EFI existant
+  3.  Telecharger l'image de recuperation Apple
+  4.  Preparer une cle USB
+  5.  Verifier si une machine est compatible
+  6.  Generer une USBMap
+  7.  Consulter les listes de reference
+  0.  quitter
+```
+
+Chaque question suivante est une liste numérotée (type de machine, génération du
+processeur, version de macOS, carte réseau, Wi-Fi…), avec une valeur par défaut
+marquée `*` que la touche Entrée accepte, et `0` pour revenir en arrière.
+
+## En ligne de commande
+
 ```bash
 # assistant interactif (questions guidées, puis construction)
 ./efibuild wizard -o mon-efi
@@ -111,6 +135,35 @@ Certains pilotes communautaires n'ont pas de release exploitable automatiquement
 sélectionne, explique leur rôle et indique où les récupérer, et le rapport les
 liste comme « à ajouter manuellement ».
 
+## Préparer la clé USB
+
+```bash
+./efibuild flash --efi mon-efi/EFI --recovery mon-efi/com.apple.recovery.boot
+```
+
+La commande détecte les clés USB sur les trois systèmes (PowerShell `Get-Disk`,
+`diskutil`, `lsblk`), les présente **numérotées**, puis, pour celle que vous
+choisissez :
+
+1. **sauvegarde** tout son contenu actuel dans un zip daté déposé dans votre
+   dossier Téléchargements (facultatif, `--no-backup` pour sauter l'étape) ;
+2. **formate la totalité** de la clé en FAT32 avec une table GPT ;
+3. **copie** `EFI/` et `com.apple.recovery.boot/` à la racine.
+
+### Garde-fous
+
+Le formatage efface tout : la commande refuse donc de toucher à un disque que le
+système ne déclare pas **amovible**, à un disque **système ou de démarrage**, et
+à tout volume de plus de 512 Go. Les disques écartés sont affichés avec leur
+motif. Avant d'effacer, il faut **retaper l'identifiant exact** de la clé — un
+simple « oui » ne suffit pas. `--dry-run` affiche les commandes sans rien
+exécuter, `--list` se contente d'énumérer les clés, et `--skip-format` copie sur
+une clé déjà en FAT32.
+
+Sous Windows, `diskpart` ne formate pas en FAT32 au-delà de 32 Go : la commande
+le détecte et vous le dit au lieu d'échouer à mi-parcours. Le formatage demande
+les droits administrateur sous Windows et `sudo` sous Linux.
+
 ## Repartir d'un EFI existant
 
 ```bash
@@ -133,7 +186,9 @@ et kexts récents) ou le **porter vers une version plus récente de macOS**
 ## Commandes
 
 ```
+efibuild             menu numéroté (aucune option à retenir)
 efibuild build       construire un EFI complet
+efibuild flash       choisir une clé USB, la sauvegarder, la formater, y copier l'EFI
 efibuild import      déduire un profil d'un EFI existant
 efibuild check       verdict de compatibilité, sans téléchargement
 efibuild wizard      assistant interactif puis construction
@@ -175,8 +230,8 @@ python3 -m unittest discover -s tests
 
 ## Limites assumées
 
-- efibuild **ne formate aucun disque** : la commande `usb` prépare un dossier et
-  affiche les commandes à lancer vous-même.
+- `efibuild usb` prépare un dossier sans rien effacer ; `efibuild flash` formate
+  réellement, mais uniquement une clé amovible confirmée par son identifiant.
 - Le relevé des ports USB et le choix du `layout-id` audio dépendent de la machine :
   aucun outil ne peut les deviner à distance.
 - Alder Lake et plus récent ne sont pas couverts par le guide Dortania : partez de

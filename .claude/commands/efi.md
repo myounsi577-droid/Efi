@@ -32,6 +32,11 @@ Marche a suivre :
    machine cible, et le remplacement de `ROM` par l'adresse MAC reelle de la
    carte reseau pour les iServices.
 
-Ne formate jamais de disque et ne lance aucune commande destructive :
-pour la cle USB, utilise `./efibuild usb` qui prepare un dossier et affiche les
-commandes que l'utilisateur lancera lui-meme.
+Ne lance jamais toi-meme le formatage d'une cle: `./efibuild flash` efface la
+totalite du support et exige que l'utilisateur retape l'identifiant du
+peripherique. Contente-toi de `./efibuild usb` (qui prepare un dossier sans rien
+effacer) ou de `./efibuild flash --list` / `--dry-run`, et laisse l'utilisateur
+lancer l'effacement lui-meme.
+
+Si l'utilisateur prefere ne rien taper en options, propose-lui `./efibuild`
+sans argument: le menu numerote couvre les memes fonctions.
