@@ -1,0 +1,43 @@
+name: Tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Tests unitaires
+        run: python -m unittest discover -s tests -v
+
+      - name: La CLI repond sur ce systeme
+        run: |
+          python -m efibuilder --version
+          python -m efibuilder list platforms
+          python -m efibuilder info coffee-lake-desktop
+          python -m efibuilder check --platform amd-zen-laptop --macos sequoia --cores 2
+
+      - name: Detection des cles USB (sans rien modifier)
+        run: python -m efibuilder flash --list
+        continue-on-error: true
+
+      - name: L'archive de distribution se construit et fonctionne
+        run: |
+          python tools/make_dist.py
+          python dist/efibuild.pyz --version
+          python dist/efibuild.pyz list macos

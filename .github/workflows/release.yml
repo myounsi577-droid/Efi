@@ -1,0 +1,57 @@
+name: Publier une version
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag a publier (ex. v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tests
+        run: python -m unittest discover -s tests
+
+      - name: Construire l'archive
+        run: python tools/make_dist.py
+
+      - name: Verifier l'executable
+        run: |
+          python dist/efibuild.pyz --version
+          python dist/efibuild.pyz list platforms
+
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          gh release create "$TAG" \
+            dist/efibuild-*.zip dist/efibuild.pyz \
+            --title "efibuild $TAG" \
+            --notes "Generateur d'EFI OpenCore.
+
+          **Telechargement**
+
+          - \`efibuild-*.zip\` : archive complete (executable, sources, documentation)
+          - \`efibuild.pyz\` : executable autonome, un seul fichier
+
+          **Utilisation** (Python 3.9+ requis, rien d'autre a installer)
+
+          \`\`\`
+          python3 efibuild.pyz
+          \`\`\`
+
+          Sans argument, le menu numerote s'ouvre. Voir INSTALLER.txt dans l'archive."

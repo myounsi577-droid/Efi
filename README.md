@@ -11,14 +11,37 @@ et le `config.plist` produit est vérifié par `ocvalidate`.
 
 Aucune dépendance : Python 3.9+ suffit.
 
+## Télécharger
+
+| | |
+|---|---|
+| **Archive complète** | [`dist/efibuild-1.0.0.zip`](dist/efibuild-1.0.0.zip) — exécutable, sources, documentation |
+| **Exécutable seul** | [`dist/efibuild.pyz`](dist/efibuild.pyz) — un seul fichier, 68 Ko |
+| **Versions publiées** | onglet [Releases](../../releases) du dépôt |
+
+Sur GitHub, cliquez le fichier puis **Download**. Seul prérequis : **Python 3.9 ou
+plus récent** — déjà présent sur macOS et Linux, à installer depuis
+[python.org](https://www.python.org/downloads/) sous Windows (cochez
+« Add python.exe to PATH »).
+
+```bash
+python3 efibuild.pyz          # macOS, Linux
+python efibuild.pyz           # Windows
+```
+
+Le `.pyz` est une archive Python exécutable : pas d'installation, pas de
+dépendance, le même fichier fonctionne sur les trois systèmes.
+
 ## Démarrage rapide
 
 Lancez la commande sans argument : tout se choisit avec un numéro, rien à retenir.
 
-```bash
-./efibuild            # macOS / Linux
-efibuild.cmd          # Windows
-```
+| Système | Commande |
+|---|---|
+| Windows (cmd) | `efibuild.cmd` ou `python efibuild.pyz` |
+| Windows (PowerShell) | `.\efibuild.ps1` |
+| macOS / Linux | `./efibuild` ou `python3 efibuild.pyz` |
+| Partout | `python3 -m efibuilder` |
 
 ```
   1.  Construire un EFI pour ma machine
@@ -222,11 +245,17 @@ les versions vérifiées de `efibuilder/data/pins.json`, `--offline` n'utilise q
 cache local (`~/.cache/efibuild`), et `--oc-version 1.0.7` fige OpenCore.
 Chaque build écrit un `profil.json` rejouable avec `--profile`.
 
-## Tests
+## Tests et construction de l'archive
 
 ```bash
-python3 -m unittest discover -s tests
+python3 -m unittest discover -s tests    # 58 tests, sans réseau
+python3 tools/make_dist.py               # regénère dist/
 ```
+
+L'intégration continue exécute la suite sur **Ubuntu, macOS et Windows**, en
+Python 3.9 et 3.12, et vérifie que l'archive se construit et démarre sur chacun.
+Pousser un tag `v*` publie une release avec le `.zip` et le `.pyz` en pièces
+jointes.
 
 ## Limites assumées
 

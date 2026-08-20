@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import functools
 import json
+from importlib import resources
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
@@ -10,8 +11,9 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 
 @functools.lru_cache(maxsize=None)
 def load(name: str) -> dict:
-    with open(DATA_DIR / f"{name}.json", encoding="utf-8") as fh:
-        return json.load(fh)
+    """Lit une table embarquee, y compris quand efibuild tourne depuis un .pyz."""
+    resource = resources.files("efibuilder").joinpath("data", f"{name}.json")
+    return json.loads(resource.read_text(encoding="utf-8"))
 
 
 def platforms() -> list[dict]:
