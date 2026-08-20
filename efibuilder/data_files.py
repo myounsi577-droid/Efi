@@ -12,7 +12,9 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 @functools.lru_cache(maxsize=None)
 def load(name: str) -> dict:
     """Lit une table embarquee, y compris quand efibuild tourne depuis un .pyz."""
-    resource = resources.files("efibuilder").joinpath("data", f"{name}.json")
+    # joinpath() n'accepte qu'un argument sur zipfile.Path avant Python 3.12:
+    # on enchaine les appels pour rester compatible depuis un .pyz.
+    resource = resources.files("efibuilder").joinpath("data").joinpath(f"{name}.json")
     return json.loads(resource.read_text(encoding="utf-8"))
 
 

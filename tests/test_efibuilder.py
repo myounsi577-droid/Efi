@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import tempfile
 import unittest
 import zipfile
@@ -341,6 +342,31 @@ class UsbSafetyTests(unittest.TestCase):
             mount.mkdir()
             usbflash.copy_payload(mount, Path(tmp) / "EFI", None)
             self.assertTrue((mount / "EFI" / "OC" / "config.plist").exists())
+
+
+class ZipappTests(unittest.TestCase):
+    """Le .pyz distribue doit savoir lire ses tables JSON depuis l'archive."""
+
+    def test_zipapp_runs_and_reads_data(self):
+        import subprocess
+        import sys
+        import zipapp
+
+        root = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as tmp:
+            staging = Path(tmp) / "src"
+            shutil.copytree(root / "efibuilder", staging / "efibuilder",
+                            ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            (staging / "__main__.py").write_text(
+                "import sys\nfrom efibuilder.cli import main\n"
+                "sys.exit(main())\n", encoding="utf-8")
+            pyz = Path(tmp) / "efibuild.pyz"
+            zipapp.create_archive(staging, pyz, compressed=True)
+            result = subprocess.run([sys.executable, str(pyz), "list", "macos"],
+                                    capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("tahoe", result.stdout)
+            self.assertIn("sequoia", result.stdout)
 
 
 class MenuTests(unittest.TestCase):
