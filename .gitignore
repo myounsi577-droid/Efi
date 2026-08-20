@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+efi-out/
+usb-stage/
+*.egg-info/

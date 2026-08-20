@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Lanceur d'efibuild: n'a besoin que de Python 3.9+ (aucune dependance externe).
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
+exec python3 -m efibuilder "$@"

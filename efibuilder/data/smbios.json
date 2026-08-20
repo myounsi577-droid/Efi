@@ -1,0 +1,965 @@
+{
+ "source": "https://dortania.github.io/OpenCore-Install-Guide/extras/smbios-support.html",
+ "models": [
+  {
+   "model": "MacBook1,1",
+   "cpu": "Yonah(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4208CC8",
+   "initial": "10.4.6 (8I2025)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "MacBook10,1",
+   "cpu": "Kaby Lake(Y)",
+   "gpu": "HD 615",
+   "board_id": "Mac-EE2EBD4B90B839A8",
+   "initial": "10.12.5 (16F207)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "MacBook2,1",
+   "cpu": "Merom(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4208CA9",
+   "initial": "10.4.8 (8N1108)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBook3,1",
+   "cpu": "Merom(M)",
+   "gpu": "GMA X3100",
+   "board_id": "Mac-F22788C8",
+   "initial": "10.5 (9A3111)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBook4,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GMA X3100",
+   "board_id": "Mac-F22788A9",
+   "initial": "10.5.2 (9C2015)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBook5,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F42D89C8",
+   "initial": "10.5.5 (9F2114)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBook5,2",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F22788AA",
+   "initial": "10.5.6 (9G2110)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBook6,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F22C8AC8",
+   "initial": "10.6.1 (10A2047)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBook7,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 320M",
+   "board_id": "Mac-F22C89C8",
+   "initial": "10.6.3 (10D2162)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBook8,1",
+   "cpu": "Broadwell(Y)",
+   "gpu": "HD 5300",
+   "board_id": "Mac-BE0E8AC46FE800CC",
+   "initial": "10.10.2 (14C2061)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBook9,1",
+   "cpu": "Skylake(Y)",
+   "gpu": "HD 515",
+   "board_id": "Mac-9AE82516C7C6B903",
+   "initial": "10.11.4 (15E2066)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookAir1,1",
+   "cpu": "Merom(M)",
+   "gpu": "GMA X3100     (11\")",
+   "board_id": "Mac-F42C8CC8",
+   "initial": "10.5.1 (9B2324)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBookAir2,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M (13\")",
+   "board_id": "Mac-F42D88C8",
+   "initial": "10.5.5",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookAir3,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 320M  (11\")",
+   "board_id": "Mac-942452F5819B1C1B",
+   "initial": "10.6.4 (10F3061)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookAir3,2",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 320M  (13\")",
+   "board_id": "Mac-942C5DF58193131B",
+   "initial": "10.6.4 (10F3061)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookAir4,1",
+   "cpu": "Sandy Bridge(M)",
+   "gpu": "HD 3000 (11\")",
+   "board_id": "Mac-C08A6BB70A942AC2",
+   "initial": "10.7 (11A2063)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookAir4,2",
+   "cpu": "Sandy Bridge(M)",
+   "gpu": "HD 3000 (13\")",
+   "board_id": "Mac-742912EFDBEE19B3",
+   "initial": "10.7 (11A2063)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookAir5,1",
+   "cpu": "Ivy Bridge(U)",
+   "gpu": "HD 4000 (11\")",
+   "board_id": "Mac-66F35F19FE2A0D05",
+   "initial": "10.7.4 (11E2520)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacBookAir5,2",
+   "cpu": "Ivy Bridge(U)",
+   "gpu": "HD 4000 (13\")",
+   "board_id": "Mac-2E6FAB96566FE58C",
+   "initial": "10.8.2 (12C2034)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacBookAir6,1",
+   "cpu": "Haswell(U)",
+   "gpu": "HD 5000 (11\")",
+   "board_id": "Mac-35C1E88140C3E6CF",
+   "initial": "10.8.4 (12E3067)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBookAir6,2",
+   "cpu": "Haswell(U)",
+   "gpu": "HD 5000 (13\")",
+   "board_id": "Mac-7DF21CB3ED6977E5",
+   "initial": "10.8.4 (12E3067)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBookAir7,1",
+   "cpu": "Broadwell(U)",
+   "gpu": "HD 6000 (11\")",
+   "board_id": "Mac-9F18E312C5C2BF0B",
+   "initial": "10.10.2 (14C2507)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookAir7,2",
+   "cpu": "Broadwell(U)",
+   "gpu": "HD 6000 (13\")",
+   "board_id": "Mac-937CB26E2E02BB01",
+   "initial": "10.10.2 (14C2507)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookAir8,1",
+   "cpu": "Amber Lake(Y)",
+   "gpu": "UHD 617 (13\")",
+   "board_id": "Mac-827FAC58A8FDFA22",
+   "initial": "10.14.1 (18B2084)",
+   "last_supported": "14.7.x"
+  },
+  {
+   "model": "MacBookAir8,2",
+   "cpu": "Amber Lake(Y)",
+   "gpu": "UHD 617 (13\")",
+   "board_id": "Mac-226CB3C6A851A671",
+   "initial": "10.14.5 (18F2058)",
+   "last_supported": "14.7.x"
+  },
+  {
+   "model": "MacBookAir9,1",
+   "cpu": "Ice Lake(Y)",
+   "gpu": "Iris Plus G4/G7 (13\")",
+   "board_id": "Mac-0CFF9C7C2B63DF8D",
+   "initial": "10.15.4 (19E287)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro1,1",
+   "cpu": "Yonah(M)",
+   "gpu": "Radeon X1600 (15\")",
+   "board_id": "Mac-F425BEC8",
+   "initial": "10.4.5 (8G1453)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "MacBookPro1,2",
+   "cpu": "Yonah(M)",
+   "gpu": "Radeon X1600 (17\")",
+   "board_id": "Mac-F42DBEC8",
+   "initial": "10.4.6 (8I2032)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "MacBookPro10,1",
+   "cpu": "Ivy Bridge(QM)",
+   "gpu": "HD 4000/GeForce GT 650M (15\")",
+   "board_id": "Mac-C3EC7CD22292981F",
+   "initial": "10.7.4 (11E2068)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacBookPro10,2",
+   "cpu": "Ivy Bridge(M)",
+   "gpu": "HD 4000 (13\")",
+   "board_id": "Mac-AFD8A9D944EA4843",
+   "initial": "10.8.2 (12C2034)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacBookPro11,1",
+   "cpu": "Haswell(U)",
+   "gpu": "Iris 5100 (13\")",
+   "board_id": "Mac-189A3D4F975D5FFC",
+   "initial": "10.9 (13A2093)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBookPro11,2",
+   "cpu": "Haswell(HQ)",
+   "gpu": "Iris Pro 5200 (15\")",
+   "board_id": "Mac-3CBD00234E554E41",
+   "initial": "10.9 (13A3017)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBookPro11,3",
+   "cpu": "Haswell(HQ)",
+   "gpu": "Iris Pro 5200/GeForce GT 750M (15\")",
+   "board_id": "Mac-2BD1B31983FE1663",
+   "initial": "10.9 (13A3017)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "MacBookPro11,4",
+   "cpu": "Haswell(HQ)",
+   "gpu": "Iris Pro 5200 (15\")",
+   "board_id": "Mac-06F11FD93F0323C5",
+   "initial": "10.10.3 (14D2134)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro11,5",
+   "cpu": "Haswell(HQ)",
+   "gpu": "Iris Pro 5200/Radeon R9 M370X (15\")",
+   "board_id": "Mac-06F11F11946D27C5",
+   "initial": "10.10.3 (14D2134)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro12,1",
+   "cpu": "Broadwell(U)",
+   "gpu": "Iris 6100 (13\")",
+   "board_id": "Mac-E43C1C25D4880AD6",
+   "initial": "10.10.2 (14C2507)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro13,1",
+   "cpu": "Skylake(U)",
+   "gpu": "Iris 540 (13\")",
+   "board_id": "Mac-473D31EABEB93F9B",
+   "initial": "10.12 (16A2323a)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro13,2",
+   "cpu": "Skylake(U)",
+   "gpu": "Iris 550 (13\")",
+   "board_id": "Mac-66E35819EE2D0D05",
+   "initial": "10.12.1 (16B2657)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro13,3",
+   "cpu": "Skylake(H)",
+   "gpu": "HD 530/Radeon Pro 450 (15\")",
+   "board_id": "Mac-A5C67F76ED83108C",
+   "initial": "10.12.1 (16B2659)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacBookPro14,1",
+   "cpu": "Kaby Lake(U)",
+   "gpu": "Iris Plus 640 (13\")",
+   "board_id": "Mac-B4831CEBD52A0C4C",
+   "initial": "10.12.5 (16F2073)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "MacBookPro14,2",
+   "cpu": "Kaby Lake(U)",
+   "gpu": "Iris Plus 650 (13\")",
+   "board_id": "Mac-CAD6701F7CEA0921",
+   "initial": "10.12.5 (16F2073)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "MacBookPro14,3",
+   "cpu": "Kaby Lake(H)",
+   "gpu": "HD 630/Radeon Pro 555 (15\")",
+   "board_id": "Mac-551B86E5744E2388",
+   "initial": "10.12.5 (16F2073)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "MacBookPro15,1",
+   "cpu": "Coffee Lake(H)",
+   "gpu": "UHD 630/Radeon Pro 555X (15\")",
+   "board_id": "Mac-937A206F2EE63C01",
+   "initial": "10.13.6 (17G2112)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro15,2",
+   "cpu": "Coffee Lake(U)",
+   "gpu": "Iris Plus 655 (13\")",
+   "board_id": "Mac-827FB448E656EC26",
+   "initial": "10.13.6 (17G2112)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro15,3",
+   "cpu": "Coffee Lake(H)",
+   "gpu": "UHD 630/Radeon Pro Vega 16 (15\")",
+   "board_id": "Mac-1E7E29AD0135F9BC",
+   "initial": "10.14.1 (18B3094)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro15,4",
+   "cpu": "Coffee Lake(U)",
+   "gpu": "Iris Plus 645 (13\")",
+   "board_id": "Mac-53FDB3D8DB8CA971",
+   "initial": "10.14.5 (18F2058)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro16,1",
+   "cpu": "Coffee Lake(H)",
+   "gpu": "UHD 630/Radeon Pro 5300 (16\")",
+   "board_id": "Mac-E1008331FDC96864",
+   "initial": "10.15.1 (19B2093)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro16,2",
+   "cpu": "Ice Lake(U)",
+   "gpu": "Iris Plus G4/G7 (13\")",
+   "board_id": "Mac-5F9802EFE386AA28",
+   "initial": "10.15.4 (19E2269)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro16,3",
+   "cpu": "Coffee Lake(U)",
+   "gpu": "Iris Plus 645 (13\")",
+   "board_id": "Mac-E7203C0F68AA0004",
+   "initial": "10.15.4 (19E2269)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro16,4",
+   "cpu": "Coffee Lake(H)",
+   "gpu": "UHD 630/Radeon Pro 5600M (16\")",
+   "board_id": "Mac-A61BADE1FDAD7B05",
+   "initial": "10.15.1 (19B2093)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "MacBookPro2,1",
+   "cpu": "Merom(M)",
+   "gpu": "Radeon X1600 (15\")",
+   "board_id": "Mac-F42189C8",
+   "initial": "10.4.8 (8N1051)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBookPro2,2",
+   "cpu": "Merom(M)",
+   "gpu": "Radeon X1600 (17\")",
+   "board_id": "Mac-F42187C8",
+   "initial": "10.4.8 (8N1037)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacBookPro3,1",
+   "cpu": "Merom(M)",
+   "gpu": "GeForce 8600M GT (15/17\")",
+   "board_id": "Mac-F4238BC8",
+   "initial": "10.4.9 (8Q1058)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro4,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 8600MG GT (17\")",
+   "board_id": "Mac-F42C89C8",
+   "initial": "10.5.2 (9C2018)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro5,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M/9600M GT (15\")",
+   "board_id": "Mac-F42D86C8",
+   "initial": "10.5.5 (9F2114)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro5,2",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M/9600M GT (17\")",
+   "board_id": "Mac-F2268EC8",
+   "initial": "10.5.6 (9G2141)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro5,3",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M/9600M GT (15\")",
+   "board_id": "Mac-F22587C8",
+   "initial": "10.5.7 (9J3050)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro5,4",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M/9600M GT (15\")",
+   "board_id": "Mac-F22587A1",
+   "initial": "10.5.7 (9J3050)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro5,5",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M/9600M GT (13\")",
+   "board_id": "Mac-F2268AC8",
+   "initial": "10.5.7 (9J3050)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacBookPro6,1",
+   "cpu": "Arrandale(M)",
+   "gpu": "HD Graphics/GeForce GT 330M (17\")",
+   "board_id": "Mac-F22589C8",
+   "initial": "10.6.3 (10D2063a)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro6,2",
+   "cpu": "Arrandale(M)",
+   "gpu": "HD Graphics/GeForce GT 330M (15\")",
+   "board_id": "Mac-F22586C8",
+   "initial": "10.6.3 (10D2094)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro7,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 320M (13\")",
+   "board_id": "Mac-F222BEC8",
+   "initial": "10.6.3 (10D2125)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro8,1",
+   "cpu": "Sandy Bridge(M)",
+   "gpu": "HD 3000 (13\")",
+   "board_id": "Mac-94245B3640C91C81",
+   "initial": "10.6.6 (10J3210)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro8,2",
+   "cpu": "Sandy Bridge(QM)",
+   "gpu": "HD 3000/Radeon HD 6490M (15\")",
+   "board_id": "Mac-94245A3940C91C80",
+   "initial": "10.6.6 (10J3210)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro8,3",
+   "cpu": "Sandy Bridge(QM)",
+   "gpu": "HD 3000/Radeon HD 6750M (17\")",
+   "board_id": "Mac-942459F5819B171B",
+   "initial": "10.6.6 (10J3210)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "MacBookPro9,1",
+   "cpu": "Ivy Bridge(QM)",
+   "gpu": "HD 4000/GeForce GT 650M (15\")",
+   "board_id": "Mac-4B7AC7E43945597E",
+   "initial": "10.7.3 (11D2097)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacBookPro9,2",
+   "cpu": "Ivy Bridge(M)",
+   "gpu": "HD 4000 (13\")",
+   "board_id": "Mac-6F01561E16C75D06",
+   "initial": "10.7.3 (11D2515)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "MacPro1,1",
+   "cpu": "Woodcrest",
+   "gpu": "GeForce 7300 GT",
+   "board_id": "Mac-F4208DC8",
+   "initial": "10.4.7 (8K1079)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "MacPro3,1",
+   "cpu": "Harpertown",
+   "gpu": "Radeon HD 2600 XT",
+   "board_id": "Mac-F42C88C8",
+   "initial": "10.5.1 (9B2117)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacPro4,1",
+   "cpu": "Nehalem",
+   "gpu": "GeForce GT 120",
+   "board_id": "Mac-F221BEC8",
+   "initial": "10.5.6 (9G3553)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "MacPro5,1",
+   "cpu": "Nehalem",
+   "gpu": "Radeon HD 5770",
+   "board_id": "Mac-F221BEC8",
+   "initial": "10.6.4 (10F2521)",
+   "last_supported": "10.14.6"
+  },
+  {
+   "model": "MacPro6,1",
+   "cpu": "Ivy Bridge EP",
+   "gpu": "FirePro D300",
+   "board_id": "Mac-F60DEB81FF30ACF6",
+   "initial": "10.9.1 (13B4116)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "MacPro7,1",
+   "cpu": "Cascade Lake-W",
+   "gpu": "Radeon Pro 580X",
+   "board_id": "Mac-27AD2F918AE68F61",
+   "initial": "10.15.0 (19A583)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "Macmini1,1",
+   "cpu": "Yonah(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4208EC8",
+   "initial": "10.4.5 (8H1619)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "Macmini2,1",
+   "cpu": "Merom(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4208EAA",
+   "initial": "10.4.10 (8R3014)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "Macmini3,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F22C86C8",
+   "initial": "10.5.6 (9G2030)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "Macmini4,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 320M",
+   "board_id": "Mac-F2208EC8",
+   "initial": "10.6.4 (10F2025)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "Macmini5,1",
+   "cpu": "Sandy Bridge(M)",
+   "gpu": "HD 3000",
+   "board_id": "Mac-8ED6AF5B48C039E1",
+   "initial": "10.7 (11A2061)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "Macmini5,2",
+   "cpu": "Sandy Bridge(M)",
+   "gpu": "Radeon HD 6630M",
+   "board_id": "Mac-4BC72D62AD45599E",
+   "initial": "10.7 (11A2061)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "Macmini5,3",
+   "cpu": "Sandy Bridge(QM)",
+   "gpu": "HD 3000",
+   "board_id": "Mac-7BA5B2794B2CDB12",
+   "initial": "10.7 (11A2061)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "Macmini6,1",
+   "cpu": "Ivy Bridge(M)",
+   "gpu": "HD 4000",
+   "board_id": "Mac-031AEE4D24BFF0B1",
+   "initial": "10.8.1 (12B2080)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "Macmini6,2",
+   "cpu": "Ivy Bridge(QM)",
+   "gpu": "HD 4000",
+   "board_id": "Mac-F65AE981FFA204ED",
+   "initial": "10.8.1 (12B2080)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "Macmini7,1",
+   "cpu": "Haswell(U)",
+   "gpu": "HD 5000 or Iris 5100",
+   "board_id": "Mac-35C5E08120C7EEAF",
+   "initial": "10.10 (14A389)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "Macmini8,1",
+   "cpu": "Coffee Lake(H)",
+   "gpu": "UHD 630",
+   "board_id": "Mac-7BA5B2DFE22DDD8C",
+   "initial": "10.14 (18A2063)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "Xserve1,1",
+   "cpu": "Woodcrest",
+   "gpu": "Radeon X1300",
+   "board_id": "Mac-F4208AC8",
+   "initial": "Server 10.4.8 (8N1215)",
+   "last_supported": "Server 10.7.5"
+  },
+  {
+   "model": "Xserve3,1",
+   "cpu": "Nehalem EP",
+   "gpu": "GeForce GT 120",
+   "board_id": "Mac-F223BEC8",
+   "initial": "Server 10.5.6",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "iMac10,1",
+   "cpu": "Wolfdale(S)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F221DCC8",
+   "initial": "10.6.1 (10A2155)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac10,1",
+   "cpu": "Wolfdale(S)",
+   "gpu": "Radeon HD 4670",
+   "board_id": "Mac-F2268CC8",
+   "initial": "10.6.1 (10A2155)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac11,1",
+   "cpu": "Lynnfield(S)",
+   "gpu": "Radeon HD 4850",
+   "board_id": "Mac-F2268DAE",
+   "initial": "10.6.2 (10C2234)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac11,2",
+   "cpu": "Clarkdale(S)",
+   "gpu": "Radeon HD 4670",
+   "board_id": "Mac-F2238AC8",
+   "initial": "10.6.3 (10D2322a)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac11,3",
+   "cpu": "Clarkdale(S)",
+   "gpu": "Radeon HD 5670",
+   "board_id": "Mac-F2238BAE",
+   "initial": "10.6.3 (10D2322a)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac12,1",
+   "cpu": "Sandy Bridge(S)",
+   "gpu": "Radeon HD 6750M",
+   "board_id": "Mac-942B5BF58194151B",
+   "initial": "10.6.6 (10J4026)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac12,2",
+   "cpu": "Sandy Bridge(S)",
+   "gpu": "Radeon HD 6770M",
+   "board_id": "Mac-942B59F58194171B",
+   "initial": "10.6.6 (10J4026)",
+   "last_supported": "10.13.6"
+  },
+  {
+   "model": "iMac13,1",
+   "cpu": "Ivy Bridge(S)",
+   "gpu": "GeForce GT 640M",
+   "board_id": "Mac-00BE6ED71E35EB86",
+   "initial": "10.8.2 (12C3104)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac13,1",
+   "cpu": "Ivy Bridge(S)",
+   "gpu": "HD 4000",
+   "board_id": "Mac-00BE6ED71E35EB86",
+   "initial": "10.8.2 (12C3104)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac13,2",
+   "cpu": "Ivy Bridge(S)",
+   "gpu": "GeForce GTX 660M",
+   "board_id": "Mac-FC02E91DDD3FA6A4",
+   "initial": "10.8.2 (12C2037)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac13,3",
+   "cpu": "Ivy Bridge(S)",
+   "gpu": "HD 4000",
+   "board_id": "Mac-7DF2A3B5E5D671ED",
+   "initial": "10.8.2 (12C2037)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac14,1",
+   "cpu": "Haswell(S)",
+   "gpu": "Iris Pro 5200",
+   "board_id": "Mac-031B6874CF7F642A",
+   "initial": "10.8.4 (12E4022)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac14,2",
+   "cpu": "Haswell(S)",
+   "gpu": "GeForce GT 750M",
+   "board_id": "Mac-27ADBB7B4CEE8E61",
+   "initial": "10.8.4 (12E4022)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac14,3",
+   "cpu": "Haswell(S)",
+   "gpu": "GeForce GT 755M",
+   "board_id": "Mac-77EB7D7DAF985301",
+   "initial": "10.8.4 (12E4022)",
+   "last_supported": "10.15.7"
+  },
+  {
+   "model": "iMac14,4",
+   "cpu": "Haswell(U)",
+   "gpu": "HD 5000",
+   "board_id": "Mac-81E3E92DD6088272",
+   "initial": "10.9.3 (13D2061)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "iMac15,1",
+   "cpu": "Haswell(S)",
+   "gpu": "Radeon R9 M290X",
+   "board_id": "Mac-42FD25EABCABB274",
+   "initial": "10.10 (14A389)",
+   "last_supported": "11.7.10"
+  },
+  {
+   "model": "iMac16,1",
+   "cpu": "Broadwell(U)",
+   "gpu": "HD 6000 or Iris Pro 6200",
+   "board_id": "Mac-A369DDC4E67F1C45",
+   "initial": "10.11 (15A2301)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "iMac16,2",
+   "cpu": "Broadwell(S)",
+   "gpu": "Iris Pro 6200",
+   "board_id": "Mac-FFE5EF870D7BA81A",
+   "initial": "10.11 (15A2301)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "iMac17,1",
+   "cpu": "Skylake(S)",
+   "gpu": "Radeon R9 M380",
+   "board_id": "Mac-DB15BD556843C820, Mac-65CE76090165799A, Mac-B809C3757DA9BB8D",
+   "initial": "10.11 (15A4310)",
+   "last_supported": "12.7.6"
+  },
+  {
+   "model": "iMac18,1",
+   "cpu": "Kaby Lake(U)",
+   "gpu": "Iris Plus 640",
+   "board_id": "Mac-4B682C642B45593E",
+   "initial": "10.12.4 (16E2193)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "iMac18,2",
+   "cpu": "Kaby Lake(S)",
+   "gpu": "Radeon Pro 555",
+   "board_id": "Mac-77F17D7DA9285301",
+   "initial": "10.12.4 (16F2073)",
+   "last_supported": "13.6.x"
+  },
+  {
+   "model": "iMac19,1",
+   "cpu": "Coffee Lake(S)",
+   "gpu": "Radeon Pro 570X",
+   "board_id": "Mac-AA95B1DDAB278B95",
+   "initial": "10.14.4 (18E226)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "iMac19,2",
+   "cpu": "Coffee Lake(S)",
+   "gpu": "Radeon Pro 555X",
+   "board_id": "Mac-63001698E7A34814",
+   "initial": "10.14.4 (18E226)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "iMac20,1",
+   "cpu": "Comet Lake(S)",
+   "gpu": "Radeon Pro 5300",
+   "board_id": "Mac-CFF7D910A743CAAF",
+   "initial": "10.15.6 (19G2005)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "iMac20,2",
+   "cpu": "Comet Lake(S)",
+   "gpu": "Radeon Pro 5700 XT",
+   "board_id": "Mac-AF89B6D9451A490B",
+   "initial": "10.15.6 (19G2005)",
+   "last_supported": "Current"
+  },
+  {
+   "model": "iMac4,1",
+   "cpu": "Yonah(M)",
+   "gpu": "Radeon X1600",
+   "board_id": "Mac-F42786C8",
+   "initial": "10.4.4 (8G1165)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "iMac4,2",
+   "cpu": "Yonah(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4218EC8",
+   "initial": "10.4.7 (8I2057)",
+   "last_supported": "10.6.8"
+  },
+  {
+   "model": "iMac5,1",
+   "cpu": "Merom(M)",
+   "gpu": "Radeon X1600",
+   "board_id": "Mac-F4228EC8",
+   "initial": "10.4.7 (8K1106)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "iMac5,2",
+   "cpu": "Merom(M)",
+   "gpu": "GMA 950",
+   "board_id": "Mac-F4218EC8",
+   "initial": "10.4.7 (8K1106)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "iMac6,1",
+   "cpu": "Merom(M)",
+   "gpu": "GeForce 7300GT",
+   "board_id": "Mac-F4218FC8",
+   "initial": "10.4.7 (8K1123)",
+   "last_supported": "10.7.5"
+  },
+  {
+   "model": "iMac7,1",
+   "cpu": "Merom(M)",
+   "gpu": "Radeon HD 2400 XT",
+   "board_id": "Mac-F42386C8",
+   "initial": "10.4.10 (8R4031)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "iMac8,1",
+   "cpu": "Penryn(M)",
+   "gpu": "Radeon HD 2400 XT",
+   "board_id": "Mac-F227BEC8",
+   "initial": "10.5.2 (9C2028)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "iMac9,1",
+   "cpu": "Penryn(M)",
+   "gpu": "GeForce 9400M",
+   "board_id": "Mac-F2218FA9",
+   "initial": "10.5.6 (9G2030)",
+   "last_supported": "10.11.6"
+  },
+  {
+   "model": "iMacPro1,1",
+   "cpu": "Skylake-W",
+   "gpu": "Vega 56",
+   "board_id": "Mac-7BA5B2D9E42DDD94",
+   "initial": "10.13.2 (17C2111)",
+   "last_supported": "Current"
+  }
+ ]
+}

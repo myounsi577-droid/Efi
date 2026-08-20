@@ -1,0 +1,114 @@
+{
+  "_source": [
+    "https://dortania.github.io/OpenCore-Install-Guide/macos-limits.html",
+    "OpenCorePkg/Utilities/macrecovery/recovery_urls.txt"
+  ],
+  "versions": [
+    {
+      "key": "lion", "name": "OS X Lion", "release": "10.7", "darwin": 11,
+      "recovery": {"board_id": "Mac-2E6FAB96566FE58C", "mlb": "00000000000F25Y00"},
+      "requires": [], "notes": ["Support historique uniquement, hors du perimetre du guide Dortania."]
+    },
+    {
+      "key": "mountain-lion", "name": "OS X Mountain Lion", "release": "10.8", "darwin": 12,
+      "recovery": {"board_id": "Mac-7DF2A3B5E5D671ED", "mlb": "00000000000F65100"},
+      "requires": [], "notes": []
+    },
+    {
+      "key": "mavericks", "name": "OS X Mavericks", "release": "10.9", "darwin": 13,
+      "recovery": {"board_id": "Mac-F60DEB81FF30ACF6", "mlb": "00000000000FNN100"},
+      "requires": [], "notes": []
+    },
+    {
+      "key": "yosemite", "name": "OS X Yosemite", "release": "10.10", "darwin": 14,
+      "recovery": {"board_id": "Mac-E43C1C25D4880AD6", "mlb": "00000000000GDVW00"},
+      "requires": [], "notes": ["Peut ne pas demarrer avec plus de 24 threads (cpus=N en contournement)."]
+    },
+    {
+      "key": "el-capitan", "name": "OS X El Capitan", "release": "10.11", "darwin": 15,
+      "recovery": {"board_id": "Mac-FFE5EF870D7BA81A", "mlb": "00000000000GQRX00"},
+      "requires": [], "notes": ["Limite de 64 threads a partir de cette version."]
+    },
+    {
+      "key": "sierra", "name": "macOS Sierra", "release": "10.12", "darwin": 16,
+      "recovery": {"board_id": "Mac-77F17D7DA9285301", "mlb": "00000000000J0DX00"},
+      "requires": ["sse4"], "notes": []
+    },
+    {
+      "key": "high-sierra", "name": "macOS High Sierra", "release": "10.13", "darwin": 17,
+      "recovery": {"board_id": "Mac-7BA5B2D9E42DDD94", "mlb": "00000000000J80300"},
+      "requires": ["sse4"], "notes": ["Derniere version supportant Penryn."]
+    },
+    {
+      "key": "mojave", "name": "macOS Mojave", "release": "10.14", "darwin": 18,
+      "recovery": {"board_id": "Mac-7BA5B2DFE22DDD8C", "mlb": "00000000000KXPG00"},
+      "requires": ["sse4.2"], "notes": ["SSE4.2 obligatoire (telemetrap.kext pour les CPU SSE4.1)."]
+    },
+    {
+      "key": "catalina", "name": "macOS Catalina", "release": "10.15", "darwin": 19,
+      "recovery": {"board_id": "Mac-00BE6ED71E35EB86", "mlb": "00000000000000000"},
+      "requires": ["sse4.2"], "notes": ["Derniere version 32 bits compatible pour les applications: non (32 bits supprime)."]
+    },
+    {
+      "key": "big-sur", "name": "macOS Big Sur", "release": "11", "darwin": 20,
+      "recovery": {"board_id": "Mac-2BD1B31983FE1663", "mlb": "00000000000000000"},
+      "requires": ["sse4.2"],
+      "notes": [
+        "XhciPortLimit ne fonctionne plus de facon fiable a partir de 11.3: le mappage USB devient obligatoire.",
+        "Derniere version avec support NVIDIA Kepler natif."
+      ]
+    },
+    {
+      "key": "monterey", "name": "macOS Monterey", "release": "12", "darwin": 21,
+      "recovery": {"board_id": "Mac-E43C1C25D4880AD6", "mlb": "00000000000000000"},
+      "requires": ["sse4.2"],
+      "notes": ["Support iGPU Ivy Bridge supprime.", "NVIDIA Kepler supprime."]
+    },
+    {
+      "key": "ventura", "name": "macOS Ventura", "release": "13", "darwin": 22,
+      "recovery": {"board_id": "Mac-B4831CEBD52A0C4C", "mlb": "00000000000000000"},
+      "requires": ["sse4.2", "avx2"],
+      "notes": [
+        "AVX2 requis: les CPU pre-Haswell ne sont plus supportes par le guide Dortania.",
+        "Support iGPU Haswell supprime.",
+        "iGPU Skylake: spoof vers le modele Kaby Lake le plus proche."
+      ]
+    },
+    {
+      "key": "sonoma", "name": "macOS Sonoma", "release": "14", "darwin": 23,
+      "recovery": {"board_id": "Mac-827FAC58A8FDFA22", "mlb": "00000000000000000"},
+      "requires": ["sse4.2", "avx2"],
+      "notes": [
+        "Support Wi-Fi Broadcom natif supprime.",
+        "A partir de 14.4 les mises a jour OTA exigent RestrictEvents + revpatch=sbvmm et SecureBootModel=Disabled (ou iBridged.kext)."
+      ]
+    },
+    {
+      "key": "sequoia", "name": "macOS Sequoia", "release": "15", "darwin": 24,
+      "recovery": {"board_id": "Mac-7BA5B2D9E42DDD94", "mlb": "00000000000000000"},
+      "requires": ["sse4.2", "avx2"],
+      "notes": [
+        "Wi-Fi Broadcom: uniquement via AppleBCMWLANCompanion (VT-d requis, donc pas sur AMD).",
+        "Mises a jour OTA: RestrictEvents + revpatch=sbvmm, SecureBootModel=Disabled."
+      ]
+    },
+    {
+      "key": "tahoe", "name": "macOS Tahoe", "release": "26", "darwin": 25,
+      "recovery": {"board_id": "Mac-CFF7D910A743CAAF", "mlb": "00000000000000000", "os_type": "latest"},
+      "requires": ["sse4.2", "avx2"],
+      "notes": [
+        "AppleHDA supprime: plus d'audio analogique via AppleALC (HDMI/DP/USB restent OK, VoodooHDA possible avec SIP abaisse).",
+        "SMBIOS limites: MacBookPro16,1 / MacBookPro16,2 / MacBookPro16,4 / MacPro7,1 / iMac20,1 / iMac20,2.",
+        "Bluetooth Intel: ajouter le boot-arg -ibtcompatbeta.",
+        "WhateverGreen a des problemes de connector patching AMD: retirer WhateverGreen.kext en cas de panic GPU.",
+        "Mises a jour OTA: RestrictEvents + revpatch=sbvmm, SecureBootModel=Disabled."
+      ]
+    }
+  ],
+  "aliases": {
+    "10.7": "lion", "10.8": "mountain-lion", "10.9": "mavericks", "10.10": "yosemite",
+    "10.11": "el-capitan", "10.12": "sierra", "10.13": "high-sierra", "10.14": "mojave",
+    "10.15": "catalina", "11": "big-sur", "12": "monterey", "13": "ventura",
+    "14": "sonoma", "15": "sequoia", "26": "tahoe", "latest": "tahoe"
+  }
+}
