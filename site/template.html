@@ -1,0 +1,330 @@
+<title>Nomenclature EFI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --ground:#EDEFF3; --surface:#FFFFFF; --sunken:#F5F6F9;
+  --ink:#161A21; --muted:#5A6472; --faint:#8B94A2;
+  --rule:#D6DAE1; --rule-strong:#B8BEC9;
+  --accent:#A55D28; --accent-soft:#F3E4D7; --accent-ink:#7C4419;
+  --ok:#1F6E51; --ok-soft:#DFF0E8;
+  --warn:#8A6412; --warn-soft:#F7ECD3;
+  --bad:#A93A35; --bad-soft:#F8E1DF;
+  --shadow:0 1px 2px rgba(22,26,33,.06), 0 8px 24px -16px rgba(22,26,33,.30);
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0F1219; --surface:#171B23; --sunken:#12161D;
+  --ink:#E4E8EF; --muted:#96A0AE; --faint:#6E7887;
+  --rule:#262C36; --rule-strong:#39414E;
+  --accent:#DE8B4C; --accent-soft:#2E2119; --accent-ink:#F0B183;
+  --ok:#4BB88B; --ok-soft:#14241E;
+  --warn:#D9A63F; --warn-soft:#241E12;
+  --bad:#E4675F; --bad-soft:#271817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1219; --surface:#171B23; --sunken:#12161D;
+  --ink:#E4E8EF; --muted:#96A0AE; --faint:#6E7887;
+  --rule:#262C36; --rule-strong:#39414E;
+  --accent:#DE8B4C; --accent-soft:#2E2119; --accent-ink:#F0B183;
+  --ok:#4BB88B; --ok-soft:#14241E;
+  --warn:#D9A63F; --warn-soft:#241E12;
+  --bad:#E4675F; --bad-soft:#271817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{text-wrap:balance;margin:0}
+a{color:var(--accent-ink);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ---------- en-tete ---------- */
+.masthead{border-bottom:1px solid var(--rule);background:var(--surface)}
+.masthead .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;
+  justify-content:space-between;padding-top:34px;padding-bottom:30px}
+.brand{display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:500}
+h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.lede{color:var(--muted);font-size:16px;margin:0}
+.tools{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink);
+  background:var(--surface);border:1px solid var(--rule-strong);border-radius:6px;
+  padding:7px 13px;cursor:pointer;text-decoration:none;display:inline-flex;gap:7px;align-items:center}
+.btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#FFF}
+:root[data-theme="dark"] .btn-primary,
+:root:not([data-theme="light"]) .btn-primary{color:#14161B}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn-primary{color:#FFF}}
+.btn-primary:hover{filter:brightness(1.06);color:#FFF}
+:root[data-theme="dark"] .btn-primary:hover{color:#14161B}
+
+/* ---------- avertissement de portee ---------- */
+.scope{background:var(--warn-soft);border-bottom:1px solid var(--rule)}
+.scope .wrap{display:flex;gap:12px;padding:13px 24px;align-items:flex-start}
+.scope p{margin:0;font-size:13.5px;color:var(--ink)}
+.scope strong{color:var(--warn)}
+.scope-mark{font-family:var(--mono);font-weight:600;color:var(--warn);flex-shrink:0;font-size:13.5px}
+
+/* ---------- etabli ---------- */
+.bench{display:grid;grid-template-columns:minmax(300px,360px) 1fr;gap:28px;
+  padding-top:28px;padding-bottom:56px;align-items:start}
+@media (max-width:900px){.bench{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  box-shadow:var(--shadow);overflow:hidden}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--rule);display:flex;
+  justify-content:space-between;align-items:baseline;gap:10px}
+.panel-head h2{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  font-family:var(--mono);color:var(--muted)}
+.panel-body{padding:18px}
+
+form{display:flex;flex-direction:column;gap:15px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+.field select,.field input[type=text],.field input[type=number]{
+  font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--sunken);
+  border:1px solid var(--rule-strong);border-radius:6px;padding:8px 10px;width:100%}
+.field select:hover,.field input:hover{border-color:var(--accent)}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+fieldset{border:1px solid var(--rule);border-radius:7px;padding:12px 14px 14px;margin:0}
+legend{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);padding:0 5px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.check{display:flex;gap:7px;align-items:center;font-size:13px;color:var(--ink)}
+.check input{accent-color:var(--accent);margin:0}
+
+/* ---------- nomenclature ---------- */
+.verdict{display:flex;gap:13px;align-items:flex-start;padding:15px 18px;
+  border-bottom:1px solid var(--rule)}
+.verdict-chip{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 9px;border-radius:4px;flex-shrink:0;margin-top:1px}
+.v-ok .verdict-chip{background:var(--ok-soft);color:var(--ok)}
+.v-warn .verdict-chip{background:var(--warn-soft);color:var(--warn)}
+.v-bad .verdict-chip{background:var(--bad-soft);color:var(--bad)}
+.v-ok{background:linear-gradient(var(--ok-soft),transparent)}
+.v-warn{background:linear-gradient(var(--warn-soft),transparent)}
+.v-bad{background:linear-gradient(var(--bad-soft),transparent)}
+.verdict p{margin:0;font-size:14px}
+.verdict .sub{color:var(--muted);font-size:13px;margin-top:3px}
+
+.section{border-bottom:1px solid var(--rule)}
+.section:last-child{border-bottom:0}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;
+  padding:13px 18px 9px;gap:10px}
+.section-head h3{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent)}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.rows{padding:0 18px 14px;display:flex;flex-direction:column;gap:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;
+  padding:6px 0;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.row .name{font-family:var(--mono);font-size:12.5px;color:var(--ink);word-break:break-word}
+.row .why{font-size:12px;color:var(--muted);grid-column:1/-1;margin-top:-2px}
+.row .val{font-family:var(--mono);font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;background:var(--accent-soft);color:var(--accent-ink);
+  white-space:nowrap}
+.tag-warn{background:var(--warn-soft);color:var(--warn)}
+.note{display:grid;grid-template-columns:auto 1fr;gap:9px;padding:8px 0;
+  border-top:1px solid var(--rule);font-size:13px;color:var(--ink)}
+.note:first-child{border-top:0}
+.note .mark{font-family:var(--mono);font-weight:600;font-size:12px}
+.n-warn .mark{color:var(--warn)}
+.n-bad .mark{color:var(--bad)}
+.empty{padding:0 18px 14px;color:var(--faint);font-size:13px}
+
+.cmd{padding:14px 18px 18px}
+.cmd-box{position:relative;background:var(--sunken);border:1px solid var(--rule);
+  border-radius:7px;padding:13px 14px;overflow-x:auto}
+.cmd-box code{font-family:var(--mono);font-size:12.5px;color:var(--ink);white-space:pre;
+  display:block;line-height:1.7}
+.cmd-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.copied{font-size:12px;color:var(--ok);font-family:var(--mono)}
+
+/* ---------- pied ---------- */
+.closing{border-top:1px solid var(--rule);background:var(--surface)}
+.closing .wrap{padding:34px 24px 44px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.closing h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:9px}
+.closing p,.closing li{font-size:13.5px;color:var(--muted);margin:0 0 7px}
+.closing ul{margin:0;padding-left:17px}
+.closing a{color:var(--accent-ink)}
+.dl{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <span class="eyebrow">efibuild &middot; configurateur</span>
+      <h1>Nomenclature EFI</h1>
+      <p class="lede">Décrivez votre machine : la page calcule les SSDT, les kexts, les
+        quirks et les boot-args exigés par votre matériel et par la version de macOS visée,
+        puis vous donne la commande à lancer chez vous.</p>
+    </div>
+    <div class="tools">
+      <button class="btn" id="theme" type="button">Thème</button>
+      <a class="btn btn-primary" href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild-1.0.0.zip">Télécharger</a>
+    </div>
+  </div>
+</header>
+
+<div class="scope">
+  <div class="wrap">
+    <span class="scope-mark">!</span>
+    <p>Cette page <strong>calcule</strong>, elle ne construit pas. Un navigateur ne peut ni
+      télécharger les kexts, ni générer les numéros de série, ni formater une clé USB :
+      ces étapes exigent l'outil en local. Ce qui est affiché ici sort du même moteur
+      de décision, porté en JavaScript et vérifié conforme au Python.</p>
+  </div>
+</div>
+
+<main class="wrap bench">
+  <section class="panel" aria-label="Spécification de la machine">
+    <div class="panel-head"><h2>Votre machine</h2></div>
+    <div class="panel-body">
+      <form id="spec">
+        <div class="field">
+          <label for="family">Type de machine</label>
+          <select id="family"></select>
+        </div>
+        <div class="field">
+          <label for="platform">Génération du processeur</label>
+          <select id="platform"></select>
+        </div>
+        <div class="field">
+          <label for="macos">Version de macOS visée</label>
+          <select id="macos"></select>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="chipset">Chipset</label>
+            <input type="text" id="chipset" placeholder="z390, b550…">
+          </div>
+          <div class="field">
+            <label for="vendor">Marque</label>
+            <select id="vendor"></select>
+          </div>
+        </div>
+        <div class="pairs">
+          <div class="field" id="cores-field">
+            <label for="cores">Cœurs physiques</label>
+            <input type="number" id="cores" min="0" max="128" value="0">
+          </div>
+          <div class="field">
+            <label for="alcid">Audio (alcid)</label>
+            <input type="number" id="alcid" min="0" max="255" value="1">
+          </div>
+        </div>
+        <div class="field">
+          <label for="igpu">Circuit graphique intégré</label>
+          <select id="igpu">
+            <option value="none">Aucun ou inutilisé</option>
+            <option value="display">Présent, il pilote l'écran</option>
+            <option value="headless">Présent, calcul seulement (headless)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dgpu">Carte graphique dédiée</label>
+          <select id="dgpu"></select>
+        </div>
+        <div class="field">
+          <label for="smbios">SMBIOS</label>
+          <select id="smbios"></select>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="ethernet">Réseau filaire</label>
+            <select id="ethernet"></select>
+          </div>
+          <div class="field">
+            <label for="wifi">Wi-Fi</label>
+            <select id="wifi"></select>
+          </div>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="bluetooth">Bluetooth</label>
+            <select id="bluetooth"></select>
+          </div>
+          <div class="field">
+            <label for="touchpad">Trackpad</label>
+            <select id="touchpad"></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="usbmap">Mappage USB</label>
+          <select id="usbmap">
+            <option value="none">Aucun pour l'instant</option>
+            <option value="usbmap">USBMap.kext</option>
+            <option value="usbtoolbox">USBToolBox / UTBMap.kext</option>
+          </select>
+        </div>
+        <fieldset>
+          <legend>Options</legend>
+          <div class="checks" id="features"></div>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+  <section class="panel" aria-live="polite" aria-label="Nomenclature calculée">
+    <div class="panel-head"><h2>Nomenclature</h2><span class="count" id="target"></span></div>
+    <div id="verdict"></div>
+    <div id="manifest"></div>
+    <div class="cmd">
+      <div class="section-head" style="padding:0 0 9px"><h3>Commande à lancer</h3></div>
+      <div class="cmd-box"><code id="command"></code></div>
+      <div class="cmd-actions">
+        <button class="btn" type="button" id="copy">Copier</button>
+        <span class="copied" id="copied" hidden>Copié</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="closing">
+  <div class="wrap">
+    <div>
+      <h3>Télécharger l'outil</h3>
+      <div class="dl">
+        <a href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild-1.0.0.zip">efibuild-1.0.0.zip — archive complète</a>
+        <a href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz">efibuild.pyz — exécutable seul, 68 Ko</a>
+        <a href="https://github.com/myounsi577-droid/Efi">Code source du projet</a>
+      </div>
+      <p style="margin-top:10px">Python 3.9 ou plus récent, rien d'autre. Testé sur Ubuntu,
+        macOS et Windows.</p>
+    </div>
+    <div>
+      <h3>Ce que la commande fait en plus</h3>
+      <ul>
+        <li>Télécharge OpenCore, les SSDT et chaque kext depuis sa source officielle</li>
+        <li>Génère numéro de série, MLB et UUID avec <code>macserial</code></li>
+        <li>Écrit le <code>config.plist</code> et le valide avec <code>ocvalidate</code></li>
+        <li>Récupère l'image de récupération Apple via <code>macrecovery</code></li>
+        <li>Sauvegarde, formate en FAT32 et remplit la clé USB</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://dortania.github.io/OpenCore-Install-Guide/">Guide d'installation Dortania</a></li>
+        <li><a href="https://github.com/acidanthera/OpenCorePkg">OpenCorePkg</a></li>
+        <li><a href="https://github.com/dortania/Getting-Started-With-ACPI">SSDT pré-compilés</a></li>
+        <li><a href="https://github.com/AMD-OSX/AMD_Vanilla">Patchs noyau AMD</a></li>
+        <li><a href="https://github.com/ChefKissInc/NootedRed">NootedRed</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>/*__ENGINE__*/</script>
+<script>const DATA = /*__DATA__*/;</script>
+<script>/*__APP__*/</script>

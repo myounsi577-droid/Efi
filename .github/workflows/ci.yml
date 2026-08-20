@@ -36,6 +36,13 @@ jobs:
         run: python -m efibuilder flash --list
         continue-on-error: true
 
+      - name: La page du configurateur est a jour avec les donnees
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
+        run: |
+          python tools/make_site.py
+          git diff --exit-code -- docs/index.html \
+            || (echo "docs/index.html est perime: relancez python tools/make_site.py" && exit 1)
+
       - name: L'archive de distribution se construit et fonctionne
         run: |
           python tools/make_dist.py

@@ -11,6 +11,23 @@ et le `config.plist` produit est vérifié par `ocvalidate`.
 
 Aucune dépendance : Python 3.9+ suffit.
 
+## Configurateur en ligne
+
+`docs/index.html` est une page autonome qui embarque les mêmes tables que la CLI et
+le moteur de décision porté en JavaScript : choisissez votre matériel, elle affiche
+les SSDT, les kexts, les quirks et les boot-args exigés, puis la commande à lancer.
+
+Elle **calcule** mais ne construit pas : un navigateur ne peut ni télécharger les
+kexts, ni générer les numéros de série, ni formater une clé. Pour la publier,
+activez GitHub Pages (**Settings → Pages → Source : branche, dossier `/docs`**).
+Régénérez-la après toute modification de `efibuilder/data/` :
+
+```bash
+python3 tools/make_site.py
+```
+
+La CI échoue si la page est périmée par rapport aux données.
+
 ## Télécharger
 
 | | |

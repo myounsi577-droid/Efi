@@ -1,0 +1,779 @@
+<title>Nomenclature EFI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --ground:#EDEFF3; --surface:#FFFFFF; --sunken:#F5F6F9;
+  --ink:#161A21; --muted:#5A6472; --faint:#8B94A2;
+  --rule:#D6DAE1; --rule-strong:#B8BEC9;
+  --accent:#A55D28; --accent-soft:#F3E4D7; --accent-ink:#7C4419;
+  --ok:#1F6E51; --ok-soft:#DFF0E8;
+  --warn:#8A6412; --warn-soft:#F7ECD3;
+  --bad:#A93A35; --bad-soft:#F8E1DF;
+  --shadow:0 1px 2px rgba(22,26,33,.06), 0 8px 24px -16px rgba(22,26,33,.30);
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0F1219; --surface:#171B23; --sunken:#12161D;
+  --ink:#E4E8EF; --muted:#96A0AE; --faint:#6E7887;
+  --rule:#262C36; --rule-strong:#39414E;
+  --accent:#DE8B4C; --accent-soft:#2E2119; --accent-ink:#F0B183;
+  --ok:#4BB88B; --ok-soft:#14241E;
+  --warn:#D9A63F; --warn-soft:#241E12;
+  --bad:#E4675F; --bad-soft:#271817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1219; --surface:#171B23; --sunken:#12161D;
+  --ink:#E4E8EF; --muted:#96A0AE; --faint:#6E7887;
+  --rule:#262C36; --rule-strong:#39414E;
+  --accent:#DE8B4C; --accent-soft:#2E2119; --accent-ink:#F0B183;
+  --ok:#4BB88B; --ok-soft:#14241E;
+  --warn:#D9A63F; --warn-soft:#241E12;
+  --bad:#E4675F; --bad-soft:#271817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{text-wrap:balance;margin:0}
+a{color:var(--accent-ink);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ---------- en-tete ---------- */
+.masthead{border-bottom:1px solid var(--rule);background:var(--surface)}
+.masthead .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;
+  justify-content:space-between;padding-top:34px;padding-bottom:30px}
+.brand{display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:500}
+h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.lede{color:var(--muted);font-size:16px;margin:0}
+.tools{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink);
+  background:var(--surface);border:1px solid var(--rule-strong);border-radius:6px;
+  padding:7px 13px;cursor:pointer;text-decoration:none;display:inline-flex;gap:7px;align-items:center}
+.btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#FFF}
+:root[data-theme="dark"] .btn-primary,
+:root:not([data-theme="light"]) .btn-primary{color:#14161B}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn-primary{color:#FFF}}
+.btn-primary:hover{filter:brightness(1.06);color:#FFF}
+:root[data-theme="dark"] .btn-primary:hover{color:#14161B}
+
+/* ---------- avertissement de portee ---------- */
+.scope{background:var(--warn-soft);border-bottom:1px solid var(--rule)}
+.scope .wrap{display:flex;gap:12px;padding:13px 24px;align-items:flex-start}
+.scope p{margin:0;font-size:13.5px;color:var(--ink)}
+.scope strong{color:var(--warn)}
+.scope-mark{font-family:var(--mono);font-weight:600;color:var(--warn);flex-shrink:0;font-size:13.5px}
+
+/* ---------- etabli ---------- */
+.bench{display:grid;grid-template-columns:minmax(300px,360px) 1fr;gap:28px;
+  padding-top:28px;padding-bottom:56px;align-items:start}
+@media (max-width:900px){.bench{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  box-shadow:var(--shadow);overflow:hidden}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--rule);display:flex;
+  justify-content:space-between;align-items:baseline;gap:10px}
+.panel-head h2{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  font-family:var(--mono);color:var(--muted)}
+.panel-body{padding:18px}
+
+form{display:flex;flex-direction:column;gap:15px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+.field select,.field input[type=text],.field input[type=number]{
+  font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--sunken);
+  border:1px solid var(--rule-strong);border-radius:6px;padding:8px 10px;width:100%}
+.field select:hover,.field input:hover{border-color:var(--accent)}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+fieldset{border:1px solid var(--rule);border-radius:7px;padding:12px 14px 14px;margin:0}
+legend{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);padding:0 5px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.check{display:flex;gap:7px;align-items:center;font-size:13px;color:var(--ink)}
+.check input{accent-color:var(--accent);margin:0}
+
+/* ---------- nomenclature ---------- */
+.verdict{display:flex;gap:13px;align-items:flex-start;padding:15px 18px;
+  border-bottom:1px solid var(--rule)}
+.verdict-chip{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 9px;border-radius:4px;flex-shrink:0;margin-top:1px}
+.v-ok .verdict-chip{background:var(--ok-soft);color:var(--ok)}
+.v-warn .verdict-chip{background:var(--warn-soft);color:var(--warn)}
+.v-bad .verdict-chip{background:var(--bad-soft);color:var(--bad)}
+.v-ok{background:linear-gradient(var(--ok-soft),transparent)}
+.v-warn{background:linear-gradient(var(--warn-soft),transparent)}
+.v-bad{background:linear-gradient(var(--bad-soft),transparent)}
+.verdict p{margin:0;font-size:14px}
+.verdict .sub{color:var(--muted);font-size:13px;margin-top:3px}
+
+.section{border-bottom:1px solid var(--rule)}
+.section:last-child{border-bottom:0}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;
+  padding:13px 18px 9px;gap:10px}
+.section-head h3{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent)}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.rows{padding:0 18px 14px;display:flex;flex-direction:column;gap:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;
+  padding:6px 0;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.row .name{font-family:var(--mono);font-size:12.5px;color:var(--ink);word-break:break-word}
+.row .why{font-size:12px;color:var(--muted);grid-column:1/-1;margin-top:-2px}
+.row .val{font-family:var(--mono);font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;background:var(--accent-soft);color:var(--accent-ink);
+  white-space:nowrap}
+.tag-warn{background:var(--warn-soft);color:var(--warn)}
+.note{display:grid;grid-template-columns:auto 1fr;gap:9px;padding:8px 0;
+  border-top:1px solid var(--rule);font-size:13px;color:var(--ink)}
+.note:first-child{border-top:0}
+.note .mark{font-family:var(--mono);font-weight:600;font-size:12px}
+.n-warn .mark{color:var(--warn)}
+.n-bad .mark{color:var(--bad)}
+.empty{padding:0 18px 14px;color:var(--faint);font-size:13px}
+
+.cmd{padding:14px 18px 18px}
+.cmd-box{position:relative;background:var(--sunken);border:1px solid var(--rule);
+  border-radius:7px;padding:13px 14px;overflow-x:auto}
+.cmd-box code{font-family:var(--mono);font-size:12.5px;color:var(--ink);white-space:pre;
+  display:block;line-height:1.7}
+.cmd-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.copied{font-size:12px;color:var(--ok);font-family:var(--mono)}
+
+/* ---------- pied ---------- */
+.closing{border-top:1px solid var(--rule);background:var(--surface)}
+.closing .wrap{padding:34px 24px 44px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.closing h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:9px}
+.closing p,.closing li{font-size:13.5px;color:var(--muted);margin:0 0 7px}
+.closing ul{margin:0;padding-left:17px}
+.closing a{color:var(--accent-ink)}
+.dl{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <span class="eyebrow">efibuild &middot; configurateur</span>
+      <h1>Nomenclature EFI</h1>
+      <p class="lede">Décrivez votre machine : la page calcule les SSDT, les kexts, les
+        quirks et les boot-args exigés par votre matériel et par la version de macOS visée,
+        puis vous donne la commande à lancer chez vous.</p>
+    </div>
+    <div class="tools">
+      <button class="btn" id="theme" type="button">Thème</button>
+      <a class="btn btn-primary" href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild-1.0.0.zip">Télécharger</a>
+    </div>
+  </div>
+</header>
+
+<div class="scope">
+  <div class="wrap">
+    <span class="scope-mark">!</span>
+    <p>Cette page <strong>calcule</strong>, elle ne construit pas. Un navigateur ne peut ni
+      télécharger les kexts, ni générer les numéros de série, ni formater une clé USB :
+      ces étapes exigent l'outil en local. Ce qui est affiché ici sort du même moteur
+      de décision, porté en JavaScript et vérifié conforme au Python.</p>
+  </div>
+</div>
+
+<main class="wrap bench">
+  <section class="panel" aria-label="Spécification de la machine">
+    <div class="panel-head"><h2>Votre machine</h2></div>
+    <div class="panel-body">
+      <form id="spec">
+        <div class="field">
+          <label for="family">Type de machine</label>
+          <select id="family"></select>
+        </div>
+        <div class="field">
+          <label for="platform">Génération du processeur</label>
+          <select id="platform"></select>
+        </div>
+        <div class="field">
+          <label for="macos">Version de macOS visée</label>
+          <select id="macos"></select>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="chipset">Chipset</label>
+            <input type="text" id="chipset" placeholder="z390, b550…">
+          </div>
+          <div class="field">
+            <label for="vendor">Marque</label>
+            <select id="vendor"></select>
+          </div>
+        </div>
+        <div class="pairs">
+          <div class="field" id="cores-field">
+            <label for="cores">Cœurs physiques</label>
+            <input type="number" id="cores" min="0" max="128" value="0">
+          </div>
+          <div class="field">
+            <label for="alcid">Audio (alcid)</label>
+            <input type="number" id="alcid" min="0" max="255" value="1">
+          </div>
+        </div>
+        <div class="field">
+          <label for="igpu">Circuit graphique intégré</label>
+          <select id="igpu">
+            <option value="none">Aucun ou inutilisé</option>
+            <option value="display">Présent, il pilote l'écran</option>
+            <option value="headless">Présent, calcul seulement (headless)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dgpu">Carte graphique dédiée</label>
+          <select id="dgpu"></select>
+        </div>
+        <div class="field">
+          <label for="smbios">SMBIOS</label>
+          <select id="smbios"></select>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="ethernet">Réseau filaire</label>
+            <select id="ethernet"></select>
+          </div>
+          <div class="field">
+            <label for="wifi">Wi-Fi</label>
+            <select id="wifi"></select>
+          </div>
+        </div>
+        <div class="pairs">
+          <div class="field">
+            <label for="bluetooth">Bluetooth</label>
+            <select id="bluetooth"></select>
+          </div>
+          <div class="field">
+            <label for="touchpad">Trackpad</label>
+            <select id="touchpad"></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="usbmap">Mappage USB</label>
+          <select id="usbmap">
+            <option value="none">Aucun pour l'instant</option>
+            <option value="usbmap">USBMap.kext</option>
+            <option value="usbtoolbox">USBToolBox / UTBMap.kext</option>
+          </select>
+        </div>
+        <fieldset>
+          <legend>Options</legend>
+          <div class="checks" id="features"></div>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+  <section class="panel" aria-live="polite" aria-label="Nomenclature calculée">
+    <div class="panel-head"><h2>Nomenclature</h2><span class="count" id="target"></span></div>
+    <div id="verdict"></div>
+    <div id="manifest"></div>
+    <div class="cmd">
+      <div class="section-head" style="padding:0 0 9px"><h3>Commande à lancer</h3></div>
+      <div class="cmd-box"><code id="command"></code></div>
+      <div class="cmd-actions">
+        <button class="btn" type="button" id="copy">Copier</button>
+        <span class="copied" id="copied" hidden>Copié</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="closing">
+  <div class="wrap">
+    <div>
+      <h3>Télécharger l'outil</h3>
+      <div class="dl">
+        <a href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild-1.0.0.zip">efibuild-1.0.0.zip — archive complète</a>
+        <a href="https://github.com/myounsi577-droid/Efi/blob/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz">efibuild.pyz — exécutable seul, 68 Ko</a>
+        <a href="https://github.com/myounsi577-droid/Efi">Code source du projet</a>
+      </div>
+      <p style="margin-top:10px">Python 3.9 ou plus récent, rien d'autre. Testé sur Ubuntu,
+        macOS et Windows.</p>
+    </div>
+    <div>
+      <h3>Ce que la commande fait en plus</h3>
+      <ul>
+        <li>Télécharge OpenCore, les SSDT et chaque kext depuis sa source officielle</li>
+        <li>Génère numéro de série, MLB et UUID avec <code>macserial</code></li>
+        <li>Écrit le <code>config.plist</code> et le valide avec <code>ocvalidate</code></li>
+        <li>Récupère l'image de récupération Apple via <code>macrecovery</code></li>
+        <li>Sauvegarde, formate en FAT32 et remplit la clé USB</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://dortania.github.io/OpenCore-Install-Guide/">Guide d'installation Dortania</a></li>
+        <li><a href="https://github.com/acidanthera/OpenCorePkg">OpenCorePkg</a></li>
+        <li><a href="https://github.com/dortania/Getting-Started-With-ACPI">SSDT pré-compilés</a></li>
+        <li><a href="https://github.com/AMD-OSX/AMD_Vanilla">Patchs noyau AMD</a></li>
+        <li><a href="https://github.com/ChefKissInc/NootedRed">NootedRed</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>// Moteur efibuild porte en JavaScript. Meme regles que efibuilder/*.py,
+// limitees a ce qui est calculable sans reseau ni acces disque.
+function makeEngine(DATA) {
+  const versions = DATA.macos.versions;
+  const vIndex = k => versions.findIndex(v => v.key === k);
+
+  function resolve(profile) {
+    const plat = DATA.platforms.platforms.find(p => p.id === profile.platform);
+    const macos = versions.find(v => v.key === profile.macos);
+    const laptop = profile.chassis
+      ? profile.chassis === "laptop"
+      : (plat.default_chassis ? plat.default_chassis === "laptop"
+                              : plat.family === "intel-laptop");
+    const digits = (profile.chipset || "").match(/(\d+)/);
+    let series = "";
+    if (digits) {
+      const d = digits[1];
+      series = d.length === 2 ? d[0] : (d.length === 3 ? d[0] + "00" : d);
+    }
+    return {
+      ...profile, plat, macos, laptop,
+      family: plat.family,
+      darwin: macos.darwin,
+      chipset_series: series,
+      smbios_model: profile.smbios || plat.smbios.default,
+    };
+  }
+
+  function field(ctx, name) {
+    if (name in ctx) return ctx[name];
+    throw new Error("champ inconnu: " + name);
+  }
+
+  function matches(ctx, cond) {
+    if (!cond) return true;
+    if (cond.any) return cond.any.some(c => matches(ctx, c));
+    if (cond.all) return cond.all.every(c => matches(ctx, c));
+    if (cond.not) return !matches(ctx, cond.not);
+    const value = field(ctx, cond.field);
+    if ("eq" in cond) return value === cond.eq;
+    if ("in" in cond) {
+      if (typeof value === "string") {
+        return cond.in.map(v => String(v).toLowerCase()).includes(value.toLowerCase());
+      }
+      return cond.in.includes(value);
+    }
+    if ("contains" in cond) return (value || []).includes(cond.contains);
+    throw new Error("condition mal formee");
+  }
+
+  const ssdts = ctx => (ctx.plat.ssdt || []).filter(s => matches(ctx, s.when));
+
+  function kexts(ctx) {
+    const chosen = [], warnings = [];
+    for (const entry of DATA.kexts.kexts) {
+      if (!entry.required && !matches(ctx, entry.when)) continue;
+      if (entry.min_darwin && ctx.darwin < entry.min_darwin) continue;
+      if (entry.max_darwin && ctx.darwin > entry.max_darwin) continue;
+      if (entry.max_macos && vIndex(ctx.macos.key) > vIndex(entry.max_macos)) {
+        warnings.push(`${entry.id} n'est pas supporte au-dela de ` +
+          `${versions[vIndex(entry.max_macos)].name}: non installe.`);
+        continue;
+      }
+      const note = (entry.warn_macos || {})[ctx.macos.key];
+      if (note) warnings.push(`${entry.id}: ${note}`);
+      chosen.push(entry);
+    }
+    if (ctx.ethernet === "auto") {
+      warnings.push("carte Ethernet non precisee: aucun pilote reseau installe.");
+    }
+    chosen.sort((a, b) => (a.order ?? 100) - (b.order ?? 100));
+    return { chosen, warnings };
+  }
+
+  function quirks(ctx) {
+    const out = {};
+    for (const [section, values] of Object.entries(ctx.plat.quirks || {})) {
+      for (let [key, expected] of Object.entries(values)) {
+        if (expected && typeof expected === "object" && "value" in expected) {
+          if (!matches(ctx, expected.when)) continue;
+          expected = expected.value;
+        }
+        let target = section;
+        if (key === "DummyPowerManagement") target = "Kernel -> Emulate";
+        if (key === "XhciPortLimit" && ctx.darwin >= 20) expected = false;
+        out[`${target}.${key}`] = expected;
+      }
+    }
+    return out;
+  }
+
+  function bootArgs(ctx) {
+    const args = [];
+    if (ctx.debug) args.push("-v", "debug=0x100", "keepsyms=1");
+    args.push(...(ctx.plat.boot_args || []));
+    if (ctx.audio !== "none") args.push(`alcid=${ctx.audio_layout}`);
+    if (ctx.dgpu === "amd-navi") args.push("agdpmod=pikera");
+    if (ctx.dgpu === "nvidia-unsupported") args.push("-wegnoegpu");
+    if (ctx.features.includes("ota") && ctx.darwin >= 23) args.push("revpatch=sbvmm");
+    if (ctx.bluetooth === "intel" && ctx.darwin >= 25) args.push("-ibtcompatbeta");
+    if (ctx.features.includes("no-avx2")) args.push("-nokcmismatchpanic");
+    if (ctx.features.includes("i2c-polling")) args.push("-vi2c-force-polling");
+    return args;
+  }
+
+  function releaseTuple(value) {
+    const parts = (value.match(/\d+/g) || []).map(Number);
+    return parts[0] === 10 ? parts.slice(0, 2) : parts.slice(0, 1);
+  }
+
+  function smbiosServes(model, macosEntry) {
+    const ref = DATA.smbios.models.find(m => m.model.toLowerCase() === model.toLowerCase());
+    if (!ref) return { known: false };
+    const served = DATA.boards.boards[ref.board_id];
+    if (served === undefined) return { known: true, ref, ok: null };
+    if (served === "latest") return { known: true, ref, ok: true, served };
+    const a = releaseTuple(served), b = releaseTuple(macosEntry.release);
+    const ok = a[0] > b[0] || (a[0] === b[0] && (a[1] ?? 0) >= (b[1] ?? 0));
+    return { known: true, ref, ok, served };
+  }
+
+  function blockers(ctx) {
+    const out = [];
+    if (ctx.macos.requires.includes("avx2") &&
+        ["monterey", "high-sierra"].includes(ctx.plat.max_macos)) {
+      out.push(`${ctx.macos.name} exige AVX2, absent de ${ctx.plat.name}.`);
+    }
+    return out;
+  }
+
+  function warnings(ctx) {
+    const out = [];
+    const idx = vIndex(ctx.macos.key);
+    if (ctx.plat.max_macos && idx > vIndex(ctx.plat.max_macos)) {
+      out.push(`${ctx.plat.name} n'est plus supporte au-dela de ` +
+        `${versions[vIndex(ctx.plat.max_macos)].name} par le guide Dortania.`);
+    }
+    const sm = smbiosServes(ctx.smbios_model, ctx.macos);
+    if (!sm.known) out.push(`SMBIOS ${ctx.smbios_model} absent de la table de reference.`);
+    else if (sm.ok === false) {
+      out.push(`le SMBIOS ${ctx.smbios_model} ne recoit pas ${ctx.macos.name}: les ` +
+        `serveurs Apple s'arretent a macOS ${sm.served} pour ce board-id.`);
+    }
+    if (ctx.family === "amd" && ctx.cpu_cores <= 0) {
+      out.push("nombre de coeurs inconnu: le patch AMD 'cpuid_cores_per_package' " +
+        "restera sur sa valeur par defaut (option --cores).");
+    }
+    if (ctx.family === "amd" && ctx.laptop) {
+      out.push("portable AMD: hors du perimetre du guide Dortania, mais la communaute " +
+        "(AMD_Vanilla + NootedRed) fait tourner ces machines.");
+    }
+    if (ctx.igpu_mode === "display" && ctx.igpu === "none") {
+      out.push("igpu_mode=display alors qu'aucun iGPU n'est declare.");
+    }
+    if (ctx.wifi === "realtek") {
+      out.push("Wi-Fi Realtek PCIe: pas de pilote officiel, mais un portage " +
+        "communautaire du pilote Linux rtw88 existe (Feixiao / RTL8821CEwifi).");
+    }
+    if (ctx.usb_map_kind === "none" && ctx.darwin >= 20) {
+      out.push("aucun mappage USB: XhciPortLimit n'est plus fiable depuis macOS 11.3.");
+    }
+    return out;
+  }
+
+  return { resolve, matches, ssdts, kexts, quirks, bootArgs, blockers, warnings,
+           smbiosServes, versions };
+}
+if (typeof module !== "undefined") module.exports = { makeEngine };
+</script>
+<script>const DATA = {"platforms":{"_source":"https://dortania.github.io/OpenCore-Install-Guide/ (config.plist / config-laptop.plist / config-HEDT / AMD) + https://dortania.github.io/Getting-Started-With-ACPI/ssdt-methods/ssdt-prebuilt.html","_schema":{"quirks":"Deltas par rapport a Docs/Sample.plist d'OpenCore. Tout ce qui n'est pas liste garde la valeur du Sample.","when":"Condition evaluee sur le profil: {field, eq|in|contains} / {any:[..]} / {all:[..]} / {not:{..}}"},"platforms":[{"id":"penryn-desktop","name":"Intel Penryn / Lynnfield (bureau)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/penryn.html","max_macos":"high-sierra","smbios":{"default":"iMac10,1"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"}],"quirks":{"Kernel":{"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":false,"UnblockFsConnect":false}},"notes":["Pas de SSE4.2: macOS 10.14 et plus recent n'est pas supporte."]},{"id":"clarkdale-desktop","name":"Intel Clarkdale / Westmere (bureau)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/clarkdale.html","max_macos":"monterey","smbios":{"default":"iMac11,2"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"notes":["Pas d'iGPU supporte a partir de macOS 10.14."]},{"id":"sandy-bridge-desktop","name":"Intel Sandy Bridge (bureau, 2e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/sandy-bridge.html","max_macos":"monterey","smbios":{"default":"iMac12,2"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-IMEI.aml","reason":"IMEI absent de l'ACPI (Sandy Bridge + chipset serie 7)","when":{"field":"chipset_series","in":["7"]}}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,snb-platform-id","display":"10000300","headless":"00000500","device_id":"26010000","stolenmem":false},"notes":["HD 3000: le device-id 26010000 peut etre necessaire.","AVX2 absent: pas de macOS 13+."]},{"id":"ivy-bridge-desktop","name":"Intel Ivy Bridge (bureau, 3e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/ivy-bridge.html","max_macos":"monterey","smbios":{"default":"iMac13,2"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-IMEI.aml","reason":"IMEI absent de l'ACPI (Ivy Bridge + chipset serie 6)","when":{"field":"chipset_series","in":["6"]}}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0A006601","headless":"07006201","stolenmem":false,"extra_devices":[{"path":"PciRoot(0x0)/Pci(0x16,0x0)","props":{"device-id":"3A1E0000"},"when":{"field":"chipset_series","in":["6"]},"reason":"Spoof IMEI pour carte mere serie 6"}]},"notes":["iGPU HD 4000 non supporte a partir de macOS 12.","AVX2 absent: pas de macOS 13+."]},{"id":"haswell-desktop","name":"Intel Haswell / Broadwell (bureau, 4e-5e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html","smbios":{"default":"iMac15,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":false,"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0300220D","headless":"04001204","options":{"broadwell":"07002216","haswell":"0300220D"},"stolenmem":true,"fbmem":true},"notes":["HD 4400: ajouter device-id 12040000 (spoof HD 4600).","Pas de support iGPU a partir de macOS 13."]},{"id":"skylake-desktop","name":"Intel Skylake (bureau, 6e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/skylake.html","smbios":{"default":"iMac17,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"}],"quirks":{"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"00001219","headless":"01001219","stolenmem":true,"fbmem":true},"notes":["HD P530: ajouter device-id 1B190000.","macOS 13+: spoofer l'iGPU en Kaby Lake."]},{"id":"kaby-lake-desktop","name":"Intel Kaby Lake (bureau, 7e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/kaby-lake.html","smbios":{"default":"iMac18,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"}],"quirks":{"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"00001259","headless":"03001259","stolenmem":true,"fbmem":true},"notes":[]},{"id":"coffee-lake-desktop","name":"Intel Coffee Lake (bureau, 8e-9e gen)","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/coffee-lake.html","smbios":{"default":"iMac19,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte)"},{"file":"SSDT-PMC.aml","reason":"NVRAM native sur les vrais chipsets serie 300 (B360/B365/H310/H370/Z390)","when":{"field":"chipset","in":["b360","b365","h310","h370","z390"]}}],"quirks":{"Booter":{"DevirtualiseMmio":true,"EnableWriteUnprotector":false,"RebuildAppleMemoryMap":true,"SyncRuntimePermissions":true,"ProtectUefiServices":{"value":true,"when":{"field":"chipset","in":["b360","b365","h310","h370","z390"]}}},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"07009B3E","headless":"0300913E","alternatives":{"black_screen":"00009B3E"},"stolenmem":true},"notes":["Ecran noir apres le mode verbeux (B360/B365/H310/H370/Z390): voir le patch BusID iGPU de Dortania."]},{"id":"comet-lake-desktop","name":"Intel Comet Lake (bureau, 10e gen) / base pour Rocket Lake et plus recent","family":"intel-desktop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html","smbios":{"default":"iMac20,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte)"},{"file":"SSDT-RHUB.aml","reason":"Reset des controleurs USB sur cartes Asus serie 400","when":{"field":"motherboard_vendor","in":["asus"]}}],"quirks":{"Booter":{"DevirtualiseMmio":true,"EnableWriteUnprotector":false,"ProtectUefiServices":true,"RebuildAppleMemoryMap":true,"SetupVirtualMap":false,"SyncRuntimePermissions":true},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"07009B3E","headless":"0300C89B","alternatives":{"black_screen":"00009B3E"},"stolenmem":true},"notes":["Rocket Lake (11e gen): utiliser ce profil, le CPUID doit etre spoofe en Comet Lake.","Alder Lake et plus recent ne sont pas couverts par le guide Dortania: partir de ce profil puis ajouter les correctifs specifiques (CpuTopologyRebuild, cores E desactives, etc.)."]},{"id":"arrandale-laptop","name":"Intel Clarksfield / Arrandale (portable)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/arrandale.html","max_macos":"monterey","smbios":{"default":"MacBookPro6,1"},"ssdt":[{"file":"SSDT-EC-LAPTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","props":{"framebuffer-singlelink":"01000000"}},"notes":[]},{"id":"sandy-bridge-laptop","name":"Intel Sandy Bridge (portable, 2e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html","max_macos":"monterey","smbios":{"default":"MacBookPro8,2"},"ssdt":[{"file":"SSDT-EC-LAPTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-IMEI.aml","reason":"IMEI absent de l'ACPI (chipset serie 7)","when":{"field":"chipset_series","in":["7"]}},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,snb-platform-id","display":"00000100","options":{"nuc":"10000300"},"device_id":"3A1C0000"},"notes":[]},{"id":"ivy-bridge-laptop","name":"Intel Ivy Bridge (portable, 3e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html","max_macos":"monterey","smbios":{"default":"MacBookPro10,2"},"ssdt":[{"file":"SSDT-EC-LAPTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-IMEI.aml","reason":"IMEI absent de l'ACPI (chipset serie 6)","when":{"field":"chipset_series","in":["6"]}},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"03006601","options":{"1366x768":"03006601","1600x900+":"04006601","edp":"09006601","nuc":"0B006601"},"device_id":"3A1E0000"},"notes":["iGPU HD 4000 non supporte a partir de macOS 12."]},{"id":"haswell-laptop","name":"Intel Haswell (portable, 4e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/haswell.html","smbios":{"default":"MacBookPro11,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-LAPTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":false,"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0500260A","options":{"hd5000":"0500260A","hd4400-4600":"0600260A","nuc":"0300220D"},"device_id":"12040000","stolenmem":true,"fbmem":true,"cursormem":true},"notes":["Pas de support iGPU a partir de macOS 13."]},{"id":"broadwell-laptop","name":"Intel Broadwell (portable, 5e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/broadwell.html","smbios":{"default":"MacBookPro12,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-LAPTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":false,"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"06002616","options":{"laptop":"06002616","nuc":"02001616"},"stolenmem":true,"fbmem":true},"notes":["Pas de support iGPU a partir de macOS 13."]},{"id":"skylake-laptop","name":"Intel Skylake (portable, 6e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/skylake.html","smbios":{"default":"MacBookPro13,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"00001619","options":{"hd515-550":"00001619","hd510":"00001B19","hd515-alt":"00001E19","nuc-hd520-530":"02001619"},"stolenmem":true,"fbmem":true},"notes":["macOS 13+: spoofer l'iGPU en Kaby Lake."]},{"id":"kaby-lake-laptop","name":"Intel Kaby Lake / Amber Lake (portable, 7e-8e gen U)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/kaby-lake.html","smbios":{"default":"MacBookPro14,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"00001B59","options":{"hd615-650":"00001B59","uhd620-alt":"00001659","uhd617-amber":"0000C087","nuc-hd615":"00001E59"},"device_id":"16590000","stolenmem":true,"fbmem":true},"notes":[]},{"id":"coffee-lake-laptop","name":"Intel Coffee Lake (portable, 8e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake.html","smbios":{"default":"MacBookPro15,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte)"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Booter":{"EnableWriteUnprotector":false,"ProtectMemoryRegions":true,"RebuildAppleMemoryMap":true,"SyncRuntimePermissions":true},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0900A53E","options":{"uhd630":"0900A53E","uhd620":"00009B3E","nuc-uhd620-630":"07009B3E","nuc-uhd655":"0000A53E"},"device_id":"9B3E0000","stolenmem":true},"notes":[]},{"id":"coffee-lake-plus-laptop","name":"Intel Coffee Lake Plus / Comet Lake (portable, 9e-10e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake-plus.html","smbios":{"default":"MacBookPro16,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte)"},{"file":"SSDT-PMC.aml","reason":"NVRAM native, uniquement sur les portables 9e gen","when":{"field":"cpu_generation","in":["9"]}},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Booter":{"DevirtualiseMmio":true,"EnableWriteUnprotector":false,"ProtectMemoryRegions":true,"ProtectUefiServices":true,"RebuildAppleMemoryMap":true,"SyncRuntimePermissions":true},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0900A53E","options":{"uhd630":"0900A53E","uhd620":"00009B3E","nuc-uhd620-630":"07009B3E","nuc-uhd655":"0000A53E"},"device_id":"9B3E0000","stolenmem":true},"notes":[]},{"id":"icelake-laptop","name":"Intel Ice Lake (portable, 10e gen)","family":"intel-laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/icelake.html","smbios":{"default":"MacBookAir9,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte)"},{"file":"SSDT-RHUB.aml","reason":"Reset des controleurs USB (souvent necessaire sur Dell)"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Booter":{"DevirtualiseMmio":true,"EnableWriteUnprotector":false,"ProtectMemoryRegions":true,"ProtectUefiServices":true,"RebuildAppleMemoryMap":true,"SetupVirtualMap":false,"SyncRuntimePermissions":true},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":false}},"igpu":{"path":"PciRoot(0x0)/Pci(0x2,0x0)","key":"AAPL,ig-platform-id","display":"0000528A","stolenmem":true},"notes":[]},{"id":"nehalem-hedt","name":"Intel Nehalem / Westmere (HEDT)","family":"intel-hedt","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/nehalem.html","max_macos":"monterey","smbios":{"default":"MacPro5,1"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"notes":[]},{"id":"ivy-bridge-e-hedt","name":"Intel Sandy / Ivy Bridge-E (HEDT)","family":"intel-hedt","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/ivy-bridge-e.html","max_macos":"monterey","smbios":{"default":"MacPro6,1"},"ssdt":[{"file":"SSDT-EC-DESKTOP.aml","reason":"Faux Embedded Controller pour macOS"},{"file":"SSDT-UNC.aml","reason":"Desactive les peripheriques uncore non supportes"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"notes":["MacPro6,1 impose un GPU AMD supporte: device-id 33150000 peut etre requis sur certains GPU."]},{"id":"haswell-e-hedt","name":"Intel Haswell-E / Broadwell-E (HEDT)","family":"intel-hedt","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/haswell-e.html","smbios":{"default":"iMacPro1,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-RTC0-RANGE-HEDT.aml","reason":"Corrige la plage RTC (blocages au demarrage sur Big Sur)"},{"file":"SSDT-UNC.aml","reason":"Desactive les peripheriques uncore non supportes"}],"quirks":{"Kernel":{"AppleCpuPmCfgLock":false,"AppleXcpmCfgLock":true,"AppleXcpmExtraMsrs":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"IgnoreInvalidFlexRatio":true,"UnblockFsConnect":false}},"notes":[]},{"id":"skylake-x-hedt","name":"Intel Skylake-X / Cascade Lake-X (HEDT)","family":"intel-hedt","guide":"https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/skylake-x.html","smbios":{"default":"iMacPro1,1"},"ssdt":[{"file":"SSDT-PLUG-DRTNIA.aml","reason":"Active XCPM (gestion d'energie CPU)"},{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-RTC0-RANGE-HEDT.aml","reason":"Corrige la plage RTC (blocages au demarrage sur Big Sur)"}],"quirks":{"Booter":{"DevirtualiseMmio":true,"EnableWriteUnprotector":false,"RebuildAppleMemoryMap":true,"SyncRuntimePermissions":true},"Kernel":{"AppleXcpmCfgLock":true,"DisableIoMapper":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"notes":[]},{"id":"amd-fx","name":"AMD Bulldozer (15h) / Jaguar (16h)","family":"amd","guide":"https://dortania.github.io/OpenCore-Install-Guide/AMD/fx.html","smbios":{"default":"MacPro7,1"},"ssdt":[{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"}],"quirks":{"Kernel":{"DummyPowerManagement":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"ProvideCurrentCpuInfo":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"kernel_patches":"amd_vanilla","boot_args":["npci=0x2000"],"notes":["Les patchs noyau AMD_Vanilla sont obligatoires, sans eux le noyau ne demarre pas."]},{"id":"amd-zen","name":"AMD Zen / Ryzen / Threadripper (17h et plus)","family":"amd","guide":"https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html","smbios":{"default":"MacPro7,1"},"ssdt":[{"file":"SSDT-EC-USBX-DESKTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-CPUR.aml","reason":"Requis sur B550 / A520 et plus recent (pas sur X570 ni Threadripper)","when":{"field":"chipset","in":["b550","a520","b650","x670","b840","b850","x870"]}}],"quirks":{"Booter":{"DevirtualiseMmio":false,"EnableWriteUnprotector":false,"RebuildAppleMemoryMap":true,"SetupVirtualMap":true,"SyncRuntimePermissions":true},"Kernel":{"DummyPowerManagement":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"ProvideCurrentCpuInfo":true,"XhciPortLimit":true},"UEFI":{"UnblockFsConnect":false}},"kernel_patches":"amd_vanilla","notes":["Les patchs noyau AMD_Vanilla sont obligatoires, sans eux le noyau ne demarre pas.","Le patch 'cpuid_cores_per_package' doit correspondre au nombre de coeurs physiques (option --cores).","Pas de AppleHV: VirtualBox, VMware, Docker et Parallels recents ne fonctionnent pas.","AppleBCMWLANCompanion (Wi-Fi Broadcom sur macOS 15+) exige VT-d: impossible sur AMD."]},{"id":"amd-zen-laptop","name":"AMD Zen mobile / APU Vega (Raven Ridge, Picasso, Dali, Renoir, Cezanne, Lucienne)","family":"amd","default_chassis":"laptop","guide":"https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html","min_macos":"catalina","smbios":{"default":"MacBookPro16,2","alternatives":["MacBookPro16,3","MacBookPro16,1","MacPro7,1"]},"ssdt":[{"file":"SSDT-EC-USBX-LAPTOP.aml","reason":"Faux EC + proprietes d'alimentation USB"},{"file":"SSDT-RHUB.aml","reason":"Reset des controleurs USB (equivalent de SSDT-USB-Reset)"},{"file":"SSDT-AWAC.aml","reason":"Force l'horloge RTC classique (AWAC non supporte); la version pre-compilee Dortania ne demande pas de renommage _STA"},{"file":"SSDT-PNLF.aml","reason":"Retroeclairage de l'ecran interne"},{"file":"SSDT-XOSI.aml","reason":"Active les fonctions reservees a Windows dans macOS"}],"quirks":{"Kernel":{"DummyPowerManagement":true,"ProvideCurrentCpuInfo":true,"PanicNoKextDump":true,"PowerTimeoutKernelPanic":true,"LapicKernelPanic":true,"DisableRtcChecksum":true,"XhciPortLimit":true},"UEFI":{"ReleaseUsbOwnership":true,"UnblockFsConnect":{"value":true,"when":{"field":"motherboard_vendor","in":["hp"]}}}},"kernel_patches":"amd_vanilla","igpu":{"path":"PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x0)","key":"AAPL,ig-platform-id","note":"Le framebuffer des APU Vega est gere par NootedRed, pas par une ig-platform-id."},"notes":["Plateforme hors guide Dortania: patchs AMD_Vanilla + NootedRed (ChefKissInc) pour l'iGPU Vega.","NootedRed couvre les APU Vega d'Athlon Silver/Gold aux Ryzen 5xxx et 7x30, de macOS 10.15 a macOS 26, et remplace WhateverGreen pour l'APU.","Quirks et SMBIOS cales sur un HP 245 G8 (Athlon Silver 3050U) en fonctionnement.","LapicKernelPanic et DisableRtcChecksum sont necessaires sur beaucoup de portables AMD; UnblockFsConnect l'est sur les cartes HP.","Audio de l'APU: PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x6). Le layout se choisit avec --audio-layout (alcid).","Trackpad I2C recalcitrant: activez la fonction 'i2c-polling' pour ajouter -vi2c-force-polling.","Pas d'AppleHV: VirtualBox, VMware, Docker et Parallels recents ne fonctionnent pas.","Gestion d'energie CPU sommaire (DummyPowerManagement): autonomie tres inferieure a Windows.","Un capteur de luminosite factice (SSDT-ALS0, genere par SSDTTime) est necessaire pour que SMCLightSensor remonte quelque chose: il n'existe pas en version pre-compilee."],"boot_args":["npci=0x3000"],"audio_path":"PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x6)"}]},"macos":{"_source":["https://dortania.github.io/OpenCore-Install-Guide/macos-limits.html","OpenCorePkg/Utilities/macrecovery/recovery_urls.txt"],"versions":[{"key":"lion","name":"OS X Lion","release":"10.7","darwin":11,"recovery":{"board_id":"Mac-2E6FAB96566FE58C","mlb":"00000000000F25Y00"},"requires":[],"notes":["Support historique uniquement, hors du perimetre du guide Dortania."]},{"key":"mountain-lion","name":"OS X Mountain Lion","release":"10.8","darwin":12,"recovery":{"board_id":"Mac-7DF2A3B5E5D671ED","mlb":"00000000000F65100"},"requires":[],"notes":[]},{"key":"mavericks","name":"OS X Mavericks","release":"10.9","darwin":13,"recovery":{"board_id":"Mac-F60DEB81FF30ACF6","mlb":"00000000000FNN100"},"requires":[],"notes":[]},{"key":"yosemite","name":"OS X Yosemite","release":"10.10","darwin":14,"recovery":{"board_id":"Mac-E43C1C25D4880AD6","mlb":"00000000000GDVW00"},"requires":[],"notes":["Peut ne pas demarrer avec plus de 24 threads (cpus=N en contournement)."]},{"key":"el-capitan","name":"OS X El Capitan","release":"10.11","darwin":15,"recovery":{"board_id":"Mac-FFE5EF870D7BA81A","mlb":"00000000000GQRX00"},"requires":[],"notes":["Limite de 64 threads a partir de cette version."]},{"key":"sierra","name":"macOS Sierra","release":"10.12","darwin":16,"recovery":{"board_id":"Mac-77F17D7DA9285301","mlb":"00000000000J0DX00"},"requires":["sse4"],"notes":[]},{"key":"high-sierra","name":"macOS High Sierra","release":"10.13","darwin":17,"recovery":{"board_id":"Mac-7BA5B2D9E42DDD94","mlb":"00000000000J80300"},"requires":["sse4"],"notes":["Derniere version supportant Penryn."]},{"key":"mojave","name":"macOS Mojave","release":"10.14","darwin":18,"recovery":{"board_id":"Mac-7BA5B2DFE22DDD8C","mlb":"00000000000KXPG00"},"requires":["sse4.2"],"notes":["SSE4.2 obligatoire (telemetrap.kext pour les CPU SSE4.1)."]},{"key":"catalina","name":"macOS Catalina","release":"10.15","darwin":19,"recovery":{"board_id":"Mac-00BE6ED71E35EB86","mlb":"00000000000000000"},"requires":["sse4.2"],"notes":["Derniere version 32 bits compatible pour les applications: non (32 bits supprime)."]},{"key":"big-sur","name":"macOS Big Sur","release":"11","darwin":20,"recovery":{"board_id":"Mac-2BD1B31983FE1663","mlb":"00000000000000000"},"requires":["sse4.2"],"notes":["XhciPortLimit ne fonctionne plus de facon fiable a partir de 11.3: le mappage USB devient obligatoire.","Derniere version avec support NVIDIA Kepler natif."]},{"key":"monterey","name":"macOS Monterey","release":"12","darwin":21,"recovery":{"board_id":"Mac-E43C1C25D4880AD6","mlb":"00000000000000000"},"requires":["sse4.2"],"notes":["Support iGPU Ivy Bridge supprime.","NVIDIA Kepler supprime."]},{"key":"ventura","name":"macOS Ventura","release":"13","darwin":22,"recovery":{"board_id":"Mac-B4831CEBD52A0C4C","mlb":"00000000000000000"},"requires":["sse4.2","avx2"],"notes":["AVX2 requis: les CPU pre-Haswell ne sont plus supportes par le guide Dortania.","Support iGPU Haswell supprime.","iGPU Skylake: spoof vers le modele Kaby Lake le plus proche."]},{"key":"sonoma","name":"macOS Sonoma","release":"14","darwin":23,"recovery":{"board_id":"Mac-827FAC58A8FDFA22","mlb":"00000000000000000"},"requires":["sse4.2","avx2"],"notes":["Support Wi-Fi Broadcom natif supprime.","A partir de 14.4 les mises a jour OTA exigent RestrictEvents + revpatch=sbvmm et SecureBootModel=Disabled (ou iBridged.kext)."]},{"key":"sequoia","name":"macOS Sequoia","release":"15","darwin":24,"recovery":{"board_id":"Mac-7BA5B2D9E42DDD94","mlb":"00000000000000000"},"requires":["sse4.2","avx2"],"notes":["Wi-Fi Broadcom: uniquement via AppleBCMWLANCompanion (VT-d requis, donc pas sur AMD).","Mises a jour OTA: RestrictEvents + revpatch=sbvmm, SecureBootModel=Disabled."]},{"key":"tahoe","name":"macOS Tahoe","release":"26","darwin":25,"recovery":{"board_id":"Mac-CFF7D910A743CAAF","mlb":"00000000000000000","os_type":"latest"},"requires":["sse4.2","avx2"],"notes":["AppleHDA supprime: plus d'audio analogique via AppleALC (HDMI/DP/USB restent OK, VoodooHDA possible avec SIP abaisse).","SMBIOS limites: MacBookPro16,1 / MacBookPro16,2 / MacBookPro16,4 / MacPro7,1 / iMac20,1 / iMac20,2.","Bluetooth Intel: ajouter le boot-arg -ibtcompatbeta.","WhateverGreen a des problemes de connector patching AMD: retirer WhateverGreen.kext en cas de panic GPU.","Mises a jour OTA: RestrictEvents + revpatch=sbvmm, SecureBootModel=Disabled."]}],"aliases":{"10.7":"lion","10.8":"mountain-lion","10.9":"mavericks","10.10":"yosemite","10.11":"el-capitan","10.12":"sierra","10.13":"high-sierra","10.14":"mojave","10.15":"catalina","11":"big-sur","12":"monterey","13":"ventura","14":"sonoma","15":"sequoia","26":"tahoe","latest":"tahoe"}},"kexts":{"_note":"asset = regex appliquee aux noms d'assets de la release GitHub. bundles = kexts a extraire de l'archive. Les PlugIns internes sont detectes automatiquement.","kexts":[{"id":"Lilu","repo":"acidanthera/Lilu","asset":"^Lilu-[0-9.]+-RELEASE\\.zip$","bundles":["Lilu.kext"],"order":0,"required":true,"reason":"Moteur de patch dont dependent WhateverGreen, AppleALC, VirtualSMC..."},{"id":"VirtualSMC","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["VirtualSMC.kext"],"order":1,"required":true,"reason":"Emule la puce SMC d'un vrai Mac (sans elle macOS ne demarre pas)"},{"id":"SMCProcessor","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["SMCProcessor.kext"],"order":2,"when":{"not":{"field":"family","eq":"amd"}},"reason":"Capteurs de temperature CPU (Intel uniquement)"},{"id":"SMCSuperIO","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["SMCSuperIO.kext"],"order":3,"reason":"Capteurs de vitesse des ventilateurs"},{"id":"SMCBatteryManager","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["SMCBatteryManager.kext"],"order":4,"when":{"field":"laptop","eq":true},"reason":"Lecture de la batterie sur portable"},{"id":"SMCLightSensor","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["SMCLightSensor.kext"],"order":5,"optional":true,"when":{"all":[{"field":"laptop","eq":true},{"field":"features","contains":"light-sensor"}]},"reason":"Capteur de luminosite ambiante"},{"id":"SMCDellSensors","repo":"acidanthera/VirtualSMC","asset":"^VirtualSMC-[0-9.]+-RELEASE\\.zip$","bundles":["SMCDellSensors.kext"],"order":6,"optional":true,"when":{"all":[{"field":"laptop","eq":true},{"field":"motherboard_vendor","in":["dell"]}]},"reason":"Gestion des ventilateurs sur portables Dell"},{"id":"WhateverGreen","repo":"acidanthera/WhateverGreen","asset":"^WhateverGreen-[0-9.]+-RELEASE\\.zip$","bundles":["WhateverGreen.kext"],"order":10,"when":{"all":[{"not":{"all":[{"field":"igpu","eq":"none"},{"field":"dgpu","eq":"none"}]}},{"not":{"all":[{"field":"family","eq":"amd"},{"field":"dgpu","eq":"none"}]}}]},"reason":"Correctifs graphiques (framebuffer, connecteurs, acceleration)","warn_macos":{"tahoe":"WhateverGreen a des problemes de connector patching AMD sur macOS 26: le retirer en cas de panic GPU."}},{"id":"AppleALC","repo":"acidanthera/AppleALC","asset":"^AppleALC-[0-9.]+-RELEASE\\.zip$","bundles":["AppleALC.kext"],"order":11,"when":{"not":{"field":"audio","eq":"none"}},"reason":"Audio analogique via injection de layout-id","warn_macos":{"tahoe":"AppleHDA a ete supprime de macOS 26: AppleALC ne restaure plus l'audio analogique."}},{"id":"NVMeFix","repo":"acidanthera/NVMeFix","asset":"^NVMeFix-[0-9.]+-RELEASE\\.zip$","bundles":["NVMeFix.kext"],"order":12,"when":{"field":"nvme","eq":true},"reason":"Gestion d'energie et compatibilite des SSD NVMe non-Apple"},{"id":"RestrictEvents","repo":"acidanthera/RestrictEvents","asset":"^RestrictEvents-[0-9.]+-RELEASE\\.zip$","bundles":["RestrictEvents.kext"],"order":13,"when":{"any":[{"field":"features","contains":"ota"},{"field":"family","eq":"amd"}]},"reason":"Mises a jour OTA (revpatch=sbvmm) et correction du nom de CPU affiche sur AMD"},{"id":"CpuTscSync","repo":"acidanthera/CpuTscSync","asset":"^CpuTscSync-[0-9.]+-RELEASE\\.zip$","bundles":["CpuTscSync.kext"],"order":14,"when":{"all":[{"not":{"field":"family","eq":"amd"}},{"any":[{"field":"laptop","eq":true},{"field":"family","eq":"intel-hedt"}]}]},"reason":"Synchronise le TSC entre coeurs (reveil de veille sur portables et HEDT)"},{"id":"CPUFriend","repo":"acidanthera/CPUFriend","asset":"^CPUFriend-[0-9.]+-RELEASE\\.zip$","bundles":["CPUFriend.kext"],"order":15,"optional":true,"when":{"field":"features","contains":"cpufriend"},"reason":"Profil de gestion d'energie CPU personnalise (necessite CPUFriendDataProvider genere sur la machine)"},{"id":"HibernationFixup","repo":"acidanthera/HibernationFixup","asset":"^HibernationFixup-[0-9.]+-RELEASE\\.zip$","bundles":["HibernationFixup.kext"],"order":16,"optional":true,"when":{"field":"features","contains":"hibernation"},"reason":"Hibernation (mode veille S4)"},{"id":"FeatureUnlock","repo":"acidanthera/FeatureUnlock","asset":"^FeatureUnlock-[0-9.]+-RELEASE\\.zip$","bundles":["FeatureUnlock.kext"],"order":17,"optional":true,"when":{"field":"features","contains":"sidecar"},"reason":"Debloque Sidecar, AirPlay to Mac, Universal Control et NightShift"},{"id":"RTCMemoryFixup","repo":"acidanthera/RTCMemoryFixup","asset":"^RTCMemoryFixup-[0-9.]+-RELEASE\\.zip$","bundles":["RTCMemoryFixup.kext"],"order":18,"optional":true,"when":{"field":"features","contains":"rtc-fix"},"reason":"Empeche la corruption de la NVRAM/RTC sur certaines cartes"},{"id":"CryptexFixup","repo":"acidanthera/CryptexFixup","asset":"^CryptexFixup-[0-9.]+-RELEASE\\.zip$","bundles":["CryptexFixup.kext"],"order":19,"optional":true,"when":{"field":"features","contains":"no-avx2"},"reason":"Force le cache dyld sans AVX2 (macOS 13+ sur CPU pre-Haswell)"},{"id":"IntelMausi","repo":"acidanthera/IntelMausi","asset":"^IntelMausi-[0-9.]+-RELEASE\\.zip$","bundles":["IntelMausi.kext"],"order":30,"when":{"field":"ethernet","in":["intel-mausi","intel-i219","intel-i218","intel-i217"]},"reason":"Cartes Ethernet Intel (I217 / I218 / I219 et la plupart des chipsets Intel)"},{"id":"AppleIGB","repo":"donatengit/AppleIGB","asset":"\\.zip$","bundles":["AppleIGB.kext"],"order":31,"when":{"field":"ethernet","in":["intel-igb","intel-i211","intel-i210"]},"reason":"Cartes Ethernet Intel I210 / I211 / I350"},{"id":"LucyRTL8125Ethernet","repo":"Mieze/LucyRTL8125Ethernet","asset":"\\.zip$","bundles":["LucyRTL8125Ethernet.kext"],"order":32,"when":{"field":"ethernet","in":["rtl8125"]},"reason":"Realtek RTL8125 2.5 Gbit"},{"id":"RealtekRTL8111","repo":"Mieze/RTL8111_driver_for_OS_X","asset":"\\.zip$","bundles":["RealtekRTL8111.kext"],"order":33,"when":{"field":"ethernet","in":["rtl8111","rtl8168"]},"reason":"Realtek RTL8111 / RTL8168 gigabit"},{"id":"AtherosE2200Ethernet","repo":"Mieze/AtherosE2200Ethernet","asset":"\\.zip$","bundles":["AtherosE2200Ethernet.kext"],"order":34,"when":{"field":"ethernet","in":["atheros","killer"]},"reason":"Atheros / Killer E2200 series"},{"id":"AirportItlwm","repo":"OpenIntelWireless/itlwm","asset_by_macos":{"high-sierra":"AirportItlwm.*High_Sierra.*\\.zip$","mojave":"AirportItlwm.*Mojave.*\\.zip$","catalina":"AirportItlwm.*Catalina.*\\.zip$","big-sur":"AirportItlwm.*Big_Sur.*\\.zip$","monterey":"AirportItlwm.*Monterey.*\\.zip$","ventura":"AirportItlwm.*Ventura.*\\.zip$","sonoma":"AirportItlwm.*Sonoma.*\\.zip$","sequoia":"AirportItlwm.*Sequoia.*\\.zip$","tahoe":"AirportItlwm.*Tahoe.*\\.zip$"},"bundles":["AirportItlwm.kext"],"order":40,"when":{"field":"wifi","eq":"intel"},"reason":"Wi-Fi Intel natif (une build par version de macOS)","note":"AirportItlwm est compile pour une version precise de macOS: il faut le remplacer a chaque mise a jour majeure."},{"id":"AirportBrcmFixup","repo":"acidanthera/AirportBrcmFixup","asset":"^AirportBrcmFixup-[0-9.]+-RELEASE\\.zip$","bundles":["AirportBrcmFixup.kext"],"order":41,"when":{"field":"wifi","eq":"broadcom"},"reason":"Correctifs pour les cartes Wi-Fi Broadcom","max_macos":"ventura","warn_macos":{"sonoma":"Le support Wi-Fi Broadcom natif a ete supprime de macOS 14+ (voir AppleBCMWLANCompanion)."}},{"id":"IntelBluetoothFirmware","repo":"OpenIntelWireless/IntelBluetoothFirmware","asset":"^IntelBluetooth-v[0-9.]+\\.zip$","bundles":["IntelBluetoothFirmware.kext","IntelBTPatcher.kext"],"order":45,"when":{"field":"bluetooth","eq":"intel"},"reason":"Firmware et correctifs Bluetooth Intel"},{"id":"BlueToolFixup","repo":"acidanthera/BrcmPatchRAM","asset":"^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$","bundles":["BlueToolFixup.kext"],"order":46,"min_darwin":20,"when":{"field":"bluetooth","in":["intel","broadcom","realtek"]},"reason":"Contourne BlueTool sur macOS 11+ (obligatoire pour le Bluetooth non Apple)"},{"id":"BrcmPatchRAM3","repo":"acidanthera/BrcmPatchRAM","asset":"^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$","bundles":["BrcmPatchRAM3.kext","BrcmFirmwareData.kext"],"order":47,"min_darwin":19,"when":{"field":"bluetooth","eq":"broadcom"},"reason":"Upload du firmware Bluetooth Broadcom"},{"id":"USBToolBox","repo":"USBToolBox/kext","asset":"\\.zip$","bundles":["USBToolBox.kext"],"order":50,"when":{"field":"usb_map_kind","eq":"usbtoolbox"},"reason":"Moteur du mappage USB genere par USBToolBox (a coupler avec UTBMap.kext)"},{"id":"VoodooPS2Controller","repo":"acidanthera/VoodooPS2","asset":"^VoodooPS2Controller-[0-9.]+-RELEASE\\.zip$","bundles":["VoodooPS2Controller.kext"],"order":60,"when":{"all":[{"field":"laptop","eq":true},{"field":"touchpad","in":["ps2","i2c"]}]},"reason":"Clavier PS2 du portable (et trackpad si celui-ci est en PS2)"},{"id":"VoodooI2C","repo":"VoodooI2C/VoodooI2C","asset":"^VoodooI2C-[0-9.]+\\.zip$","bundles":["VoodooI2C.kext","VoodooI2CHID.kext"],"order":61,"when":{"field":"touchpad","in":["i2c"]},"reason":"Trackpad I2C / HID de portable"},{"id":"ECEnabler","repo":"1Revenger1/ECEnabler","asset":"^ECEnabler-[0-9.]+-RELEASE\\.zip$","bundles":["ECEnabler.kext"],"order":62,"when":{"field":"laptop","eq":true},"reason":"Permet la lecture de la batterie quand l'EC expose des champs > 8 bits"},{"id":"NootedRed","repo":"ChefKissInc/NootedRed","asset":"\\.zip$","bundles":["NootedRed.kext"],"order":70,"when":{"any":[{"field":"dgpu","eq":"amd-apu"},{"all":[{"field":"family","eq":"amd"},{"not":{"field":"igpu","eq":"none"}}]}]},"reason":"Acceleration graphique des iGPU AMD Vega (Raven Ridge a Cezanne), en remplacement de WhateverGreen pour l'APU","note":"NootedRed gere lui-meme le framebuffer de l'APU: verifiez sa documentation avant de conserver WhateverGreen a cote."},{"id":"NootRX","repo":"ChefKissInc/NootRX","asset":"\\.zip$","bundles":["NootRX.kext"],"order":71,"optional":true,"when":{"field":"dgpu","eq":"amd-rdna2"},"reason":"Support des GPU AMD RX 6000 (RDNA2) non reconnus nativement"},{"id":"SMCAMDProcessor","repo":"trulyspinach/SMCAMDProcessor","asset":"\\.zip$","bundles":["SMCAMDProcessor.kext","AMDRyzenCPUPowerManagement.kext"],"order":7,"optional":true,"when":{"field":"family","eq":"amd"},"reason":"Capteurs et gestion d'energie CPU sur AMD Ryzen"},{"id":"ForgedInvariant","repo":"ChefKissInc/ForgedInvariant","asset":"^ForgedInvariant-[0-9.]+-RELEASE\\.zip$","bundles":["ForgedInvariant.kext"],"order":8,"when":{"field":"family","eq":"amd"},"reason":"Synchronisation du TSC sur AMD (equivalent de CpuTscSync)"},{"id":"BrightnessKeys","repo":"acidanthera/BrightnessKeys","asset":"^BrightnessKeys-[0-9.]+-RELEASE\\.zip$","bundles":["BrightnessKeys.kext"],"order":63,"when":{"field":"laptop","eq":true},"reason":"Touches de luminosite du clavier"},{"id":"AppleMCEReporterDisabler","manual":true,"order":9,"bundles":["AppleMCEReporterDisabler.kext"],"source":"https://github.com/AMD-OSX/AMD_Vanilla (voir aussi les depots communautaires AMD)","when":{"field":"family","eq":"amd"},"reason":"Evite les kernel panics AppleMCEReporter sur AMD et sur les SMBIOS Mac Pro / iMac Pro"},{"id":"CtlnaAHCIPort","manual":true,"order":35,"min_darwin":20,"bundles":["CtlnaAHCIPort.kext"],"source":"https://github.com/dortania/OpenCore-Install-Guide (kext communautaire, souvent fourni avec les EFI AMD)","when":{"field":"features","contains":"sata-legacy"},"reason":"Retablit la prise en charge de controleurs SATA non reconnus a partir de macOS 11"},{"id":"rtw88","manual":true,"order":42,"bundles":["rtw88.kext"],"source":"https://github.com/thegwchr/Feixiao ou https://github.com/crangel660/RTL8821CEwifi.kext","when":{"field":"wifi","eq":"realtek"},"reason":"Wi-Fi Realtek PCIe (RTL8821CE, RTL8822BE/CE, RTL8812AE, RTL8814AE), portage du pilote Linux rtw88","note":"Pilote communautaire en developpement: a recuperer et compiler soi-meme, la stabilite varie selon la carte."},{"id":"RealtekBluetoothFirmware","manual":true,"order":48,"bundles":["RealtekBluetoothFirmware.kext"],"source":"depots communautaires (recherche 'RealtekBluetoothFirmware kext')","when":{"field":"bluetooth","eq":"realtek"},"reason":"Chargement du firmware Bluetooth Realtek"}]},"smbios":{"models":[{"model":"MacBook1,1","board_id":"Mac-F4208CC8","cpu":"Yonah(M)","gpu":"GMA 950"},{"model":"MacBook10,1","board_id":"Mac-EE2EBD4B90B839A8","cpu":"Kaby Lake(Y)","gpu":"HD 615"},{"model":"MacBook2,1","board_id":"Mac-F4208CA9","cpu":"Merom(M)","gpu":"GMA 950"},{"model":"MacBook3,1","board_id":"Mac-F22788C8","cpu":"Merom(M)","gpu":"GMA X3100"},{"model":"MacBook4,1","board_id":"Mac-F22788A9","cpu":"Penryn(M)","gpu":"GMA X3100"},{"model":"MacBook5,1","board_id":"Mac-F42D89C8","cpu":"Penryn(M)","gpu":"GeForce 9400M"},{"model":"MacBook5,2","board_id":"Mac-F22788AA","cpu":"Penryn(M)","gpu":"GeForce 9400M"},{"model":"MacBook6,1","board_id":"Mac-F22C8AC8","cpu":"Penryn(M)","gpu":"GeForce 9400M"},{"model":"MacBook7,1","board_id":"Mac-F22C89C8","cpu":"Penryn(M)","gpu":"GeForce 320M"},{"model":"MacBook8,1","board_id":"Mac-BE0E8AC46FE800CC","cpu":"Broadwell(Y)","gpu":"HD 5300"},{"model":"MacBook9,1","board_id":"Mac-9AE82516C7C6B903","cpu":"Skylake(Y)","gpu":"HD 515"},{"model":"MacBookAir1,1","board_id":"Mac-F42C8CC8","cpu":"Merom(M)","gpu":"GMA X3100     (11\")"},{"model":"MacBookAir2,1","board_id":"Mac-F42D88C8","cpu":"Penryn(M)","gpu":"GeForce 9400M (13\")"},{"model":"MacBookAir3,1","board_id":"Mac-942452F5819B1C1B","cpu":"Penryn(M)","gpu":"GeForce 320M  (11\")"},{"model":"MacBookAir3,2","board_id":"Mac-942C5DF58193131B","cpu":"Penryn(M)","gpu":"GeForce 320M  (13\")"},{"model":"MacBookAir4,1","board_id":"Mac-C08A6BB70A942AC2","cpu":"Sandy Bridge(M)","gpu":"HD 3000 (11\")"},{"model":"MacBookAir4,2","board_id":"Mac-742912EFDBEE19B3","cpu":"Sandy Bridge(M)","gpu":"HD 3000 (13\")"},{"model":"MacBookAir5,1","board_id":"Mac-66F35F19FE2A0D05","cpu":"Ivy Bridge(U)","gpu":"HD 4000 (11\")"},{"model":"MacBookAir5,2","board_id":"Mac-2E6FAB96566FE58C","cpu":"Ivy Bridge(U)","gpu":"HD 4000 (13\")"},{"model":"MacBookAir6,1","board_id":"Mac-35C1E88140C3E6CF","cpu":"Haswell(U)","gpu":"HD 5000 (11\")"},{"model":"MacBookAir6,2","board_id":"Mac-7DF21CB3ED6977E5","cpu":"Haswell(U)","gpu":"HD 5000 (13\")"},{"model":"MacBookAir7,1","board_id":"Mac-9F18E312C5C2BF0B","cpu":"Broadwell(U)","gpu":"HD 6000 (11\")"},{"model":"MacBookAir7,2","board_id":"Mac-937CB26E2E02BB01","cpu":"Broadwell(U)","gpu":"HD 6000 (13\")"},{"model":"MacBookAir8,1","board_id":"Mac-827FAC58A8FDFA22","cpu":"Amber Lake(Y)","gpu":"UHD 617 (13\")"},{"model":"MacBookAir8,2","board_id":"Mac-226CB3C6A851A671","cpu":"Amber Lake(Y)","gpu":"UHD 617 (13\")"},{"model":"MacBookAir9,1","board_id":"Mac-0CFF9C7C2B63DF8D","cpu":"Ice Lake(Y)","gpu":"Iris Plus G4/G7 (13\")"},{"model":"MacBookPro1,1","board_id":"Mac-F425BEC8","cpu":"Yonah(M)","gpu":"Radeon X1600 (15\")"},{"model":"MacBookPro1,2","board_id":"Mac-F42DBEC8","cpu":"Yonah(M)","gpu":"Radeon X1600 (17\")"},{"model":"MacBookPro10,1","board_id":"Mac-C3EC7CD22292981F","cpu":"Ivy Bridge(QM)","gpu":"HD 4000/GeForce GT 650M (15\")"},{"model":"MacBookPro10,2","board_id":"Mac-AFD8A9D944EA4843","cpu":"Ivy Bridge(M)","gpu":"HD 4000 (13\")"},{"model":"MacBookPro11,1","board_id":"Mac-189A3D4F975D5FFC","cpu":"Haswell(U)","gpu":"Iris 5100 (13\")"},{"model":"MacBookPro11,2","board_id":"Mac-3CBD00234E554E41","cpu":"Haswell(HQ)","gpu":"Iris Pro 5200 (15\")"},{"model":"MacBookPro11,3","board_id":"Mac-2BD1B31983FE1663","cpu":"Haswell(HQ)","gpu":"Iris Pro 5200/GeForce GT 750M (15\")"},{"model":"MacBookPro11,4","board_id":"Mac-06F11FD93F0323C5","cpu":"Haswell(HQ)","gpu":"Iris Pro 5200 (15\")"},{"model":"MacBookPro11,5","board_id":"Mac-06F11F11946D27C5","cpu":"Haswell(HQ)","gpu":"Iris Pro 5200/Radeon R9 M370X (15\")"},{"model":"MacBookPro12,1","board_id":"Mac-E43C1C25D4880AD6","cpu":"Broadwell(U)","gpu":"Iris 6100 (13\")"},{"model":"MacBookPro13,1","board_id":"Mac-473D31EABEB93F9B","cpu":"Skylake(U)","gpu":"Iris 540 (13\")"},{"model":"MacBookPro13,2","board_id":"Mac-66E35819EE2D0D05","cpu":"Skylake(U)","gpu":"Iris 550 (13\")"},{"model":"MacBookPro13,3","board_id":"Mac-A5C67F76ED83108C","cpu":"Skylake(H)","gpu":"HD 530/Radeon Pro 450 (15\")"},{"model":"MacBookPro14,1","board_id":"Mac-B4831CEBD52A0C4C","cpu":"Kaby Lake(U)","gpu":"Iris Plus 640 (13\")"},{"model":"MacBookPro14,2","board_id":"Mac-CAD6701F7CEA0921","cpu":"Kaby Lake(U)","gpu":"Iris Plus 650 (13\")"},{"model":"MacBookPro14,3","board_id":"Mac-551B86E5744E2388","cpu":"Kaby Lake(H)","gpu":"HD 630/Radeon Pro 555 (15\")"},{"model":"MacBookPro15,1","board_id":"Mac-937A206F2EE63C01","cpu":"Coffee Lake(H)","gpu":"UHD 630/Radeon Pro 555X (15\")"},{"model":"MacBookPro15,2","board_id":"Mac-827FB448E656EC26","cpu":"Coffee Lake(U)","gpu":"Iris Plus 655 (13\")"},{"model":"MacBookPro15,3","board_id":"Mac-1E7E29AD0135F9BC","cpu":"Coffee Lake(H)","gpu":"UHD 630/Radeon Pro Vega 16 (15\")"},{"model":"MacBookPro15,4","board_id":"Mac-53FDB3D8DB8CA971","cpu":"Coffee Lake(U)","gpu":"Iris Plus 645 (13\")"},{"model":"MacBookPro16,1","board_id":"Mac-E1008331FDC96864","cpu":"Coffee Lake(H)","gpu":"UHD 630/Radeon Pro 5300 (16\")"},{"model":"MacBookPro16,2","board_id":"Mac-5F9802EFE386AA28","cpu":"Ice Lake(U)","gpu":"Iris Plus G4/G7 (13\")"},{"model":"MacBookPro16,3","board_id":"Mac-E7203C0F68AA0004","cpu":"Coffee Lake(U)","gpu":"Iris Plus 645 (13\")"},{"model":"MacBookPro16,4","board_id":"Mac-A61BADE1FDAD7B05","cpu":"Coffee Lake(H)","gpu":"UHD 630/Radeon Pro 5600M (16\")"},{"model":"MacBookPro2,1","board_id":"Mac-F42189C8","cpu":"Merom(M)","gpu":"Radeon X1600 (15\")"},{"model":"MacBookPro2,2","board_id":"Mac-F42187C8","cpu":"Merom(M)","gpu":"Radeon X1600 (17\")"},{"model":"MacBookPro3,1","board_id":"Mac-F4238BC8","cpu":"Merom(M)","gpu":"GeForce 8600M GT (15/17\")"},{"model":"MacBookPro4,1","board_id":"Mac-F42C89C8","cpu":"Penryn(M)","gpu":"GeForce 8600MG GT (17\")"},{"model":"MacBookPro5,1","board_id":"Mac-F42D86C8","cpu":"Penryn(M)","gpu":"GeForce 9400M/9600M GT (15\")"},{"model":"MacBookPro5,2","board_id":"Mac-F2268EC8","cpu":"Penryn(M)","gpu":"GeForce 9400M/9600M GT (17\")"},{"model":"MacBookPro5,3","board_id":"Mac-F22587C8","cpu":"Penryn(M)","gpu":"GeForce 9400M/9600M GT (15\")"},{"model":"MacBookPro5,4","board_id":"Mac-F22587A1","cpu":"Penryn(M)","gpu":"GeForce 9400M/9600M GT (15\")"},{"model":"MacBookPro5,5","board_id":"Mac-F2268AC8","cpu":"Penryn(M)","gpu":"GeForce 9400M/9600M GT (13\")"},{"model":"MacBookPro6,1","board_id":"Mac-F22589C8","cpu":"Arrandale(M)","gpu":"HD Graphics/GeForce GT 330M (17\")"},{"model":"MacBookPro6,2","board_id":"Mac-F22586C8","cpu":"Arrandale(M)","gpu":"HD Graphics/GeForce GT 330M (15\")"},{"model":"MacBookPro7,1","board_id":"Mac-F222BEC8","cpu":"Penryn(M)","gpu":"GeForce 320M (13\")"},{"model":"MacBookPro8,1","board_id":"Mac-94245B3640C91C81","cpu":"Sandy Bridge(M)","gpu":"HD 3000 (13\")"},{"model":"MacBookPro8,2","board_id":"Mac-94245A3940C91C80","cpu":"Sandy Bridge(QM)","gpu":"HD 3000/Radeon HD 6490M (15\")"},{"model":"MacBookPro8,3","board_id":"Mac-942459F5819B171B","cpu":"Sandy Bridge(QM)","gpu":"HD 3000/Radeon HD 6750M (17\")"},{"model":"MacBookPro9,1","board_id":"Mac-4B7AC7E43945597E","cpu":"Ivy Bridge(QM)","gpu":"HD 4000/GeForce GT 650M (15\")"},{"model":"MacBookPro9,2","board_id":"Mac-6F01561E16C75D06","cpu":"Ivy Bridge(M)","gpu":"HD 4000 (13\")"},{"model":"MacPro1,1","board_id":"Mac-F4208DC8","cpu":"Woodcrest","gpu":"GeForce 7300 GT"},{"model":"MacPro3,1","board_id":"Mac-F42C88C8","cpu":"Harpertown","gpu":"Radeon HD 2600 XT"},{"model":"MacPro4,1","board_id":"Mac-F221BEC8","cpu":"Nehalem","gpu":"GeForce GT 120"},{"model":"MacPro5,1","board_id":"Mac-F221BEC8","cpu":"Nehalem","gpu":"Radeon HD 5770"},{"model":"MacPro6,1","board_id":"Mac-F60DEB81FF30ACF6","cpu":"Ivy Bridge EP","gpu":"FirePro D300"},{"model":"MacPro7,1","board_id":"Mac-27AD2F918AE68F61","cpu":"Cascade Lake-W","gpu":"Radeon Pro 580X"},{"model":"Macmini1,1","board_id":"Mac-F4208EC8","cpu":"Yonah(M)","gpu":"GMA 950"},{"model":"Macmini2,1","board_id":"Mac-F4208EAA","cpu":"Merom(M)","gpu":"GMA 950"},{"model":"Macmini3,1","board_id":"Mac-F22C86C8","cpu":"Penryn(M)","gpu":"GeForce 9400M"},{"model":"Macmini4,1","board_id":"Mac-F2208EC8","cpu":"Penryn(M)","gpu":"GeForce 320M"},{"model":"Macmini5,1","board_id":"Mac-8ED6AF5B48C039E1","cpu":"Sandy Bridge(M)","gpu":"HD 3000"},{"model":"Macmini5,2","board_id":"Mac-4BC72D62AD45599E","cpu":"Sandy Bridge(M)","gpu":"Radeon HD 6630M"},{"model":"Macmini5,3","board_id":"Mac-7BA5B2794B2CDB12","cpu":"Sandy Bridge(QM)","gpu":"HD 3000"},{"model":"Macmini6,1","board_id":"Mac-031AEE4D24BFF0B1","cpu":"Ivy Bridge(M)","gpu":"HD 4000"},{"model":"Macmini6,2","board_id":"Mac-F65AE981FFA204ED","cpu":"Ivy Bridge(QM)","gpu":"HD 4000"},{"model":"Macmini7,1","board_id":"Mac-35C5E08120C7EEAF","cpu":"Haswell(U)","gpu":"HD 5000 or Iris 5100"},{"model":"Macmini8,1","board_id":"Mac-7BA5B2DFE22DDD8C","cpu":"Coffee Lake(H)","gpu":"UHD 630"},{"model":"Xserve1,1","board_id":"Mac-F4208AC8","cpu":"Woodcrest","gpu":"Radeon X1300"},{"model":"Xserve3,1","board_id":"Mac-F223BEC8","cpu":"Nehalem EP","gpu":"GeForce GT 120"},{"model":"iMac10,1","board_id":"Mac-F221DCC8","cpu":"Wolfdale(S)","gpu":"GeForce 9400M"},{"model":"iMac10,1","board_id":"Mac-F2268CC8","cpu":"Wolfdale(S)","gpu":"Radeon HD 4670"},{"model":"iMac11,1","board_id":"Mac-F2268DAE","cpu":"Lynnfield(S)","gpu":"Radeon HD 4850"},{"model":"iMac11,2","board_id":"Mac-F2238AC8","cpu":"Clarkdale(S)","gpu":"Radeon HD 4670"},{"model":"iMac11,3","board_id":"Mac-F2238BAE","cpu":"Clarkdale(S)","gpu":"Radeon HD 5670"},{"model":"iMac12,1","board_id":"Mac-942B5BF58194151B","cpu":"Sandy Bridge(S)","gpu":"Radeon HD 6750M"},{"model":"iMac12,2","board_id":"Mac-942B59F58194171B","cpu":"Sandy Bridge(S)","gpu":"Radeon HD 6770M"},{"model":"iMac13,1","board_id":"Mac-00BE6ED71E35EB86","cpu":"Ivy Bridge(S)","gpu":"GeForce GT 640M"},{"model":"iMac13,1","board_id":"Mac-00BE6ED71E35EB86","cpu":"Ivy Bridge(S)","gpu":"HD 4000"},{"model":"iMac13,2","board_id":"Mac-FC02E91DDD3FA6A4","cpu":"Ivy Bridge(S)","gpu":"GeForce GTX 660M"},{"model":"iMac13,3","board_id":"Mac-7DF2A3B5E5D671ED","cpu":"Ivy Bridge(S)","gpu":"HD 4000"},{"model":"iMac14,1","board_id":"Mac-031B6874CF7F642A","cpu":"Haswell(S)","gpu":"Iris Pro 5200"},{"model":"iMac14,2","board_id":"Mac-27ADBB7B4CEE8E61","cpu":"Haswell(S)","gpu":"GeForce GT 750M"},{"model":"iMac14,3","board_id":"Mac-77EB7D7DAF985301","cpu":"Haswell(S)","gpu":"GeForce GT 755M"},{"model":"iMac14,4","board_id":"Mac-81E3E92DD6088272","cpu":"Haswell(U)","gpu":"HD 5000"},{"model":"iMac15,1","board_id":"Mac-42FD25EABCABB274","cpu":"Haswell(S)","gpu":"Radeon R9 M290X"},{"model":"iMac16,1","board_id":"Mac-A369DDC4E67F1C45","cpu":"Broadwell(U)","gpu":"HD 6000 or Iris Pro 6200"},{"model":"iMac16,2","board_id":"Mac-FFE5EF870D7BA81A","cpu":"Broadwell(S)","gpu":"Iris Pro 6200"},{"model":"iMac17,1","board_id":"Mac-DB15BD556843C820, Mac-65CE76090165799A, Mac-B809C3757DA9BB8D","cpu":"Skylake(S)","gpu":"Radeon R9 M380"},{"model":"iMac18,1","board_id":"Mac-4B682C642B45593E","cpu":"Kaby Lake(U)","gpu":"Iris Plus 640"},{"model":"iMac18,2","board_id":"Mac-77F17D7DA9285301","cpu":"Kaby Lake(S)","gpu":"Radeon Pro 555"},{"model":"iMac19,1","board_id":"Mac-AA95B1DDAB278B95","cpu":"Coffee Lake(S)","gpu":"Radeon Pro 570X"},{"model":"iMac19,2","board_id":"Mac-63001698E7A34814","cpu":"Coffee Lake(S)","gpu":"Radeon Pro 555X"},{"model":"iMac20,1","board_id":"Mac-CFF7D910A743CAAF","cpu":"Comet Lake(S)","gpu":"Radeon Pro 5300"},{"model":"iMac20,2","board_id":"Mac-AF89B6D9451A490B","cpu":"Comet Lake(S)","gpu":"Radeon Pro 5700 XT"},{"model":"iMac4,1","board_id":"Mac-F42786C8","cpu":"Yonah(M)","gpu":"Radeon X1600"},{"model":"iMac4,2","board_id":"Mac-F4218EC8","cpu":"Yonah(M)","gpu":"GMA 950"},{"model":"iMac5,1","board_id":"Mac-F4228EC8","cpu":"Merom(M)","gpu":"Radeon X1600"},{"model":"iMac5,2","board_id":"Mac-F4218EC8","cpu":"Merom(M)","gpu":"GMA 950"},{"model":"iMac6,1","board_id":"Mac-F4218FC8","cpu":"Merom(M)","gpu":"GeForce 7300GT"},{"model":"iMac7,1","board_id":"Mac-F42386C8","cpu":"Merom(M)","gpu":"Radeon HD 2400 XT"},{"model":"iMac8,1","board_id":"Mac-F227BEC8","cpu":"Penryn(M)","gpu":"Radeon HD 2400 XT"},{"model":"iMac9,1","board_id":"Mac-F2218FA9","cpu":"Penryn(M)","gpu":"GeForce 9400M"},{"model":"iMacPro1,1","board_id":"Mac-7BA5B2D9E42DDD94","cpu":"Skylake-W","gpu":"Vega 56"}]},"boards":{"_source":"OpenCorePkg 1.0.7 - Utilities/macrecovery/boards.json","_note":"board-id -> derniere version de macOS servie par les serveurs Apple. Rafraichi automatiquement a chaque build depuis la release OpenCore utilisee.","boards":{"Mac-EE2EBD4B90B839A8":"13.7.8","Mac-BE0E8AC46FE800CC":"11.7.11","Mac-9AE82516C7C6B903":"12.7.6","Mac-942452F5819B1C1B":"10.13.6","Mac-942C5DF58193131B":"10.13.6","Mac-C08A6BB70A942AC2":"10.13.6","Mac-742912EFDBEE19B3":"10.13.6","Mac-66F35F19FE2A0D05":"10.15.8","Mac-2E6FAB96566FE58C":"10.15.8","Mac-35C1E88140C3E6CF":"11.7.11","Mac-7DF21CB3ED6977E5":"11.7.11","Mac-9F18E312C5C2BF0B":"12.7.6","Mac-937CB26E2E02BB01":"12.7.6","Mac-827FAC58A8FDFA22":"14.8.4","Mac-226CB3C6A851A671":"14.8.4","Mac-0CFF9C7C2B63DF8D":"15.7.4","Mac-C3EC7CD22292981F":"10.15.8","Mac-AFD8A9D944EA4843":"10.15.8","Mac-189A3D4F975D5FFC":"11.7.11","Mac-3CBD00234E554E41":"11.7.11","Mac-2BD1B31983FE1663":"11.7.11","Mac-06F11FD93F0323C5":"12.7.6","Mac-06F11F11946D27C5":"12.7.6","Mac-E43C1C25D4880AD6":"12.7.6","Mac-473D31EABEB93F9B":"12.7.6","Mac-66E35819EE2D0D05":"12.7.6","Mac-A5C67F76ED83108C":"12.7.6","Mac-B4831CEBD52A0C4C":"13.7.8","Mac-CAD6701F7CEA0921":"13.7.8","Mac-551B86E5744E2388":"13.7.8","Mac-937A206F2EE63C01":"15.7.4","Mac-827FB448E656EC26":"15.7.4","Mac-1E7E29AD0135F9BC":"15.7.4","Mac-53FDB3D8DB8CA971":"15.7.4","Mac-E1008331FDC96864":"latest","Mac-5F9802EFE386AA28":"latest","Mac-E7203C0F68AA0004":"15.7.4","Mac-A61BADE1FDAD7B05":"latest","Mac-F22589C8":"10.13.6","Mac-94245B3640C91C81":"10.13.6","Mac-94245A3940C91C80":"10.13.6","Mac-942459F5819B171B":"10.13.6","Mac-4B7AC7E43945597E":"10.15.8","Mac-6F01561E16C75D06":"10.15.8","Mac-F60DEB81FF30ACF6":"12.7.6","Mac-27AD2F918AE68F61":"latest","Mac-F2208EC8":"10.13.6","Mac-8ED6AF5B48C039E1":"10.13.6","Mac-4BC72D62AD45599E":"10.13.6","Mac-7BA5B2794B2CDB12":"10.13.6","Mac-031AEE4D24BFF0B1":"10.15.8","Mac-F65AE981FFA204ED":"10.15.8","Mac-35C5E08120C7EEAF":"12.7.6","Mac-7BA5B2DFE22DDD8C":"15.7.4","Mac-942B5BF58194151B":"10.13.6","Mac-942B59F58194171B":"10.13.6","Mac-00BE6ED71E35EB86":"10.15.8","Mac-FC02E91DDD3FA6A4":"10.15.8","Mac-7DF2A3B5E5D671ED":"10.15.8","Mac-031B6874CF7F642A":"10.15.8","Mac-27ADBB7B4CEE8E61":"10.15.8","Mac-77EB7D7DAF985301":"10.15.8","Mac-81E3E92DD6088272":"11.7.11","Mac-42FD25EABCABB274":"11.7.11","Mac-A369DDC4E67F1C45":"12.7.6","Mac-FFE5EF870D7BA81A":"12.7.6","Mac-DB15BD556843C820":"12.7.6","Mac-65CE76090165799A":"12.7.6","Mac-B809C3757DA9BB8D":"12.7.6","Mac-4B682C642B45593E":"13.7.8","Mac-77F17D7DA9285301":"13.7.8","Mac-BE088AF8C5EB4FA2":"13.7.8","Mac-AA95B1DDAB278B95":"15.7.4","Mac-63001698E7A34814":"15.7.4","Mac-CFF7D910A743CAAF":"latest","Mac-AF89B6D9451A490B":"latest","Mac-7BA5B2D9E42DDD94":"15.7.4"}}};</script>
+<script>(function () {
+  const engine = makeEngine(DATA);
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  };
+
+  const FAMILIES = [
+    ["intel-desktop", "Bureau Intel"],
+    ["intel-laptop", "Portable Intel"],
+    ["intel-hedt", "Station de travail Intel"],
+    ["amd", "AMD"],
+  ];
+  const VENDORS = ["", "asus", "gigabyte", "msi", "asrock", "dell", "hp", "lenovo", "acer"];
+  const DGPU = [
+    ["none", "Aucune"], ["amd-polaris", "AMD Polaris (RX 400/500)"],
+    ["amd-vega", "AMD Vega"], ["amd-navi", "AMD Navi (RX 5000)"],
+    ["amd-rdna2", "AMD RDNA2 (RX 6000)"], ["amd-apu", "APU AMD (Vega intégré)"],
+    ["nvidia-kepler", "NVIDIA Kepler"], ["nvidia-unsupported", "NVIDIA non supportée"],
+  ];
+  const ETHERNET = [
+    ["auto", "Non précisée"], ["none", "Aucune"], ["intel-i219", "Intel I217/I218/I219"],
+    ["intel-igb", "Intel I210/I211/I350"], ["intel-i225", "Intel I225 2,5 Gb"],
+    ["rtl8111", "Realtek RTL8111/8168"], ["rtl8125", "Realtek RTL8125 2,5 Gb"],
+    ["atheros", "Atheros / Killer E2200"],
+  ];
+  const WIFI = [["none", "Aucun"], ["intel", "Intel"], ["broadcom", "Broadcom"],
+                ["realtek", "Realtek"], ["mediatek", "MediaTek"], ["qualcomm", "Qualcomm"]];
+  const BT = [["none", "Aucun"], ["intel", "Intel"], ["broadcom", "Broadcom"],
+              ["realtek", "Realtek"]];
+  const TOUCHPAD = [["none", "Aucun"], ["ps2", "PS2"], ["i2c", "I2C"]];
+  const FEATURES = [
+    ["ota", "Mises à jour OTA"], ["gui", "Menu graphique"], ["sidecar", "Sidecar / AirPlay"],
+    ["hibernation", "Hibernation"], ["custom-smbios", "SMBIOS en dur"],
+    ["i2c-polling", "Trackpad en polling"], ["light-sensor", "Capteur de luminosité"],
+    ["sata-legacy", "SATA non reconnu"], ["cpufriend", "Profil CPU"],
+    ["rtc-fix", "Correctif RTC"], ["no-avx2", "CPU sans AVX2"],
+    ["audio-chime", "Son de démarrage"], ["linux-boot", "Démarrer Linux"],
+  ];
+
+  function fill(select, pairs, value) {
+    select.replaceChildren();
+    for (const [v, label] of pairs) {
+      const o = el("option", null, label);
+      o.value = v;
+      select.appendChild(o);
+    }
+    if (value !== undefined) select.value = value;
+  }
+
+  fill($("family"), FAMILIES, "intel-desktop");
+  fill($("vendor"), VENDORS.map(v => [v, v ? v[0].toUpperCase() + v.slice(1) : "Non précisée"]));
+  fill($("dgpu"), DGPU);
+  fill($("ethernet"), ETHERNET);
+  fill($("wifi"), WIFI);
+  fill($("bluetooth"), BT);
+  fill($("touchpad"), TOUCHPAD);
+  fill($("macos"), engine.versions.slice(6).map(v => [v.key, `${v.name} — macOS ${v.release}`]),
+       "sequoia");
+
+  for (const [key, label] of FEATURES) {
+    const wrap = el("label", "check");
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.value = key;
+    box.checked = key === "ota";
+    box.addEventListener("change", render);
+    wrap.append(box, document.createTextNode(label));
+    $("features").appendChild(wrap);
+  }
+
+  function platformsFor(family) {
+    return DATA.platforms.platforms.filter(p => p.family === family);
+  }
+
+  function syncPlatforms(keep) {
+    const list = platformsFor($("family").value);
+    fill($("platform"), list.map(p => [p.id, p.name]), keep && list.some(p => p.id === keep)
+      ? keep : list[0].id);
+    syncSmbios();
+  }
+
+  let smbiosTouched = false;
+
+  function syncSmbios() {
+    const plat = DATA.platforms.platforms.find(p => p.id === $("platform").value);
+    const recommended = plat.smbios.default;
+    const others = (plat.smbios.alternatives || []);
+    const rest = DATA.smbios.models.map(m => m.model)
+      .filter(m => m !== recommended && !others.includes(m));
+    const pairs = [[recommended, `${recommended} — recommandé`]]
+      .concat(others.map(m => [m, `${m} — alternative`]))
+      .concat(rest.map(m => [m, m]));
+    // Le modele recommande suit la plateforme, sauf si l'utilisateur l'a choisi lui-meme.
+    const previous = $("smbios").value;
+    const keep = smbiosTouched && pairs.some(p => p[0] === previous);
+    fill($("smbios"), pairs, keep ? previous : recommended);
+  }
+
+  function readProfile() {
+    const igpuChoice = $("igpu").value;
+    const features = [...$("features").querySelectorAll("input:checked")].map(b => b.value);
+    return {
+      platform: $("platform").value, macos: $("macos").value, chassis: "",
+      chipset: $("chipset").value.trim(), motherboard_vendor: $("vendor").value,
+      cpu_cores: Number($("cores").value) || 0,
+      igpu: igpuChoice === "none" ? "none" : "igpu",
+      igpu_mode: igpuChoice === "none" ? "none" : igpuChoice,
+      igpu_variant: "", dgpu: $("dgpu").value, audio: "alc",
+      audio_layout: Number($("alcid").value) || 1,
+      ethernet: $("ethernet").value, wifi: $("wifi").value, bluetooth: $("bluetooth").value,
+      touchpad: $("touchpad").value, nvme: true, smbios: $("smbios").value,
+      usb_map_kind: $("usbmap").value, features, debug: false, sip: "enabled",
+    };
+  }
+
+  function section(title, count, build) {
+    const wrap = el("div", "section");
+    const head = el("div", "section-head");
+    head.append(el("h3", null, title), el("span", "count", count));
+    wrap.appendChild(head);
+    wrap.appendChild(build());
+    return wrap;
+  }
+
+  function rowList(items) {
+    const box = el("div", "rows");
+    for (const item of items) {
+      const row = el("div", "row");
+      const name = el("div", "name", item.name);
+      if (item.tag) {
+        const t = el("span", "tag" + (item.tagWarn ? " tag-warn" : ""), item.tag);
+        t.style.marginLeft = "7px";
+        name.appendChild(t);
+      }
+      row.appendChild(name);
+      row.appendChild(el("div", "val", item.value || ""));
+      if (item.why) row.appendChild(el("div", "why", item.why));
+      box.appendChild(row);
+    }
+    return box;
+  }
+
+  function commandFor(p, ctx) {
+    const parts = ["efibuild build", `--platform ${p.platform}`, `--macos ${p.macos}`];
+    if (p.chipset) parts.push(`--chipset ${p.chipset}`);
+    if (p.motherboard_vendor) parts.push(`--vendor ${p.motherboard_vendor}`);
+    if (p.cpu_cores > 0) parts.push(`--cores ${p.cpu_cores}`);
+    if (p.igpu !== "none") parts.push("--igpu igpu", `--igpu-mode ${p.igpu_mode}`);
+    if (p.dgpu !== "none") parts.push(`--dgpu ${p.dgpu}`);
+    if (p.ethernet !== "auto") parts.push(`--ethernet ${p.ethernet}`);
+    if (p.wifi !== "none") parts.push(`--wifi ${p.wifi}`);
+    if (p.bluetooth !== "none") parts.push(`--bluetooth ${p.bluetooth}`);
+    if (p.touchpad !== "none") parts.push(`--touchpad ${p.touchpad}`);
+    if (p.audio_layout !== 1) parts.push(`--audio-layout ${p.audio_layout}`);
+    if (p.smbios !== ctx.plat.smbios.default) parts.push(`--smbios ${p.smbios}`);
+    if (p.usb_map_kind !== "none") parts.push(`--usb-map-kind ${p.usb_map_kind}`,
+                                              "--usb-map <votre fichier>");
+    for (const f of p.features) parts.push(`--feature ${f}`);
+    parts.push("-o mon-efi");
+    const lines = [];
+    let line = parts[0];
+    for (const part of parts.slice(1)) {
+      if ((line + " " + part).length > 68) { lines.push(line + " \\"); line = "    " + part; }
+      else line += " " + part;
+    }
+    lines.push(line);
+    return lines.join("\n");
+  }
+
+  function render() {
+    const profile = readProfile();
+    const ctx = engine.resolve(profile);
+    const ssdts = engine.ssdts(ctx);
+    const { chosen, warnings: kextWarnings } = engine.kexts(ctx);
+    const quirks = engine.quirks(ctx);
+    const boot = engine.bootArgs(ctx);
+    const blockers = engine.blockers(ctx);
+    const notes = engine.warnings(ctx).concat(kextWarnings);
+    const sm = engine.smbiosServes(ctx.smbios_model, ctx.macos);
+
+    $("target").textContent = `${ctx.macos.name} · ${ctx.smbios_model}`;
+    $("cores-field").style.display = ctx.family === "amd" ? "" : "none";
+
+    const v = el("div", "verdict " + (blockers.length ? "v-bad" : notes.length ? "v-warn" : "v-ok"));
+    v.appendChild(el("span", "verdict-chip",
+      blockers.length ? "incompatible" : notes.length ? "faisable" : "sans réserve"));
+    const vt = el("div");
+    vt.appendChild(el("p", null, blockers.length
+      ? blockers[0]
+      : `${ctx.plat.name} sous ${ctx.macos.name}.`));
+    vt.appendChild(el("p", "sub", sm.known && sm.ok === false
+      ? `Le SMBIOS ${ctx.smbios_model} ne reçoit plus que macOS ${sm.served}.`
+      : `${ssdts.length} SSDT, ${chosen.length} kexts, ${Object.keys(quirks).length} quirks à appliquer.`));
+    v.appendChild(vt);
+    $("verdict").replaceChildren(v);
+
+    const manifest = el("div");
+
+    manifest.appendChild(section("ACPI", `${ssdts.length}`, () => ssdts.length
+      ? rowList(ssdts.map(s => ({ name: s.file, why: s.reason })))
+      : el("div", "empty", "Aucun SSDT pour cette plateforme.")));
+
+    manifest.appendChild(section("Kexts", `${chosen.length}`, () => rowList(
+      chosen.map(k => ({
+        name: k.bundles[0],
+        tag: k.manual ? "à fournir" : null, tagWarn: true,
+        value: k.repo ? k.repo.split("/")[0] : "",
+        why: k.reason,
+      })))));
+
+    manifest.appendChild(section("Quirks", `${Object.keys(quirks).length}`, () => rowList(
+      Object.entries(quirks).map(([k, val]) => ({
+        name: k, value: val === true ? "vrai" : val === false ? "faux" : String(val),
+      })))));
+
+    manifest.appendChild(section("boot-args", `${boot.length}`, () => boot.length
+      ? rowList([{ name: boot.join(" ") }])
+      : el("div", "empty", "Aucun boot-arg nécessaire.")));
+
+    if (notes.length || blockers.length) {
+      manifest.appendChild(section("À savoir", `${blockers.length + notes.length}`, () => {
+        const box = el("div", "rows");
+        for (const b of blockers) {
+          const n = el("div", "note n-bad");
+          n.append(el("span", "mark", "×"), el("span", null, b));
+          box.appendChild(n);
+        }
+        for (const w of notes) {
+          const n = el("div", "note n-warn");
+          n.append(el("span", "mark", "!"), el("span", null, w));
+          box.appendChild(n);
+        }
+        return box;
+      }));
+    }
+
+    $("manifest").replaceChildren(manifest);
+    $("command").textContent = commandFor(profile, ctx);
+    $("copied").hidden = true;
+  }
+
+  $("smbios").addEventListener("change", () => { smbiosTouched = true; });
+  $("family").addEventListener("change", () => { syncPlatforms(); render(); });
+  $("platform").addEventListener("change", () => { syncSmbios(); render(); });
+  for (const id of ["macos", "chipset", "vendor", "cores", "alcid", "igpu", "dgpu",
+                    "smbios", "ethernet", "wifi", "bluetooth", "touchpad", "usbmap"]) {
+    $(id).addEventListener("input", render);
+  }
+
+  $("copy").addEventListener("click", async () => {
+    const text = $("command").textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents($("command"));
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    $("copied").hidden = false;
+  });
+
+  $("theme").addEventListener("click", () => {
+    const root = document.documentElement;
+    const dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") &&
+       matchMedia("(prefers-color-scheme: dark)").matches);
+    root.setAttribute("data-theme", dark ? "light" : "dark");
+  });
+
+  syncPlatforms("coffee-lake-desktop");
+  $("platform").value = "coffee-lake-desktop";
+  syncSmbios();
+  $("igpu").value = "headless";
+  render();
+})();
+</script>
