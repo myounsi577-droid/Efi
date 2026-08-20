@@ -144,6 +144,25 @@ Puis reconstruire en déclarant la carte :
 - Vérifier la gestion d'énergie CPU, la veille, l'audio et le Wi-Fi avant de
   considérer l'installation terminée.
 
+## Mettre à jour un EFI existant
+
+```bash
+./efibuild import /Volumes/EFI/EFI -o profil.json
+$EDITOR profil.json          # compléter chipset, motherboard_vendor, usb_map_file
+./efibuild build --profile profil.json --macos tahoe -o efi-neuf
+```
+
+Quelques précautions :
+
+- **Gardez vos SSDT.** Ceux générés par SSDTTime sont taillés sur votre DSDT ;
+  ceux d'efibuild sont génériques. Recopiez les vôtres dans `EFI/OC/ACPI` et
+  reprenez les entrées correspondantes de `ACPI → Add`.
+- **Gardez votre mappage USB** : `--usb-map <votre UTBMap.kext>`.
+- **Comparez avant de remplacer.** Démarrez d'abord depuis une clé USB avec le
+  nouvel EFI, l'ancien reste intact sur le disque.
+- `import` liste les kexts hors catalogue : ils ne seront pas régénérés, il faut
+  les recopier à la main.
+
 ## Dépannage
 
 | Symptôme | Piste |

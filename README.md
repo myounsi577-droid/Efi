@@ -111,10 +111,30 @@ Certains pilotes communautaires n'ont pas de release exploitable automatiquement
 sélectionne, explique leur rôle et indique où les récupérer, et le rapport les
 liste comme « à ajouter manuellement ».
 
+## Repartir d'un EFI existant
+
+```bash
+./efibuild import mon-efi/EFI -o profil.json      # ou directement un config.plist
+./efibuild build --profile profil.json -o efi-neuf
+```
+
+`import` relit un `config.plist` et en déduit un profil complet : plateforme,
+châssis, SMBIOS, `ProcessorType`, nombre de cœurs (relu dans le patch AMD
+`cpuid_cores_per_package`), réseau / Wi-Fi / Bluetooth / trackpad d'après les
+kexts, framebuffer iGPU, `layout-id` audio, niveau de SIP, mappage USB et
+fonctions activées.
+
+Il signale aussi ce qu'il ne sait pas reproduire : kexts hors catalogue,
+quirks de votre EFI qui diffèrent de ceux de la plateforme, champs à compléter
+à la main. C'est le chemin pour **remettre à jour un EFI qui marche** (OpenCore
+et kexts récents) ou le **porter vers une version plus récente de macOS**
+(`--macos tahoe`), sans repartir de zéro.
+
 ## Commandes
 
 ```
 efibuild build       construire un EFI complet
+efibuild import      déduire un profil d'un EFI existant
 efibuild check       verdict de compatibilité, sans téléchargement
 efibuild wizard      assistant interactif puis construction
 efibuild recovery    télécharger l'image de récupération Apple

@@ -5,7 +5,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from efibuilder import __version__, data_files, oc, recovery, smbios, usbdisk, usbmap, wizard
+from efibuilder import (__version__, data_files, importer, oc, recovery, smbios,
+                        usbdisk, usbmap, wizard)
 from efibuilder.build import build_efi, validate_config
 from efibuilder.net import Downloader, default_cache_dir
 from efibuilder.profile import (BLUETOOTH_CHOICES, DGPU_CHOICES, ETHERNET_CHOICES,
@@ -137,6 +138,16 @@ def build_parser() -> argparse.ArgumentParser:
     l = sub.add_parser("list", help="lister les donnees de reference")
     l.add_argument("what", choices=["platforms", "macos", "smbios", "kexts", "features"])
     l.add_argument("--macos", help="pour 'smbios': filtrer sur une version de macOS")
+
+    # ----------------------------------------------------------------- import
+    im = sub.add_parser("import",
+                        help="deduire un profil d'un EFI ou d'un config.plist existant")
+    im.add_argument("source", type=Path,
+                    help="config.plist, dossier EFI ou dossier le contenant")
+    im.add_argument("--macos", default="sequoia",
+                    help="version de macOS a inscrire dans le profil")
+    im.add_argument("-o", "--out", type=Path, default=Path("profil.json"),
+                    help="fichier de profil a ecrire")
 
     # ------------------------------------------------------------------ check
     ch = sub.add_parser("check",
@@ -312,6 +323,22 @@ def cmd_list(args) -> int:
     return 0
 
 
+def cmd_import(args) -> int:
+    config, source = importer.load_config(args.source)
+    profile, notes = importer.import_profile(config, args.macos)
+    importer.describe(profile, notes, source)
+    profile.save(args.out)
+    print()
+    ok(f"profil ecrit dans {args.out}")
+    info(f"reconstruire avec: efibuild build --profile {args.out} -o efi-neuf")
+    warnings = profile.validate()
+    if warnings:
+        print()
+        for item in warnings:
+            warn(item)
+    return 0
+
+
 def cmd_check(args) -> int:
     profile = Profile(
         platform=args.platform, macos=args.macos,
@@ -391,7 +418,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {
         "build": cmd_build, "wizard": cmd_wizard, "recovery": cmd_recovery,
         "usbmap": cmd_usbmap, "usb": cmd_usb, "list": cmd_list, "info": cmd_info,
-        "check": cmd_check,
+        "check": cmd_check, "import": cmd_import,
         "validate": cmd_validate,
     }
     try:

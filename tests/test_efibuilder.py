@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from efibuilder import acpi, configgen, data_files, kexts, smbios, usbmap
+from efibuilder import acpi, configgen, data_files, importer, kexts, smbios, usbmap
 from efibuilder.profile import Profile
 from efibuilder.util import ascii_comment
 
@@ -184,6 +184,73 @@ class CompatibilityTests(unittest.TestCase):
     def test_pre_haswell_blocked_on_ventura(self):
         profile = Profile(platform="ivy-bridge-desktop", macos="ventura")
         self.assertTrue(any("AVX2" in b for b in profile.blockers()))
+
+
+def amd_laptop_config() -> dict:
+    """Config minimal representatif d'un portable AMD a APU Vega."""
+    return {
+        "ACPI": {"Add": [{"Path": "SSDT-PNLF.aml", "Enabled": True}]},
+        "Kernel": {
+            "Add": [{"BundlePath": n, "Enabled": True} for n in (
+                "Lilu.kext", "NootedRed.kext", "VirtualSMC.kext", "SMCBatteryManager.kext",
+                "VoodooI2C.kext", "RealtekRTL8111.kext", "rtw88.kext", "UTBMap.kext",
+                "RestrictEvents.kext", "SMCLightSensor.kext", "MonKextInconnu.kext")],
+            "Patch": [{"Comment": "algrey | Force cpuid_cores_per_package to constant",
+                       "Replace": bytes.fromhex("ba06000000")}],
+            "Quirks": {"LapicKernelPanic": True, "DisableRtcChecksum": True},
+        },
+        "UEFI": {"Drivers": [{"Path": "OpenCanopy.efi"}], "Quirks": {}},
+        "Booter": {"Quirks": {}},
+        "DeviceProperties": {"Add": {"PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x6)":
+                                     {"layout-id": 55}}},
+        "PlatformInfo": {"UpdateSMBIOSMode": "Custom",
+                         "Generic": {"SystemProductName": "MacBookPro16,2",
+                                     "ProcessorType": 1537,
+                                     "SystemSerialNumber": "C02XXXXXXXXX"}},
+        "NVRAM": {"Add": {importer.NVRAM_GUID: {
+            "boot-args": "-vi2c-force-polling npci=0x3000",
+            "csr-active-config": bytes.fromhex("030A0000")}}},
+    }
+
+
+class ImportTests(unittest.TestCase):
+    def setUp(self):
+        self.profile, self.notes = importer.import_profile(amd_laptop_config())
+
+    def test_platform_and_chassis(self):
+        self.assertEqual(self.profile.platform, "amd-zen-laptop")
+        self.assertEqual(self.profile.chassis, "laptop")
+
+    def test_core_count_read_from_amd_patch(self):
+        self.assertEqual(self.profile.cpu_cores, 6)
+
+    def test_hardware_from_kexts(self):
+        self.assertEqual(self.profile.ethernet, "rtl8111")
+        self.assertEqual(self.profile.wifi, "realtek")
+        self.assertEqual(self.profile.touchpad, "i2c")
+        self.assertEqual(self.profile.usb_map_kind, "usbtoolbox")
+
+    def test_smbios_and_processor_type(self):
+        self.assertEqual(self.profile.smbios, "MacBookPro16,2")
+        self.assertEqual(self.profile.processor_type, 1537)
+
+    def test_audio_layout_from_device_properties(self):
+        self.assertEqual(self.profile.audio_layout, 55)
+
+    def test_sip_level(self):
+        self.assertEqual(self.profile.sip, "partial")
+
+    def test_features(self):
+        for feature in ("custom-smbios", "gui", "i2c-polling", "light-sensor", "ota"):
+            self.assertIn(feature, self.profile.features)
+
+    def test_unknown_kext_is_reported_but_usb_map_is_not(self):
+        joined = " ".join(self.notes)
+        self.assertIn("MonKextInconnu.kext", joined)
+        self.assertNotIn("UTBMap.kext n", joined)
+
+    def test_generated_boot_args_are_not_duplicated(self):
+        self.assertEqual(self.profile.boot_args, [])
 
 
 class UsbMapTests(unittest.TestCase):
