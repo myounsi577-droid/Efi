@@ -2,138 +2,402 @@
   "_note": "asset = regex appliquee aux noms d'assets de la release GitHub. bundles = kexts a extraire de l'archive. Les PlugIns internes sont detectes automatiquement.",
   "kexts": [
     {
-      "id": "Lilu", "repo": "acidanthera/Lilu", "asset": "^Lilu-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["Lilu.kext"], "order": 0, "required": true,
+      "id": "Lilu",
+      "repo": "acidanthera/Lilu",
+      "asset": "^Lilu-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "Lilu.kext"
+      ],
+      "order": 0,
+      "required": true,
       "reason": "Moteur de patch dont dependent WhateverGreen, AppleALC, VirtualSMC..."
     },
     {
-      "id": "VirtualSMC", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["VirtualSMC.kext"], "order": 1, "required": true,
+      "id": "VirtualSMC",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "VirtualSMC.kext"
+      ],
+      "order": 1,
+      "required": true,
       "reason": "Emule la puce SMC d'un vrai Mac (sans elle macOS ne demarre pas)"
     },
     {
-      "id": "SMCProcessor", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["SMCProcessor.kext"], "order": 2,
-      "when": {"not": {"field": "family", "eq": "amd"}},
+      "id": "SMCProcessor",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "SMCProcessor.kext"
+      ],
+      "order": 2,
+      "when": {
+        "not": {
+          "field": "family",
+          "eq": "amd"
+        }
+      },
       "reason": "Capteurs de temperature CPU (Intel uniquement)"
     },
     {
-      "id": "SMCSuperIO", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["SMCSuperIO.kext"], "order": 3,
+      "id": "SMCSuperIO",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "SMCSuperIO.kext"
+      ],
+      "order": 3,
       "reason": "Capteurs de vitesse des ventilateurs"
     },
     {
-      "id": "SMCBatteryManager", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["SMCBatteryManager.kext"], "order": 4,
-      "when": {"field": "laptop", "eq": true},
+      "id": "SMCBatteryManager",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "SMCBatteryManager.kext"
+      ],
+      "order": 4,
+      "when": {
+        "field": "laptop",
+        "eq": true
+      },
       "reason": "Lecture de la batterie sur portable"
     },
     {
-      "id": "SMCLightSensor", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["SMCLightSensor.kext"], "order": 5, "optional": true,
-      "when": {"all": [{"field": "laptop", "eq": true}, {"field": "features", "contains": "light-sensor"}]},
+      "id": "SMCLightSensor",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "SMCLightSensor.kext"
+      ],
+      "order": 5,
+      "optional": true,
+      "when": {
+        "all": [
+          {
+            "field": "laptop",
+            "eq": true
+          },
+          {
+            "field": "features",
+            "contains": "light-sensor"
+          }
+        ]
+      },
       "reason": "Capteur de luminosite ambiante"
     },
     {
-      "id": "SMCDellSensors", "repo": "acidanthera/VirtualSMC", "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["SMCDellSensors.kext"], "order": 6, "optional": true,
-      "when": {"all": [{"field": "laptop", "eq": true}, {"field": "motherboard_vendor", "in": ["dell"]}]},
+      "id": "SMCDellSensors",
+      "repo": "acidanthera/VirtualSMC",
+      "asset": "^VirtualSMC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "SMCDellSensors.kext"
+      ],
+      "order": 6,
+      "optional": true,
+      "when": {
+        "all": [
+          {
+            "field": "laptop",
+            "eq": true
+          },
+          {
+            "field": "motherboard_vendor",
+            "in": [
+              "dell"
+            ]
+          }
+        ]
+      },
       "reason": "Gestion des ventilateurs sur portables Dell"
     },
     {
-      "id": "WhateverGreen", "repo": "acidanthera/WhateverGreen", "asset": "^WhateverGreen-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["WhateverGreen.kext"], "order": 10,
-      "when": {"not": {"all": [{"field": "igpu", "eq": "none"}, {"field": "dgpu", "eq": "none"}]}},
+      "id": "WhateverGreen",
+      "repo": "acidanthera/WhateverGreen",
+      "asset": "^WhateverGreen-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "WhateverGreen.kext"
+      ],
+      "order": 10,
+      "when": {
+        "all": [
+          {
+            "not": {
+              "all": [
+                {
+                  "field": "igpu",
+                  "eq": "none"
+                },
+                {
+                  "field": "dgpu",
+                  "eq": "none"
+                }
+              ]
+            }
+          },
+          {
+            "not": {
+              "all": [
+                {
+                  "field": "family",
+                  "eq": "amd"
+                },
+                {
+                  "field": "dgpu",
+                  "eq": "none"
+                }
+              ]
+            }
+          }
+        ]
+      },
       "reason": "Correctifs graphiques (framebuffer, connecteurs, acceleration)",
-      "warn_macos": {"tahoe": "WhateverGreen a des problemes de connector patching AMD sur macOS 26: le retirer en cas de panic GPU."}
+      "warn_macos": {
+        "tahoe": "WhateverGreen a des problemes de connector patching AMD sur macOS 26: le retirer en cas de panic GPU."
+      }
     },
     {
-      "id": "AppleALC", "repo": "acidanthera/AppleALC", "asset": "^AppleALC-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["AppleALC.kext"], "order": 11,
-      "when": {"not": {"field": "audio", "eq": "none"}},
+      "id": "AppleALC",
+      "repo": "acidanthera/AppleALC",
+      "asset": "^AppleALC-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "AppleALC.kext"
+      ],
+      "order": 11,
+      "when": {
+        "not": {
+          "field": "audio",
+          "eq": "none"
+        }
+      },
       "reason": "Audio analogique via injection de layout-id",
-      "warn_macos": {"tahoe": "AppleHDA a ete supprime de macOS 26: AppleALC ne restaure plus l'audio analogique."}
+      "warn_macos": {
+        "tahoe": "AppleHDA a ete supprime de macOS 26: AppleALC ne restaure plus l'audio analogique."
+      }
     },
     {
-      "id": "NVMeFix", "repo": "acidanthera/NVMeFix", "asset": "^NVMeFix-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["NVMeFix.kext"], "order": 12,
-      "when": {"field": "nvme", "eq": true},
+      "id": "NVMeFix",
+      "repo": "acidanthera/NVMeFix",
+      "asset": "^NVMeFix-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "NVMeFix.kext"
+      ],
+      "order": 12,
+      "when": {
+        "field": "nvme",
+        "eq": true
+      },
       "reason": "Gestion d'energie et compatibilite des SSD NVMe non-Apple"
     },
     {
-      "id": "RestrictEvents", "repo": "acidanthera/RestrictEvents", "asset": "^RestrictEvents-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["RestrictEvents.kext"], "order": 13,
-      "when": {"any": [{"field": "features", "contains": "ota"}, {"field": "family", "eq": "amd"}]},
+      "id": "RestrictEvents",
+      "repo": "acidanthera/RestrictEvents",
+      "asset": "^RestrictEvents-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "RestrictEvents.kext"
+      ],
+      "order": 13,
+      "when": {
+        "any": [
+          {
+            "field": "features",
+            "contains": "ota"
+          },
+          {
+            "field": "family",
+            "eq": "amd"
+          }
+        ]
+      },
       "reason": "Mises a jour OTA (revpatch=sbvmm) et correction du nom de CPU affiche sur AMD"
     },
     {
-      "id": "CpuTscSync", "repo": "acidanthera/CpuTscSync", "asset": "^CpuTscSync-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["CpuTscSync.kext"], "order": 14,
-      "when": {"any": [{"field": "laptop", "eq": true}, {"field": "family", "eq": "intel-hedt"}]},
+      "id": "CpuTscSync",
+      "repo": "acidanthera/CpuTscSync",
+      "asset": "^CpuTscSync-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "CpuTscSync.kext"
+      ],
+      "order": 14,
+      "when": {
+        "any": [
+          {
+            "field": "laptop",
+            "eq": true
+          },
+          {
+            "field": "family",
+            "eq": "intel-hedt"
+          }
+        ]
+      },
       "reason": "Synchronise le TSC entre coeurs (reveil de veille sur portables et HEDT)"
     },
     {
-      "id": "CPUFriend", "repo": "acidanthera/CPUFriend", "asset": "^CPUFriend-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["CPUFriend.kext"], "order": 15, "optional": true,
-      "when": {"field": "features", "contains": "cpufriend"},
+      "id": "CPUFriend",
+      "repo": "acidanthera/CPUFriend",
+      "asset": "^CPUFriend-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "CPUFriend.kext"
+      ],
+      "order": 15,
+      "optional": true,
+      "when": {
+        "field": "features",
+        "contains": "cpufriend"
+      },
       "reason": "Profil de gestion d'energie CPU personnalise (necessite CPUFriendDataProvider genere sur la machine)"
     },
     {
-      "id": "HibernationFixup", "repo": "acidanthera/HibernationFixup", "asset": "^HibernationFixup-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["HibernationFixup.kext"], "order": 16, "optional": true,
-      "when": {"field": "features", "contains": "hibernation"},
+      "id": "HibernationFixup",
+      "repo": "acidanthera/HibernationFixup",
+      "asset": "^HibernationFixup-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "HibernationFixup.kext"
+      ],
+      "order": 16,
+      "optional": true,
+      "when": {
+        "field": "features",
+        "contains": "hibernation"
+      },
       "reason": "Hibernation (mode veille S4)"
     },
     {
-      "id": "FeatureUnlock", "repo": "acidanthera/FeatureUnlock", "asset": "^FeatureUnlock-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["FeatureUnlock.kext"], "order": 17, "optional": true,
-      "when": {"field": "features", "contains": "sidecar"},
+      "id": "FeatureUnlock",
+      "repo": "acidanthera/FeatureUnlock",
+      "asset": "^FeatureUnlock-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "FeatureUnlock.kext"
+      ],
+      "order": 17,
+      "optional": true,
+      "when": {
+        "field": "features",
+        "contains": "sidecar"
+      },
       "reason": "Debloque Sidecar, AirPlay to Mac, Universal Control et NightShift"
     },
     {
-      "id": "RTCMemoryFixup", "repo": "acidanthera/RTCMemoryFixup", "asset": "^RTCMemoryFixup-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["RTCMemoryFixup.kext"], "order": 18, "optional": true,
-      "when": {"field": "features", "contains": "rtc-fix"},
+      "id": "RTCMemoryFixup",
+      "repo": "acidanthera/RTCMemoryFixup",
+      "asset": "^RTCMemoryFixup-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "RTCMemoryFixup.kext"
+      ],
+      "order": 18,
+      "optional": true,
+      "when": {
+        "field": "features",
+        "contains": "rtc-fix"
+      },
       "reason": "Empeche la corruption de la NVRAM/RTC sur certaines cartes"
     },
     {
-      "id": "CryptexFixup", "repo": "acidanthera/CryptexFixup", "asset": "^CryptexFixup-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["CryptexFixup.kext"], "order": 19, "optional": true,
-      "when": {"field": "features", "contains": "no-avx2"},
+      "id": "CryptexFixup",
+      "repo": "acidanthera/CryptexFixup",
+      "asset": "^CryptexFixup-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "CryptexFixup.kext"
+      ],
+      "order": 19,
+      "optional": true,
+      "when": {
+        "field": "features",
+        "contains": "no-avx2"
+      },
       "reason": "Force le cache dyld sans AVX2 (macOS 13+ sur CPU pre-Haswell)"
     },
     {
-      "id": "IntelMausi", "repo": "acidanthera/IntelMausi", "asset": "^IntelMausi-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["IntelMausi.kext"], "order": 30,
-      "when": {"field": "ethernet", "in": ["intel-mausi", "intel-i219", "intel-i218", "intel-i217"]},
+      "id": "IntelMausi",
+      "repo": "acidanthera/IntelMausi",
+      "asset": "^IntelMausi-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "IntelMausi.kext"
+      ],
+      "order": 30,
+      "when": {
+        "field": "ethernet",
+        "in": [
+          "intel-mausi",
+          "intel-i219",
+          "intel-i218",
+          "intel-i217"
+        ]
+      },
       "reason": "Cartes Ethernet Intel (I217 / I218 / I219 et la plupart des chipsets Intel)"
     },
     {
-      "id": "AppleIGB", "repo": "donatengit/AppleIGB", "asset": "\\.zip$",
-      "bundles": ["AppleIGB.kext"], "order": 31,
-      "when": {"field": "ethernet", "in": ["intel-igb", "intel-i211", "intel-i210"]},
+      "id": "AppleIGB",
+      "repo": "donatengit/AppleIGB",
+      "asset": "\\.zip$",
+      "bundles": [
+        "AppleIGB.kext"
+      ],
+      "order": 31,
+      "when": {
+        "field": "ethernet",
+        "in": [
+          "intel-igb",
+          "intel-i211",
+          "intel-i210"
+        ]
+      },
       "reason": "Cartes Ethernet Intel I210 / I211 / I350"
     },
     {
-      "id": "LucyRTL8125Ethernet", "repo": "Mieze/LucyRTL8125Ethernet", "asset": "\\.zip$",
-      "bundles": ["LucyRTL8125Ethernet.kext"], "order": 32,
-      "when": {"field": "ethernet", "in": ["rtl8125"]},
+      "id": "LucyRTL8125Ethernet",
+      "repo": "Mieze/LucyRTL8125Ethernet",
+      "asset": "\\.zip$",
+      "bundles": [
+        "LucyRTL8125Ethernet.kext"
+      ],
+      "order": 32,
+      "when": {
+        "field": "ethernet",
+        "in": [
+          "rtl8125"
+        ]
+      },
       "reason": "Realtek RTL8125 2.5 Gbit"
     },
     {
-      "id": "RealtekRTL8111", "repo": "Mieze/RTL8111_driver_for_OS_X", "asset": "\\.zip$",
-      "bundles": ["RealtekRTL8111.kext"], "order": 33,
-      "when": {"field": "ethernet", "in": ["rtl8111", "rtl8168"]},
+      "id": "RealtekRTL8111",
+      "repo": "Mieze/RTL8111_driver_for_OS_X",
+      "asset": "\\.zip$",
+      "bundles": [
+        "RealtekRTL8111.kext"
+      ],
+      "order": 33,
+      "when": {
+        "field": "ethernet",
+        "in": [
+          "rtl8111",
+          "rtl8168"
+        ]
+      },
       "reason": "Realtek RTL8111 / RTL8168 gigabit"
     },
     {
-      "id": "AtherosE2200Ethernet", "repo": "Mieze/AtherosE2200Ethernet", "asset": "\\.zip$",
-      "bundles": ["AtherosE2200Ethernet.kext"], "order": 34,
-      "when": {"field": "ethernet", "in": ["atheros", "killer"]},
+      "id": "AtherosE2200Ethernet",
+      "repo": "Mieze/AtherosE2200Ethernet",
+      "asset": "\\.zip$",
+      "bundles": [
+        "AtherosE2200Ethernet.kext"
+      ],
+      "order": 34,
+      "when": {
+        "field": "ethernet",
+        "in": [
+          "atheros",
+          "killer"
+        ]
+      },
       "reason": "Atheros / Killer E2200 series"
     },
     {
-      "id": "AirportItlwm", "repo": "OpenIntelWireless/itlwm",
+      "id": "AirportItlwm",
+      "repo": "OpenIntelWireless/itlwm",
       "asset_by_macos": {
         "high-sierra": "AirportItlwm.*High_Sierra.*\\.zip$",
         "mojave": "AirportItlwm.*Mojave.*\\.zip$",
@@ -145,74 +409,208 @@
         "sequoia": "AirportItlwm.*Sequoia.*\\.zip$",
         "tahoe": "AirportItlwm.*Tahoe.*\\.zip$"
       },
-      "bundles": ["AirportItlwm.kext"], "order": 40,
-      "when": {"field": "wifi", "eq": "intel"},
+      "bundles": [
+        "AirportItlwm.kext"
+      ],
+      "order": 40,
+      "when": {
+        "field": "wifi",
+        "eq": "intel"
+      },
       "reason": "Wi-Fi Intel natif (une build par version de macOS)",
       "note": "AirportItlwm est compile pour une version precise de macOS: il faut le remplacer a chaque mise a jour majeure."
     },
     {
-      "id": "AirportBrcmFixup", "repo": "acidanthera/AirportBrcmFixup", "asset": "^AirportBrcmFixup-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["AirportBrcmFixup.kext"], "order": 41,
-      "when": {"field": "wifi", "eq": "broadcom"},
+      "id": "AirportBrcmFixup",
+      "repo": "acidanthera/AirportBrcmFixup",
+      "asset": "^AirportBrcmFixup-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "AirportBrcmFixup.kext"
+      ],
+      "order": 41,
+      "when": {
+        "field": "wifi",
+        "eq": "broadcom"
+      },
       "reason": "Correctifs pour les cartes Wi-Fi Broadcom",
       "max_macos": "ventura",
-      "warn_macos": {"sonoma": "Le support Wi-Fi Broadcom natif a ete supprime de macOS 14+ (voir AppleBCMWLANCompanion)."}
+      "warn_macos": {
+        "sonoma": "Le support Wi-Fi Broadcom natif a ete supprime de macOS 14+ (voir AppleBCMWLANCompanion)."
+      }
     },
     {
-      "id": "IntelBluetoothFirmware", "repo": "OpenIntelWireless/IntelBluetoothFirmware", "asset": "^IntelBluetooth-v[0-9.]+\\.zip$",
-      "bundles": ["IntelBluetoothFirmware.kext", "IntelBTPatcher.kext"], "order": 45,
-      "when": {"field": "bluetooth", "eq": "intel"},
+      "id": "IntelBluetoothFirmware",
+      "repo": "OpenIntelWireless/IntelBluetoothFirmware",
+      "asset": "^IntelBluetooth-v[0-9.]+\\.zip$",
+      "bundles": [
+        "IntelBluetoothFirmware.kext",
+        "IntelBTPatcher.kext"
+      ],
+      "order": 45,
+      "when": {
+        "field": "bluetooth",
+        "eq": "intel"
+      },
       "reason": "Firmware et correctifs Bluetooth Intel"
     },
     {
-      "id": "BlueToolFixup", "repo": "acidanthera/BrcmPatchRAM", "asset": "^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["BlueToolFixup.kext"], "order": 46,
+      "id": "BlueToolFixup",
+      "repo": "acidanthera/BrcmPatchRAM",
+      "asset": "^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "BlueToolFixup.kext"
+      ],
+      "order": 46,
       "min_darwin": 20,
-      "when": {"field": "bluetooth", "in": ["intel", "broadcom"]},
+      "when": {
+        "field": "bluetooth",
+        "in": [
+          "intel",
+          "broadcom"
+        ]
+      },
       "reason": "Contourne BlueTool sur macOS 11+ (obligatoire pour le Bluetooth non Apple)"
     },
     {
-      "id": "BrcmPatchRAM3", "repo": "acidanthera/BrcmPatchRAM", "asset": "^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["BrcmPatchRAM3.kext", "BrcmFirmwareData.kext"], "order": 47,
+      "id": "BrcmPatchRAM3",
+      "repo": "acidanthera/BrcmPatchRAM",
+      "asset": "^BrcmPatchRAM-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "BrcmPatchRAM3.kext",
+        "BrcmFirmwareData.kext"
+      ],
+      "order": 47,
       "min_darwin": 19,
-      "when": {"field": "bluetooth", "eq": "broadcom"},
+      "when": {
+        "field": "bluetooth",
+        "eq": "broadcom"
+      },
       "reason": "Upload du firmware Bluetooth Broadcom"
     },
     {
-      "id": "USBToolBox", "repo": "USBToolBox/kext", "asset": "\\.zip$",
-      "bundles": ["USBToolBox.kext"], "order": 50,
-      "when": {"field": "usb_map_kind", "eq": "usbtoolbox"},
+      "id": "USBToolBox",
+      "repo": "USBToolBox/kext",
+      "asset": "\\.zip$",
+      "bundles": [
+        "USBToolBox.kext"
+      ],
+      "order": 50,
+      "when": {
+        "field": "usb_map_kind",
+        "eq": "usbtoolbox"
+      },
       "reason": "Moteur du mappage USB genere par USBToolBox (a coupler avec UTBMap.kext)"
     },
     {
-      "id": "VoodooPS2Controller", "repo": "acidanthera/VoodooPS2", "asset": "^VoodooPS2Controller-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["VoodooPS2Controller.kext"], "order": 60,
-      "when": {"field": "touchpad", "in": ["ps2"]},
+      "id": "VoodooPS2Controller",
+      "repo": "acidanthera/VoodooPS2",
+      "asset": "^VoodooPS2Controller-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "VoodooPS2Controller.kext"
+      ],
+      "order": 60,
+      "when": {
+        "field": "touchpad",
+        "in": [
+          "ps2"
+        ]
+      },
       "reason": "Clavier / trackpad PS2 de portable"
     },
     {
-      "id": "VoodooI2C", "repo": "VoodooI2C/VoodooI2C", "asset": "^VoodooI2C-[0-9.]+\\.zip$",
-      "bundles": ["VoodooI2C.kext", "VoodooI2CHID.kext"], "order": 61,
-      "when": {"field": "touchpad", "in": ["i2c"]},
+      "id": "VoodooI2C",
+      "repo": "VoodooI2C/VoodooI2C",
+      "asset": "^VoodooI2C-[0-9.]+\\.zip$",
+      "bundles": [
+        "VoodooI2C.kext",
+        "VoodooI2CHID.kext"
+      ],
+      "order": 61,
+      "when": {
+        "field": "touchpad",
+        "in": [
+          "i2c"
+        ]
+      },
       "reason": "Trackpad I2C / HID de portable"
     },
     {
-      "id": "ECEnabler", "repo": "1Revenger1/ECEnabler", "asset": "^ECEnabler-[0-9.]+-RELEASE\\.zip$",
-      "bundles": ["ECEnabler.kext"], "order": 62,
-      "when": {"field": "laptop", "eq": true},
+      "id": "ECEnabler",
+      "repo": "1Revenger1/ECEnabler",
+      "asset": "^ECEnabler-[0-9.]+-RELEASE\\.zip$",
+      "bundles": [
+        "ECEnabler.kext"
+      ],
+      "order": 62,
+      "when": {
+        "field": "laptop",
+        "eq": true
+      },
       "reason": "Permet la lecture de la batterie quand l'EC expose des champs > 8 bits"
     },
     {
-      "id": "NootedRed", "repo": "ChefKissInc/NootedRed", "asset": "\\.zip$",
-      "bundles": ["NootedRed.kext"], "order": 70, "optional": true,
-      "when": {"field": "dgpu", "eq": "amd-apu"},
-      "reason": "Acceleration des iGPU AMD (Vega / RDNA2 integres)"
+      "id": "NootedRed",
+      "repo": "ChefKissInc/NootedRed",
+      "asset": "\\.zip$",
+      "bundles": [
+        "NootedRed.kext"
+      ],
+      "order": 70,
+      "when": {
+        "any": [
+          {
+            "field": "dgpu",
+            "eq": "amd-apu"
+          },
+          {
+            "all": [
+              {
+                "field": "family",
+                "eq": "amd"
+              },
+              {
+                "not": {
+                  "field": "igpu",
+                  "eq": "none"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "Acceleration graphique des iGPU AMD Vega (Raven Ridge a Cezanne), en remplacement de WhateverGreen pour l'APU",
+      "note": "NootedRed gere lui-meme le framebuffer de l'APU: verifiez sa documentation avant de conserver WhateverGreen a cote."
     },
     {
-      "id": "NootRX", "repo": "ChefKissInc/NootRX", "asset": "\\.zip$",
-      "bundles": ["NootRX.kext"], "order": 71, "optional": true,
-      "when": {"field": "dgpu", "eq": "amd-rdna2"},
+      "id": "NootRX",
+      "repo": "ChefKissInc/NootRX",
+      "asset": "\\.zip$",
+      "bundles": [
+        "NootRX.kext"
+      ],
+      "order": 71,
+      "optional": true,
+      "when": {
+        "field": "dgpu",
+        "eq": "amd-rdna2"
+      },
       "reason": "Support des GPU AMD RX 6000 (RDNA2) non reconnus nativement"
+    },
+    {
+      "id": "SMCAMDProcessor",
+      "repo": "trulyspinach/SMCAMDProcessor",
+      "asset": "\\.zip$",
+      "bundles": [
+        "SMCAMDProcessor.kext",
+        "AMDRyzenCPUPowerManagement.kext"
+      ],
+      "order": 7,
+      "optional": true,
+      "when": {
+        "field": "family",
+        "eq": "amd"
+      },
+      "reason": "Capteurs et gestion d'energie CPU sur AMD Ryzen"
     }
   ]
 }

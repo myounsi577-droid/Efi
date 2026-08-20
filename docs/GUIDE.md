@@ -30,10 +30,15 @@ Matériel qui interdit purement et simplement un Hackintosh :
 
 | Matériel | Pourquoi |
 |---|---|
-| CPU AMD de portable (Athlon/Ryzen mobiles, séries U/H) | non supportés par macOS ; les patchs `AMD_Vanilla` ne gèrent ni l'énergie mobile, ni la batterie, ni la veille |
 | CPU sans SSE4.2 | bloqué à macOS 10.13 |
 | CPU sans AVX2 | bloqué à macOS 12 |
 | Alder Lake et plus récent | hors du guide Dortania, correctifs à assembler soi-même |
+
+Matériel jouable mais hors guide, à traiter comme un projet :
+
+| Matériel | Situation |
+|---|---|
+| APU AMD de portable (Athlon/Ryzen mobiles) | plateforme `amd-zen-laptop` : `AMD_Vanilla` + `NootedRed` ; gestion d'énergie CPU, batterie et veille à régler à la main |
 
 Matériel remplaçable, qui n'empêche pas de démarrer :
 

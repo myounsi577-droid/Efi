@@ -83,17 +83,22 @@ La version visée (`--macos`) change réellement le résultat :
 rédhibitoires, points d'attention. Le code de sortie vaut 1 si la machine est
 incompatible, ce qui permet de l'enchaîner dans un script.
 
-`build` refuse de construire quand un blocage est détecté (`--force` passe outre) :
-
-- **CPU AMD de portable** : macOS ne les supporte pas. Le guide Dortania limite le
-  support AMD aux processeurs de bureau et exclut explicitement les CPU mobiles ;
-  les patchs `AMD_Vanilla` ne couvrent ni la gestion d'énergie mobile, ni la
-  batterie, ni la veille.
-- **CPU sans AVX2 avec macOS 13+**.
+`build` refuse de construire quand un blocage est détecté (`--force` passe outre).
+Aujourd'hui un seul cas bloque : **CPU sans AVX2 visé sur macOS 13+**.
 
 Certaines pièces ne bloquent pas le démarrage mais n'ont aucun pilote macOS ;
 elles sont signalées et doivent être remplacées : Wi-Fi Realtek, MediaTek et
 Qualcomm récents (`--wifi realtek|mediatek|qualcomm`).
+
+### Portables AMD
+
+Ils sont hors du périmètre du guide Dortania, mais la communauté les fait tourner :
+la plateforme `amd-zen-laptop` combine les patchs `AMD_Vanilla` et
+[NootedRed](https://github.com/ChefKissInc/NootedRed), qui accélère les iGPU Vega
+des Athlon Silver/Gold jusqu'aux Ryzen 5xxx, de macOS 10.15 à macOS 26.
+`WhateverGreen` est alors remplacé par `NootedRed` pour l'APU. L'outil le signale
+comme un chemin communautaire : gestion d'énergie CPU, batterie et veille
+demandent du travail manuel.
 
 ## Commandes
 

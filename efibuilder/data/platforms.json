@@ -11,13 +11,30 @@
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/penryn.html",
       "max_macos": "high-sierra",
-      "smbios": {"default": "iMac10,1"},
-      "ssdt": [{"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"}],
-      "quirks": {
-        "Kernel": {"DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": false, "UnblockFsConnect": false}
+      "smbios": {
+        "default": "iMac10,1"
       },
-      "notes": ["Pas de SSE4.2: macOS 10.14 et plus recent n'est pas supporte."]
+      "ssdt": [
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        }
+      ],
+      "quirks": {
+        "Kernel": {
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": false,
+          "UnblockFsConnect": false
+        }
+      },
+      "notes": [
+        "Pas de SSE4.2: macOS 10.14 et plus recent n'est pas supporte."
+      ]
     },
     {
       "id": "clarkdale-desktop",
@@ -25,13 +42,31 @@
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/clarkdale.html",
       "max_macos": "monterey",
-      "smbios": {"default": "iMac11,2"},
-      "ssdt": [{"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"}],
-      "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+      "smbios": {
+        "default": "iMac11,2"
       },
-      "notes": ["Pas d'iGPU supporte a partir de macOS 10.14."]
+      "ssdt": [
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        }
+      ],
+      "quirks": {
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
+      },
+      "notes": [
+        "Pas d'iGPU supporte a partir de macOS 10.14."
+      ]
     },
     {
       "id": "sandy-bridge-desktop",
@@ -39,15 +74,37 @@
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/sandy-bridge.html",
       "max_macos": "monterey",
-      "smbios": {"default": "iMac12,2"},
+      "smbios": {
+        "default": "iMac12,2"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-IMEI.aml", "reason": "IMEI absent de l'ACPI (Sandy Bridge + chipset serie 7)",
-         "when": {"field": "chipset_series", "in": ["7"]}}
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-IMEI.aml",
+          "reason": "IMEI absent de l'ACPI (Sandy Bridge + chipset serie 7)",
+          "when": {
+            "field": "chipset_series",
+            "in": [
+              "7"
+            ]
+          }
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
@@ -57,7 +114,10 @@
         "device_id": "26010000",
         "stolenmem": false
       },
-      "notes": ["HD 3000: le device-id 26010000 peut etre necessaire.", "AVX2 absent: pas de macOS 13+."]
+      "notes": [
+        "HD 3000: le device-id 26010000 peut etre necessaire.",
+        "AVX2 absent: pas de macOS 13+."
+      ]
     },
     {
       "id": "ivy-bridge-desktop",
@@ -65,15 +125,37 @@
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/ivy-bridge.html",
       "max_macos": "monterey",
-      "smbios": {"default": "iMac13,2"},
+      "smbios": {
+        "default": "iMac13,2"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-IMEI.aml", "reason": "IMEI absent de l'ACPI (Ivy Bridge + chipset serie 6)",
-         "when": {"field": "chipset_series", "in": ["6"]}}
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-IMEI.aml",
+          "reason": "IMEI absent de l'ACPI (Ivy Bridge + chipset serie 6)",
+          "when": {
+            "field": "chipset_series",
+            "in": [
+              "6"
+            ]
+          }
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
@@ -82,51 +164,104 @@
         "headless": "07006201",
         "stolenmem": false,
         "extra_devices": [
-          {"path": "PciRoot(0x0)/Pci(0x16,0x0)", "props": {"device-id": "3A1E0000"},
-           "when": {"field": "chipset_series", "in": ["6"]},
-           "reason": "Spoof IMEI pour carte mere serie 6"}
+          {
+            "path": "PciRoot(0x0)/Pci(0x16,0x0)",
+            "props": {
+              "device-id": "3A1E0000"
+            },
+            "when": {
+              "field": "chipset_series",
+              "in": [
+                "6"
+              ]
+            },
+            "reason": "Spoof IMEI pour carte mere serie 6"
+          }
         ]
       },
-      "notes": ["iGPU HD 4000 non supporte a partir de macOS 12.", "AVX2 absent: pas de macOS 13+."]
+      "notes": [
+        "iGPU HD 4000 non supporte a partir de macOS 12.",
+        "AVX2 absent: pas de macOS 13+."
+      ]
     },
     {
       "id": "haswell-desktop",
       "name": "Intel Haswell / Broadwell (bureau, 4e-5e gen)",
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html",
-      "smbios": {"default": "iMac15,1"},
+      "smbios": {
+        "default": "iMac15,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": false, "AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": false,
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
         "key": "AAPL,ig-platform-id",
         "display": "0300220D",
         "headless": "04001204",
-        "options": {"broadwell": "07002216", "haswell": "0300220D"},
+        "options": {
+          "broadwell": "07002216",
+          "haswell": "0300220D"
+        },
         "stolenmem": true,
         "fbmem": true
       },
-      "notes": ["HD 4400: ajouter device-id 12040000 (spoof HD 4600).", "Pas de support iGPU a partir de macOS 13."]
+      "notes": [
+        "HD 4400: ajouter device-id 12040000 (spoof HD 4600).",
+        "Pas de support iGPU a partir de macOS 13."
+      ]
     },
     {
       "id": "skylake-desktop",
       "name": "Intel Skylake (bureau, 6e gen)",
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/skylake.html",
-      "smbios": {"default": "iMac17,1"},
+      "smbios": {
+        "default": "iMac17,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
@@ -136,21 +271,40 @@
         "stolenmem": true,
         "fbmem": true
       },
-      "notes": ["HD P530: ajouter device-id 1B190000.", "macOS 13+: spoofer l'iGPU en Kaby Lake."]
+      "notes": [
+        "HD P530: ajouter device-id 1B190000.",
+        "macOS 13+: spoofer l'iGPU en Kaby Lake."
+      ]
     },
     {
       "id": "kaby-lake-desktop",
       "name": "Intel Kaby Lake (bureau, 7e gen)",
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/kaby-lake.html",
-      "smbios": {"default": "iMac18,1"},
+      "smbios": {
+        "default": "iMac18,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
@@ -167,54 +321,142 @@
       "name": "Intel Coffee Lake (bureau, 8e-9e gen)",
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/coffee-lake.html",
-      "smbios": {"default": "iMac19,1"},
+      "smbios": {
+        "default": "iMac19,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-AWAC.aml", "reason": "Force l'horloge RTC classique (AWAC non supporte)"},
-        {"file": "SSDT-PMC.aml", "reason": "NVRAM native sur les vrais chipsets serie 300 (B360/B365/H310/H370/Z390)",
-         "when": {"field": "chipset", "in": ["b360", "b365", "h310", "h370", "z390"]}}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte)"
+        },
+        {
+          "file": "SSDT-PMC.aml",
+          "reason": "NVRAM native sur les vrais chipsets serie 300 (B360/B365/H310/H370/Z390)",
+          "when": {
+            "field": "chipset",
+            "in": [
+              "b360",
+              "b365",
+              "h310",
+              "h370",
+              "z390"
+            ]
+          }
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": true, "EnableWriteUnprotector": false, "RebuildAppleMemoryMap": true, "SyncRuntimePermissions": true,
-                   "ProtectUefiServices": {"value": true, "when": {"field": "chipset", "in": ["b360", "b365", "h310", "h370", "z390"]}}},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": true,
+          "EnableWriteUnprotector": false,
+          "RebuildAppleMemoryMap": true,
+          "SyncRuntimePermissions": true,
+          "ProtectUefiServices": {
+            "value": true,
+            "when": {
+              "field": "chipset",
+              "in": [
+                "b360",
+                "b365",
+                "h310",
+                "h370",
+                "z390"
+              ]
+            }
+          }
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
         "key": "AAPL,ig-platform-id",
         "display": "07009B3E",
         "headless": "0300913E",
-        "alternatives": {"black_screen": "00009B3E"},
+        "alternatives": {
+          "black_screen": "00009B3E"
+        },
         "stolenmem": true
       },
-      "notes": ["Ecran noir apres le mode verbeux (B360/B365/H310/H370/Z390): voir le patch BusID iGPU de Dortania."]
+      "notes": [
+        "Ecran noir apres le mode verbeux (B360/B365/H310/H370/Z390): voir le patch BusID iGPU de Dortania."
+      ]
     },
     {
       "id": "comet-lake-desktop",
       "name": "Intel Comet Lake (bureau, 10e gen) / base pour Rocket Lake et plus recent",
       "family": "intel-desktop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html",
-      "smbios": {"default": "iMac20,1"},
+      "smbios": {
+        "default": "iMac20,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-AWAC.aml", "reason": "Force l'horloge RTC classique (AWAC non supporte)"},
-        {"file": "SSDT-RHUB.aml", "reason": "Reset des controleurs USB sur cartes Asus serie 400",
-         "when": {"field": "motherboard_vendor", "in": ["asus"]}}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte)"
+        },
+        {
+          "file": "SSDT-RHUB.aml",
+          "reason": "Reset des controleurs USB sur cartes Asus serie 400",
+          "when": {
+            "field": "motherboard_vendor",
+            "in": [
+              "asus"
+            ]
+          }
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": true, "EnableWriteUnprotector": false, "ProtectUefiServices": true, "RebuildAppleMemoryMap": true, "SetupVirtualMap": false, "SyncRuntimePermissions": true},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": true,
+          "EnableWriteUnprotector": false,
+          "ProtectUefiServices": true,
+          "RebuildAppleMemoryMap": true,
+          "SetupVirtualMap": false,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
         "path": "PciRoot(0x0)/Pci(0x2,0x0)",
         "key": "AAPL,ig-platform-id",
         "display": "07009B3E",
         "headless": "0300C89B",
-        "alternatives": {"black_screen": "00009B3E"},
+        "alternatives": {
+          "black_screen": "00009B3E"
+        },
         "stolenmem": true
       },
       "notes": [
@@ -228,17 +470,44 @@
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/arrandale.html",
       "max_macos": "monterey",
-      "smbios": {"default": "MacBookPro6,1"},
+      "smbios": {
+        "default": "MacBookPro6,1"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-LAPTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-EC-LAPTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
-      "igpu": {"path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id", "props": {"framebuffer-singlelink": "01000000"}},
+      "igpu": {
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
+        "props": {
+          "framebuffer-singlelink": "01000000"
+        }
+      },
       "notes": []
     },
     {
@@ -247,18 +516,56 @@
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html",
       "max_macos": "monterey",
-      "smbios": {"default": "MacBookPro8,2"},
+      "smbios": {
+        "default": "MacBookPro8,2"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-LAPTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-IMEI.aml", "reason": "IMEI absent de l'ACPI (chipset serie 7)", "when": {"field": "chipset_series", "in": ["7"]}},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-EC-LAPTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-IMEI.aml",
+          "reason": "IMEI absent de l'ACPI (chipset serie 7)",
+          "when": {
+            "field": "chipset_series",
+            "in": [
+              "7"
+            ]
+          }
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
-      "igpu": {"path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,snb-platform-id", "display": "00000100", "options": {"nuc": "10000300"}, "device_id": "3A1C0000"},
+      "igpu": {
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,snb-platform-id",
+        "display": "00000100",
+        "options": {
+          "nuc": "10000300"
+        },
+        "device_id": "3A1C0000"
+      },
       "notes": []
     },
     {
@@ -267,117 +574,286 @@
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html",
       "max_macos": "monterey",
-      "smbios": {"default": "MacBookPro10,2"},
+      "smbios": {
+        "default": "MacBookPro10,2"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-LAPTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-IMEI.aml", "reason": "IMEI absent de l'ACPI (chipset serie 6)", "when": {"field": "chipset_series", "in": ["6"]}},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-EC-LAPTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-IMEI.aml",
+          "reason": "IMEI absent de l'ACPI (chipset serie 6)",
+          "when": {
+            "field": "chipset_series",
+            "in": [
+              "6"
+            ]
+          }
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "03006601",
-        "options": {"1366x768": "03006601", "1600x900+": "04006601", "edp": "09006601", "nuc": "0B006601"},
+        "options": {
+          "1366x768": "03006601",
+          "1600x900+": "04006601",
+          "edp": "09006601",
+          "nuc": "0B006601"
+        },
         "device_id": "3A1E0000"
       },
-      "notes": ["iGPU HD 4000 non supporte a partir de macOS 12."]
+      "notes": [
+        "iGPU HD 4000 non supporte a partir de macOS 12."
+      ]
     },
     {
       "id": "haswell-laptop",
       "name": "Intel Haswell (portable, 4e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/haswell.html",
-      "smbios": {"default": "MacBookPro11,1"},
+      "smbios": {
+        "default": "MacBookPro11,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-LAPTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-LAPTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": false, "AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": false,
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "0500260A",
-        "options": {"hd5000": "0500260A", "hd4400-4600": "0600260A", "nuc": "0300220D"},
-        "device_id": "12040000", "stolenmem": true, "fbmem": true, "cursormem": true
+        "options": {
+          "hd5000": "0500260A",
+          "hd4400-4600": "0600260A",
+          "nuc": "0300220D"
+        },
+        "device_id": "12040000",
+        "stolenmem": true,
+        "fbmem": true,
+        "cursormem": true
       },
-      "notes": ["Pas de support iGPU a partir de macOS 13."]
+      "notes": [
+        "Pas de support iGPU a partir de macOS 13."
+      ]
     },
     {
       "id": "broadwell-laptop",
       "name": "Intel Broadwell (portable, 5e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/broadwell.html",
-      "smbios": {"default": "MacBookPro12,1"},
+      "smbios": {
+        "default": "MacBookPro12,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-LAPTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-LAPTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": false, "AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": false,
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
-        "display": "06002616", "options": {"laptop": "06002616", "nuc": "02001616"},
-        "stolenmem": true, "fbmem": true
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
+        "display": "06002616",
+        "options": {
+          "laptop": "06002616",
+          "nuc": "02001616"
+        },
+        "stolenmem": true,
+        "fbmem": true
       },
-      "notes": ["Pas de support iGPU a partir de macOS 13."]
+      "notes": [
+        "Pas de support iGPU a partir de macOS 13."
+      ]
     },
     {
       "id": "skylake-laptop",
       "name": "Intel Skylake (portable, 6e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/skylake.html",
-      "smbios": {"default": "MacBookPro13,1"},
+      "smbios": {
+        "default": "MacBookPro13,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-LAPTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "00001619",
-        "options": {"hd515-550": "00001619", "hd510": "00001B19", "hd515-alt": "00001E19", "nuc-hd520-530": "02001619"},
-        "stolenmem": true, "fbmem": true
+        "options": {
+          "hd515-550": "00001619",
+          "hd510": "00001B19",
+          "hd515-alt": "00001E19",
+          "nuc-hd520-530": "02001619"
+        },
+        "stolenmem": true,
+        "fbmem": true
       },
-      "notes": ["macOS 13+: spoofer l'iGPU en Kaby Lake."]
+      "notes": [
+        "macOS 13+: spoofer l'iGPU en Kaby Lake."
+      ]
     },
     {
       "id": "kaby-lake-laptop",
       "name": "Intel Kaby Lake / Amber Lake (portable, 7e-8e gen U)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/kaby-lake.html",
-      "smbios": {"default": "MacBookPro14,1"},
+      "smbios": {
+        "default": "MacBookPro14,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-LAPTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "00001B59",
-        "options": {"hd615-650": "00001B59", "uhd620-alt": "00001659", "uhd617-amber": "0000C087", "nuc-hd615": "00001E59"},
-        "device_id": "16590000", "stolenmem": true, "fbmem": true
+        "options": {
+          "hd615-650": "00001B59",
+          "uhd620-alt": "00001659",
+          "uhd617-amber": "0000C087",
+          "nuc-hd615": "00001E59"
+        },
+        "device_id": "16590000",
+        "stolenmem": true,
+        "fbmem": true
       },
       "notes": []
     },
@@ -386,24 +862,62 @@
       "name": "Intel Coffee Lake (portable, 8e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake.html",
-      "smbios": {"default": "MacBookPro15,1"},
+      "smbios": {
+        "default": "MacBookPro15,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-LAPTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-AWAC.aml", "reason": "Force l'horloge RTC classique (AWAC non supporte)"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte)"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Booter": {"EnableWriteUnprotector": false, "ProtectMemoryRegions": true, "RebuildAppleMemoryMap": true, "SyncRuntimePermissions": true},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Booter": {
+          "EnableWriteUnprotector": false,
+          "ProtectMemoryRegions": true,
+          "RebuildAppleMemoryMap": true,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "0900A53E",
-        "options": {"uhd630": "0900A53E", "uhd620": "00009B3E", "nuc-uhd620-630": "07009B3E", "nuc-uhd655": "0000A53E"},
-        "device_id": "9B3E0000", "stolenmem": true
+        "options": {
+          "uhd630": "0900A53E",
+          "uhd620": "00009B3E",
+          "nuc-uhd620-630": "07009B3E",
+          "nuc-uhd655": "0000A53E"
+        },
+        "device_id": "9B3E0000",
+        "stolenmem": true
       },
       "notes": []
     },
@@ -412,26 +926,74 @@
       "name": "Intel Coffee Lake Plus / Comet Lake (portable, 9e-10e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake-plus.html",
-      "smbios": {"default": "MacBookPro16,1"},
+      "smbios": {
+        "default": "MacBookPro16,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-LAPTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-AWAC.aml", "reason": "Force l'horloge RTC classique (AWAC non supporte)"},
-        {"file": "SSDT-PMC.aml", "reason": "NVRAM native, uniquement sur les portables 9e gen",
-         "when": {"field": "cpu_generation", "in": ["9"]}},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte)"
+        },
+        {
+          "file": "SSDT-PMC.aml",
+          "reason": "NVRAM native, uniquement sur les portables 9e gen",
+          "when": {
+            "field": "cpu_generation",
+            "in": [
+              "9"
+            ]
+          }
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": true, "EnableWriteUnprotector": false, "ProtectMemoryRegions": true, "ProtectUefiServices": true, "RebuildAppleMemoryMap": true, "SyncRuntimePermissions": true},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": true,
+          "EnableWriteUnprotector": false,
+          "ProtectMemoryRegions": true,
+          "ProtectUefiServices": true,
+          "RebuildAppleMemoryMap": true,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
       "igpu": {
-        "path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id",
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
         "display": "0900A53E",
-        "options": {"uhd630": "0900A53E", "uhd620": "00009B3E", "nuc-uhd620-630": "07009B3E", "nuc-uhd655": "0000A53E"},
-        "device_id": "9B3E0000", "stolenmem": true
+        "options": {
+          "uhd630": "0900A53E",
+          "uhd620": "00009B3E",
+          "nuc-uhd620-630": "07009B3E",
+          "nuc-uhd655": "0000A53E"
+        },
+        "device_id": "9B3E0000",
+        "stolenmem": true
       },
       "notes": []
     },
@@ -440,21 +1002,63 @@
       "name": "Intel Ice Lake (portable, 10e gen)",
       "family": "intel-laptop",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/icelake.html",
-      "smbios": {"default": "MacBookAir9,1"},
+      "smbios": {
+        "default": "MacBookAir9,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-LAPTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-AWAC.aml", "reason": "Force l'horloge RTC classique (AWAC non supporte)"},
-        {"file": "SSDT-RHUB.aml", "reason": "Reset des controleurs USB (souvent necessaire sur Dell)"},
-        {"file": "SSDT-PNLF.aml", "reason": "Retroeclairage de l'ecran interne"},
-        {"file": "SSDT-XOSI.aml", "reason": "Active les fonctions reservees a Windows dans macOS"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-AWAC.aml",
+          "reason": "Force l'horloge RTC classique (AWAC non supporte)"
+        },
+        {
+          "file": "SSDT-RHUB.aml",
+          "reason": "Reset des controleurs USB (souvent necessaire sur Dell)"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": true, "EnableWriteUnprotector": false, "ProtectMemoryRegions": true, "ProtectUefiServices": true, "RebuildAppleMemoryMap": true, "SetupVirtualMap": false, "SyncRuntimePermissions": true},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"ReleaseUsbOwnership": true, "UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": true,
+          "EnableWriteUnprotector": false,
+          "ProtectMemoryRegions": true,
+          "ProtectUefiServices": true,
+          "RebuildAppleMemoryMap": true,
+          "SetupVirtualMap": false,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
       },
-      "igpu": {"path": "PciRoot(0x0)/Pci(0x2,0x0)", "key": "AAPL,ig-platform-id", "display": "0000528A", "stolenmem": true},
+      "igpu": {
+        "path": "PciRoot(0x0)/Pci(0x2,0x0)",
+        "key": "AAPL,ig-platform-id",
+        "display": "0000528A",
+        "stolenmem": true
+      },
       "notes": []
     },
     {
@@ -463,11 +1067,27 @@
       "family": "intel-hedt",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/nehalem.html",
       "max_macos": "monterey",
-      "smbios": {"default": "MacPro5,1"},
-      "ssdt": [{"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"}],
+      "smbios": {
+        "default": "MacPro5,1"
+      },
+      "ssdt": [
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        }
+      ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
       "notes": []
     },
@@ -477,32 +1097,76 @@
       "family": "intel-hedt",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/ivy-bridge-e.html",
       "max_macos": "monterey",
-      "smbios": {"default": "MacPro6,1"},
+      "smbios": {
+        "default": "MacPro6,1"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-DESKTOP.aml", "reason": "Faux Embedded Controller pour macOS"},
-        {"file": "SSDT-UNC.aml", "reason": "Desactive les peripheriques uncore non supportes"}
+        {
+          "file": "SSDT-EC-DESKTOP.aml",
+          "reason": "Faux Embedded Controller pour macOS"
+        },
+        {
+          "file": "SSDT-UNC.aml",
+          "reason": "Desactive les peripheriques uncore non supportes"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
-      "notes": ["MacPro6,1 impose un GPU AMD supporte: device-id 33150000 peut etre requis sur certains GPU."]
+      "notes": [
+        "MacPro6,1 impose un GPU AMD supporte: device-id 33150000 peut etre requis sur certains GPU."
+      ]
     },
     {
       "id": "haswell-e-hedt",
       "name": "Intel Haswell-E / Broadwell-E (HEDT)",
       "family": "intel-hedt",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/haswell-e.html",
-      "smbios": {"default": "iMacPro1,1"},
+      "smbios": {
+        "default": "iMacPro1,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-RTC0-RANGE-HEDT.aml", "reason": "Corrige la plage RTC (blocages au demarrage sur Big Sur)"},
-        {"file": "SSDT-UNC.aml", "reason": "Desactive les peripheriques uncore non supportes"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-RTC0-RANGE-HEDT.aml",
+          "reason": "Corrige la plage RTC (blocages au demarrage sur Big Sur)"
+        },
+        {
+          "file": "SSDT-UNC.aml",
+          "reason": "Desactive les peripheriques uncore non supportes"
+        }
       ],
       "quirks": {
-        "Kernel": {"AppleCpuPmCfgLock": false, "AppleXcpmCfgLock": true, "AppleXcpmExtraMsrs": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"IgnoreInvalidFlexRatio": true, "UnblockFsConnect": false}
+        "Kernel": {
+          "AppleCpuPmCfgLock": false,
+          "AppleXcpmCfgLock": true,
+          "AppleXcpmExtraMsrs": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "IgnoreInvalidFlexRatio": true,
+          "UnblockFsConnect": false
+        }
       },
       "notes": []
     },
@@ -511,16 +1175,40 @@
       "name": "Intel Skylake-X / Cascade Lake-X (HEDT)",
       "family": "intel-hedt",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/config-HEDT/skylake-x.html",
-      "smbios": {"default": "iMacPro1,1"},
+      "smbios": {
+        "default": "iMacPro1,1"
+      },
       "ssdt": [
-        {"file": "SSDT-PLUG-DRTNIA.aml", "reason": "Active XCPM (gestion d'energie CPU)"},
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-RTC0-RANGE-HEDT.aml", "reason": "Corrige la plage RTC (blocages au demarrage sur Big Sur)"}
+        {
+          "file": "SSDT-PLUG-DRTNIA.aml",
+          "reason": "Active XCPM (gestion d'energie CPU)"
+        },
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-RTC0-RANGE-HEDT.aml",
+          "reason": "Corrige la plage RTC (blocages au demarrage sur Big Sur)"
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": true, "EnableWriteUnprotector": false, "RebuildAppleMemoryMap": true, "SyncRuntimePermissions": true},
-        "Kernel": {"AppleXcpmCfgLock": true, "DisableIoMapper": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": true,
+          "EnableWriteUnprotector": false,
+          "RebuildAppleMemoryMap": true,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "AppleXcpmCfgLock": true,
+          "DisableIoMapper": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "notes": []
     },
@@ -529,31 +1217,83 @@
       "name": "AMD Bulldozer (15h) / Jaguar (16h)",
       "family": "amd",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/AMD/fx.html",
-      "smbios": {"default": "MacPro7,1"},
-      "ssdt": [{"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"}],
+      "smbios": {
+        "default": "MacPro7,1"
+      },
+      "ssdt": [
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        }
+      ],
       "quirks": {
-        "Kernel": {"DummyPowerManagement": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "ProvideCurrentCpuInfo": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Kernel": {
+          "DummyPowerManagement": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "ProvideCurrentCpuInfo": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "kernel_patches": "amd_vanilla",
-      "boot_args": ["npci=0x2000"],
-      "notes": ["Les patchs noyau AMD_Vanilla sont obligatoires, sans eux le noyau ne demarre pas."]
+      "boot_args": [
+        "npci=0x2000"
+      ],
+      "notes": [
+        "Les patchs noyau AMD_Vanilla sont obligatoires, sans eux le noyau ne demarre pas."
+      ]
     },
     {
       "id": "amd-zen",
       "name": "AMD Zen / Ryzen / Threadripper (17h et plus)",
       "family": "amd",
       "guide": "https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html",
-      "smbios": {"default": "MacPro7,1"},
+      "smbios": {
+        "default": "MacPro7,1"
+      },
       "ssdt": [
-        {"file": "SSDT-EC-USBX-DESKTOP.aml", "reason": "Faux EC + proprietes d'alimentation USB"},
-        {"file": "SSDT-CPUR.aml", "reason": "Requis sur B550 / A520 et plus recent (pas sur X570 ni Threadripper)",
-         "when": {"field": "chipset", "in": ["b550", "a520", "b650", "x670", "b840", "b850", "x870"]}}
+        {
+          "file": "SSDT-EC-USBX-DESKTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-CPUR.aml",
+          "reason": "Requis sur B550 / A520 et plus recent (pas sur X570 ni Threadripper)",
+          "when": {
+            "field": "chipset",
+            "in": [
+              "b550",
+              "a520",
+              "b650",
+              "x670",
+              "b840",
+              "b850",
+              "x870"
+            ]
+          }
+        }
       ],
       "quirks": {
-        "Booter": {"DevirtualiseMmio": false, "EnableWriteUnprotector": false, "RebuildAppleMemoryMap": true, "SetupVirtualMap": true, "SyncRuntimePermissions": true},
-        "Kernel": {"DummyPowerManagement": true, "PanicNoKextDump": true, "PowerTimeoutKernelPanic": true, "ProvideCurrentCpuInfo": true, "XhciPortLimit": true},
-        "UEFI": {"UnblockFsConnect": false}
+        "Booter": {
+          "DevirtualiseMmio": false,
+          "EnableWriteUnprotector": false,
+          "RebuildAppleMemoryMap": true,
+          "SetupVirtualMap": true,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "DummyPowerManagement": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "ProvideCurrentCpuInfo": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "UnblockFsConnect": false
+        }
       },
       "kernel_patches": "amd_vanilla",
       "notes": [
@@ -561,6 +1301,64 @@
         "Le patch 'cpuid_cores_per_package' doit correspondre au nombre de coeurs physiques (option --cores).",
         "Pas de AppleHV: VirtualBox, VMware, Docker et Parallels recents ne fonctionnent pas.",
         "AppleBCMWLANCompanion (Wi-Fi Broadcom sur macOS 15+) exige VT-d: impossible sur AMD."
+      ]
+    },
+    {
+      "id": "amd-zen-laptop",
+      "name": "AMD Zen mobile / APU Vega (Raven Ridge, Picasso, Dali, Renoir, Cezanne, Lucienne)",
+      "family": "amd",
+      "default_chassis": "laptop",
+      "guide": "https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html",
+      "min_macos": "catalina",
+      "smbios": {
+        "default": "MacBookPro16,3"
+      },
+      "ssdt": [
+        {
+          "file": "SSDT-EC-USBX-LAPTOP.aml",
+          "reason": "Faux EC + proprietes d'alimentation USB"
+        },
+        {
+          "file": "SSDT-PNLF.aml",
+          "reason": "Retroeclairage de l'ecran interne"
+        },
+        {
+          "file": "SSDT-XOSI.aml",
+          "reason": "Active les fonctions reservees a Windows dans macOS"
+        }
+      ],
+      "quirks": {
+        "Booter": {
+          "DevirtualiseMmio": false,
+          "EnableWriteUnprotector": false,
+          "RebuildAppleMemoryMap": true,
+          "SetupVirtualMap": true,
+          "SyncRuntimePermissions": true
+        },
+        "Kernel": {
+          "DummyPowerManagement": true,
+          "PanicNoKextDump": true,
+          "PowerTimeoutKernelPanic": true,
+          "ProvideCurrentCpuInfo": true,
+          "XhciPortLimit": true
+        },
+        "UEFI": {
+          "ReleaseUsbOwnership": true,
+          "UnblockFsConnect": false
+        }
+      },
+      "kernel_patches": "amd_vanilla",
+      "igpu": {
+        "path": "PciRoot(0x0)/Pci(0x8,0x1)/Pci(0x0,0x0)",
+        "key": "AAPL,ig-platform-id",
+        "note": "Le framebuffer des APU Vega est gere par NootedRed, pas par une ig-platform-id."
+      },
+      "notes": [
+        "Plateforme hors guide Dortania: elle s'appuie sur les patchs AMD_Vanilla et sur NootedRed (ChefKissInc) pour l'iGPU Vega.",
+        "NootedRed couvre les APU Vega d'Athlon Silver/Gold jusqu'aux Ryzen 5xxx et 7x30, de macOS 10.15 a macOS 26.",
+        "Le SMBIOS par defaut est un modele de portable pour obtenir la batterie et le rabat d'ecran; MacPro7,1 reste l'alternative si la gestion d'energie pose probleme.",
+        "Pas d'AppleHV: VirtualBox, VMware, Docker et Parallels recents ne fonctionnent pas.",
+        "La gestion d'energie CPU reste sommaire (DummyPowerManagement): l'autonomie est nettement inferieure a Windows."
       ]
     }
   ]

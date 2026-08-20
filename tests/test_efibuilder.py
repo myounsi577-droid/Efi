@@ -123,9 +123,22 @@ class SmbiosTests(unittest.TestCase):
 
 
 class CompatibilityTests(unittest.TestCase):
-    def test_amd_laptop_is_blocked(self):
-        profile = Profile(platform="amd-zen", chassis="laptop", cpu_cores=2)
-        self.assertTrue(any("AMD mobile" in b for b in profile.blockers()))
+    def test_amd_laptop_is_warned_not_blocked(self):
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2)
+        self.assertEqual(profile.blockers(), [])
+        self.assertTrue(any("portable AMD" in w for w in profile.validate()))
+
+    def test_amd_laptop_platform_uses_nootedred_instead_of_weg(self):
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2, igpu="vega3")
+        ids = kext_ids(profile)
+        self.assertIn("NootedRed", ids)
+        self.assertNotIn("WhateverGreen", ids)
+
+    def test_amd_desktop_with_dgpu_keeps_weg(self):
+        profile = Profile(platform="amd-zen", chipset="b550", cpu_cores=8, dgpu="amd-navi")
+        ids = kext_ids(profile)
+        self.assertIn("WhateverGreen", ids)
+        self.assertNotIn("NootedRed", ids)
 
     def test_amd_desktop_is_not_blocked(self):
         profile = Profile(platform="amd-zen", chassis="desktop", cpu_cores=8)
@@ -136,7 +149,7 @@ class CompatibilityTests(unittest.TestCase):
         self.assertFalse(Profile(platform="kaby-lake-laptop", chassis="desktop").laptop)
 
     def test_amd_laptop_still_gets_battery_kexts(self):
-        profile = Profile(platform="amd-zen", chassis="laptop", cpu_cores=2)
+        profile = Profile(platform="amd-zen-laptop", cpu_cores=2)
         self.assertIn("SMCBatteryManager", kext_ids(profile))
 
     def test_realtek_wifi_is_flagged(self):
