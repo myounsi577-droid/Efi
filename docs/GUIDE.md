@@ -20,6 +20,29 @@ Puis :
 ./efibuild info coffee-lake-desktop  # voir SSDT, quirks et framebuffers
 ```
 
+## 1 bis. Vérifier que la machine est compatible
+
+```bash
+./efibuild check --platform amd-zen --chassis laptop --macos sequoia --wifi realtek
+```
+
+Matériel qui interdit purement et simplement un Hackintosh :
+
+| Matériel | Pourquoi |
+|---|---|
+| CPU AMD de portable (Athlon/Ryzen mobiles, séries U/H) | non supportés par macOS ; les patchs `AMD_Vanilla` ne gèrent ni l'énergie mobile, ni la batterie, ni la veille |
+| CPU sans SSE4.2 | bloqué à macOS 10.13 |
+| CPU sans AVX2 | bloqué à macOS 12 |
+| Alder Lake et plus récent | hors du guide Dortania, correctifs à assembler soi-même |
+
+Matériel remplaçable, qui n'empêche pas de démarrer :
+
+| Matériel | Solution |
+|---|---|
+| Wi-Fi Realtek / MediaTek / Qualcomm récent | remplacer la carte M.2 par une Intel AX200/AX210 ou une Broadcom, ou utiliser un dongle USB |
+| NVIDIA Maxwell/Pascal et plus récent | aucun pilote depuis macOS 10.14 : désactiver le GPU (`--dgpu nvidia-unsupported`) |
+| Optane / Micron 3D XPoint | retirer le module |
+
 ## 2. Choisir la version de macOS
 
 ```bash

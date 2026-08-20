@@ -15,7 +15,13 @@ ETHERNET_CHOICES = [
     "intel-igb", "intel-i210", "intel-i211", "intel-i225", "rtl8111", "rtl8125",
     "atheros", "killer",
 ]
-WIFI_CHOICES = ["none", "intel", "broadcom"]
+WIFI_CHOICES = ["none", "intel", "broadcom", "realtek", "mediatek", "qualcomm"]
+# Cartes Wi-Fi sans aucun pilote macOS: elles doivent etre remplacees physiquement.
+WIFI_UNSUPPORTED = {
+    "realtek": "Realtek (RTL8821CE, RTL8822CE, RTL8852...)",
+    "mediatek": "MediaTek / Ralink",
+    "qualcomm": "Qualcomm Atheros recents (QCA61x4A, QCNFA765...)",
+}
 BLUETOOTH_CHOICES = ["none", "intel", "broadcom"]
 TOUCHPAD_CHOICES = ["none", "ps2", "i2c"]
 DGPU_CHOICES = [
@@ -35,6 +41,7 @@ class Profile:
     platform: str
     macos: str = "sequoia"
     name: str = "Mon PC"
+    chassis: str = ""                 # desktop | laptop (vide = deduit de la plateforme)
     chipset: str = ""                 # z390, b550, hm370...
     motherboard_vendor: str = ""      # asus, gigabyte, msi, asrock, dell, hp, lenovo
     cpu_name: str = ""
@@ -84,6 +91,8 @@ class Profile:
 
     @property
     def laptop(self) -> bool:
+        if self.chassis:
+            return self.chassis == "laptop"
         return self.family == "intel-laptop"
 
     @property
@@ -153,6 +162,23 @@ class Profile:
             raise BuildError(f"champs inconnus dans {path}: {', '.join(sorted(unknown))}")
         return cls(**data)
 
+    def blockers(self) -> list[str]:
+        """Incompatibilites redhibitoires: construire un EFI ne sert a rien."""
+        problems: list[str] = []
+        if self.family == "amd" and self.laptop:
+            problems.append(
+                "CPU AMD mobile: macOS ne supporte pas les APU AMD de portable. Le guide "
+                "Dortania limite le support AMD aux processeurs de bureau (Bulldozer 15h, "
+                "Jaguar 16h, Ryzen 17h) et indique explicitement que les CPU de portable ne "
+                "sont pas supportes. Les patchs noyau AMD_Vanilla ne couvrent ni la gestion "
+                "d'energie mobile, ni la batterie, ni la mise en veille.")
+        target = self.macos_data
+        if "avx2" in target["requires"] and self.platform_data.get("max_macos") in {
+                "monterey", "high-sierra"}:
+            problems.append(
+                f"{target['name']} exige AVX2, absent de {self.platform_data['name']}.")
+        return problems
+
     def validate(self) -> list[str]:
         """Retourne la liste des avertissements (les erreurs levent BuildError)."""
         warnings: list[str] = []
@@ -192,6 +218,12 @@ class Profile:
                 "(option --cores).")
         if self.igpu_mode == "display" and self.igpu == "none":
             warnings.append("igpu_mode=display alors qu'aucun iGPU n'est declare.")
+        if self.wifi in WIFI_UNSUPPORTED:
+            warnings.append(
+                f"Wi-Fi {WIFI_UNSUPPORTED[self.wifi]}: aucun pilote macOS n'existe pour ces "
+                f"cartes. La seule solution est de remplacer la carte M.2 par une Intel "
+                f"(AX200/AX210, via AirportItlwm) ou une Broadcom compatible, ou d'utiliser "
+                f"un dongle USB reconnu.")
         if self.usb_map_kind == "none" and self.darwin >= 20:
             warnings.append(
                 "aucun mappage USB: XhciPortLimit n'est plus fiable a partir de macOS 11.3, "

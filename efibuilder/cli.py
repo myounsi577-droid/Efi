@@ -52,6 +52,10 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--platform", help="identifiant de plateforme (efibuild list platforms)")
     b.add_argument("--macos", default="sequoia", help="version de macOS visee")
     b.add_argument("--name", default="Mon PC", help="nom de la machine")
+    b.add_argument("--chassis", choices=["auto", "desktop", "laptop"], default="auto",
+                   help="type de machine (defaut: deduit de la plateforme)")
+    b.add_argument("--force", action="store_true",
+                   help="construire malgre un materiel declare incompatible")
     b.add_argument("--chipset", default="", help="chipset (z390, b550, hm370...)")
     b.add_argument("--vendor", dest="motherboard_vendor", default="",
                    help="marque de la carte mere (asus, gigabyte, msi, dell...)")
@@ -130,6 +134,22 @@ def build_parser() -> argparse.ArgumentParser:
     l.add_argument("what", choices=["platforms", "macos", "smbios", "kexts", "features"])
     l.add_argument("--macos", help="pour 'smbios': filtrer sur une version de macOS")
 
+    # ------------------------------------------------------------------ check
+    ch = sub.add_parser("check",
+                        help="verifier si une machine peut faire tourner macOS, "
+                             "sans rien telecharger")
+    ch.add_argument("--platform", required=True)
+    ch.add_argument("--macos", default="sequoia")
+    ch.add_argument("--chassis", choices=["auto", "desktop", "laptop"], default="auto")
+    ch.add_argument("--chipset", default="")
+    ch.add_argument("--cores", dest="cpu_cores", type=int, default=0)
+    ch.add_argument("--igpu", default="none")
+    ch.add_argument("--dgpu", choices=DGPU_CHOICES, default="none")
+    ch.add_argument("--ethernet", choices=ETHERNET_CHOICES, default="auto")
+    ch.add_argument("--wifi", choices=WIFI_CHOICES, default="none")
+    ch.add_argument("--bluetooth", choices=BLUETOOTH_CHOICES, default="none")
+    ch.add_argument("--smbios", default="")
+
     # ------------------------------------------------------------------- info
     i = sub.add_parser("info", help="detail d'une plateforme")
     i.add_argument("platform")
@@ -165,6 +185,7 @@ def _profile_from_args(args) -> Profile:
                          f"Disponibles: {', '.join(FEATURE_CHOICES)}")
     return Profile(
         platform=args.platform, macos=args.macos, name=args.name, chipset=args.chipset,
+        chassis="" if args.chassis == "auto" else args.chassis,
         motherboard_vendor=args.motherboard_vendor, cpu_name=args.cpu_name,
         cpu_generation=args.cpu_generation, cpu_cores=args.cpu_cores,
         igpu=args.igpu, igpu_mode=args.igpu_mode, igpu_variant=args.igpu_variant,
@@ -181,7 +202,7 @@ def _profile_from_args(args) -> Profile:
 def cmd_build(args, profile: Profile | None = None) -> int:
     profile = profile or _profile_from_args(args)
     dl = _downloader(args)
-    context = build_efi(profile, args.out, dl)
+    context = build_efi(profile, args.out, dl, force=getattr(args, "force", False))
     if getattr(args, "save_profile", None):
         profile.save(args.save_profile)
         ok(f"profil enregistre dans {args.save_profile}")
@@ -286,6 +307,38 @@ def cmd_list(args) -> int:
     return 0
 
 
+def cmd_check(args) -> int:
+    profile = Profile(
+        platform=args.platform, macos=args.macos,
+        chassis="" if args.chassis == "auto" else args.chassis,
+        chipset=args.chipset, cpu_cores=args.cpu_cores, igpu=args.igpu,
+        dgpu=args.dgpu, ethernet=args.ethernet, wifi=args.wifi,
+        bluetooth=args.bluetooth, smbios=args.smbios)
+    print(f"Machine    : {profile.platform_data['name']}"
+          f" ({'portable' if profile.laptop else 'bureau'})")
+    print(f"macOS vise : {profile.macos_data['name']}")
+    print(f"SMBIOS     : {profile.smbios_model}")
+    print(f"Guide      : {profile.platform_data['guide']}")
+    print()
+    blockers = profile.blockers()
+    if blockers:
+        print("VERDICT: incompatible")
+        print()
+        for item in blockers:
+            print(f"  [bloquant] {item}")
+    else:
+        print("VERDICT: compatible, sous reserve des points ci-dessous")
+    warnings = profile.validate()
+    if warnings:
+        print()
+        for item in warnings:
+            print(f"  [attention] {item}")
+    print()
+    for note in profile.macos_data["notes"]:
+        print(f"  [{profile.macos_data['name']}] {note}")
+    return 1 if blockers else 0
+
+
 def cmd_info(args) -> int:
     entry = data_files.platform(args.platform)
     print(f"{entry['id']} - {entry['name']}")
@@ -333,6 +386,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {
         "build": cmd_build, "wizard": cmd_wizard, "recovery": cmd_recovery,
         "usbmap": cmd_usbmap, "usb": cmd_usb, "list": cmd_list, "info": cmd_info,
+        "check": cmd_check,
         "validate": cmd_validate,
     }
     try:

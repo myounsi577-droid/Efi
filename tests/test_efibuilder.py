@@ -122,6 +122,33 @@ class SmbiosTests(unittest.TestCase):
         self.assertTrue(any("ne recoit pas" in w for w in profile.validate()))
 
 
+class CompatibilityTests(unittest.TestCase):
+    def test_amd_laptop_is_blocked(self):
+        profile = Profile(platform="amd-zen", chassis="laptop", cpu_cores=2)
+        self.assertTrue(any("AMD mobile" in b for b in profile.blockers()))
+
+    def test_amd_desktop_is_not_blocked(self):
+        profile = Profile(platform="amd-zen", chassis="desktop", cpu_cores=8)
+        self.assertEqual(profile.blockers(), [])
+
+    def test_chassis_overrides_family_detection(self):
+        self.assertTrue(Profile(platform="amd-zen", chassis="laptop").laptop)
+        self.assertFalse(Profile(platform="kaby-lake-laptop", chassis="desktop").laptop)
+
+    def test_amd_laptop_still_gets_battery_kexts(self):
+        profile = Profile(platform="amd-zen", chassis="laptop", cpu_cores=2)
+        self.assertIn("SMCBatteryManager", kext_ids(profile))
+
+    def test_realtek_wifi_is_flagged(self):
+        profile = Profile(platform="coffee-lake-desktop", wifi="realtek")
+        self.assertTrue(any("Realtek" in w for w in profile.validate()))
+        self.assertEqual(profile.blockers(), [])
+
+    def test_pre_haswell_blocked_on_ventura(self):
+        profile = Profile(platform="ivy-bridge-desktop", macos="ventura")
+        self.assertTrue(any("AVX2" in b for b in profile.blockers()))
+
+
 class UsbMapTests(unittest.TestCase):
     def test_generated_kext(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -10,14 +10,26 @@ from efibuilder.profile import Profile, set_boards_table
 from efibuilder.util import BuildError, info, ok, step, warn, write_plist
 
 
-def build_efi(profile: Profile, out_dir: Path, dl: Downloader) -> dict:
+def build_efi(profile: Profile, out_dir: Path, dl: Downloader,
+              force: bool = False) -> dict:
     """Construit l'EFI et retourne le contexte utilise pour le rapport."""
+    blockers = profile.blockers()
+    if blockers:
+        listing = "\n  - ".join(blockers)
+        if not force:
+            raise BuildError(
+                f"materiel incompatible avec macOS:\n  - {listing}\n"
+                f"Aucun EFI ne rendra cette machine fonctionnelle. Utilisez --force "
+                f"pour generer quand meme les fichiers (a des fins d'experimentation).")
+        warn("construction forcee malgre un materiel incompatible:")
+        for item in blockers:
+            info(f"- {item}")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     pkg = oc.fetch_opencore(dl, profile.oc_version)
     set_boards_table(pkg.boards())
 
-    warnings = profile.validate()
+    warnings = list(blockers) + profile.validate()
     issue = smbios.check_model_supports(pkg.boards(), profile.smbios_model, profile.macos_data)
     if issue:
         warnings.append(issue)

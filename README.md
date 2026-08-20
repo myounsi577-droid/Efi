@@ -73,10 +73,33 @@ La version visée (`--macos`) change réellement le résultat :
 - **macOS 11.3+** : `XhciPortLimit` est désactivé, la USBMap devient la seule solution correcte.
 - **SMBIOS** : `efibuild list smbios --macos tahoe` ne liste que les modèles encore servis par Apple.
 
+## Vérifier avant de construire
+
+```bash
+./efibuild check --platform amd-zen --chassis laptop --macos sequoia --wifi realtek
+```
+
+`check` ne télécharge rien et répond en quelques lignes : verdict, blocages
+rédhibitoires, points d'attention. Le code de sortie vaut 1 si la machine est
+incompatible, ce qui permet de l'enchaîner dans un script.
+
+`build` refuse de construire quand un blocage est détecté (`--force` passe outre) :
+
+- **CPU AMD de portable** : macOS ne les supporte pas. Le guide Dortania limite le
+  support AMD aux processeurs de bureau et exclut explicitement les CPU mobiles ;
+  les patchs `AMD_Vanilla` ne couvrent ni la gestion d'énergie mobile, ni la
+  batterie, ni la veille.
+- **CPU sans AVX2 avec macOS 13+**.
+
+Certaines pièces ne bloquent pas le démarrage mais n'ont aucun pilote macOS ;
+elles sont signalées et doivent être remplacées : Wi-Fi Realtek, MediaTek et
+Qualcomm récents (`--wifi realtek|mediatek|qualcomm`).
+
 ## Commandes
 
 ```
 efibuild build       construire un EFI complet
+efibuild check       verdict de compatibilité, sans téléchargement
 efibuild wizard      assistant interactif puis construction
 efibuild recovery    télécharger l'image de récupération Apple
 efibuild usbmap      template | build | import  (USBMap.kext)
