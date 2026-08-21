@@ -39,6 +39,27 @@ class BuildError(Exception):
     """Erreur fatale, remontee proprement par la CLI."""
 
 
+def run_tool(cmd, **kwargs):
+    """Lance un programme externe, ou retourne None si l'hote l'interdit.
+
+    Certains environnements mobiles (a-Shell et Pythonista sur iOS) executent
+    Python sans possibilite de creer un processus: subprocess leve alors une
+    OSError ou une NotImplementedError. Le reste d'efibuild continue de
+    fonctionner, seules les etapes qui dependent d'un binaire sont sautees.
+    """
+    import subprocess
+
+    kwargs.setdefault("check", False)
+    try:
+        return subprocess.run(cmd, **kwargs)
+    except (OSError, NotImplementedError, ValueError):
+        return None
+
+
+NO_SUBPROCESS = ("cet environnement execute Python sans pouvoir lancer de programme "
+                 "externe (c'est le cas d'a-Shell sur iOS)")
+
+
 def ascii_comment(text: str) -> str:
     """OpenCore refuse les caracteres non ASCII dans les champs Comment."""
     import unicodedata

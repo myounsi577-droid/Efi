@@ -1,13 +1,12 @@
 """Telechargement de l'image de recuperation Apple via macrecovery (OpenCorePkg)."""
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
 from efibuilder import data_files
 from efibuilder.oc import OpenCorePackage
-from efibuilder.util import BuildError, info, ok, step, warn
+from efibuilder.util import NO_SUBPROCESS, BuildError, info, ok, run_tool, step, warn
 
 RECOVERY_DIR = "com.apple.recovery.boot"
 
@@ -38,7 +37,11 @@ def download_recovery(pkg: OpenCorePackage, macos_key: str, out_dir: Path,
     cmd.append("download")
 
     info(" ".join(cmd))
-    result = subprocess.run(cmd, cwd=script.parent, check=False)
+    result = run_tool(cmd, cwd=script.parent)
+    if result is None:
+        raise BuildError(
+            f"macrecovery non lance: {NO_SUBPROCESS}. Telechargez l'image de "
+            f"recuperation depuis un ordinateur, ou depuis iSH qui emule un vrai Linux.")
     if result.returncode != 0:
         raise BuildError(
             "macrecovery a echoue. Les serveurs Apple (osrecovery.apple.com) doivent etre "

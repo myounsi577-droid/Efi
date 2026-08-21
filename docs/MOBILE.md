@@ -33,16 +33,55 @@ Le menu numéroté s'ouvre, l'EFI se construit vraiment : OpenCore, SSDT, kexts 
 
 ## 3. iPhone / iPad : construire aussi
 
-| Application | Ce qu'elle permet |
-|---|---|
-| **a-Shell** (gratuite) | Python 3 intégré : `python3 efibuild.pyz` construit l'EFI. Exportez le dossier via l'app Fichiers. |
-| **iSH** (gratuite) | Émule x86 : `apk add python3` puis lancez l'outil. Plus lent, mais `macserial` et `ocvalidate` fonctionnent en plus. |
+### a-Shell — le plus simple
+
+Installez **a-Shell** (gratuite, App Store), ouvrez-la et tapez :
+
+```bash
+curl -LO https://github.com/myounsi577-droid/Efi/raw/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+python3 efibuild.pyz
+```
+
+Le menu numéroté s'ouvre. Choisissez `1`, répondez aux questions, et l'EFI est
+construit dans le dossier que vous indiquez.
+
+Pour le récupérer, transformez-le en zip puis ouvrez l'app **Fichiers** →
+**Sur mon iPhone** → **a-Shell** :
+
+```bash
+python3 -c "import shutil; shutil.make_archive('mon-efi','zip','mon-efi')"
+```
+
+Quelques points propres à a-Shell :
+
+- Tapez `python3`, pas `python`.
+- L'application n'a pas de dossier de téléchargement : tout se passe dans son
+  propre espace, visible depuis Fichiers.
+- Si `curl` échoue, essayez d'abord `pickFolder` puis relancez, ou téléchargez le
+  `.pyz` avec Safari et déplacez-le dans le dossier a-Shell via l'app Fichiers.
+- **a-Shell ne peut lancer aucun programme externe.** `macserial`, `ocvalidate` et
+  `macrecovery` sont donc sautés ; l'outil le dit clairement et construit le reste.
+
+### iSH — plus complet, plus lent
+
+**iSH** émule un vrai Linux x86 :
+
+```bash
+apk add python3 curl
+curl -LO https://github.com/myounsi577-droid/Efi/raw/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+python3 efibuild.pyz
+```
+
+Comme l'émulation est x86, `macserial` et `ocvalidate` **fonctionnent**, et
+l'image de récupération Apple peut être téléchargée. Comptez plusieurs minutes
+pour un build.
 
 ## Ce qui ne marche pas sur mobile, et pourquoi
 
-**Les numéros de série et la validation.** OpenCorePkg ne fournit `macserial` et
-`ocvalidate` qu'en x86 ; les téléphones et tablettes sont en ARM. L'outil le
-détecte, l'annonce et poursuit : l'EFI est construit normalement, mais
+**Les numéros de série et la validation.** Deux raisons se cumulent : OpenCorePkg
+ne fournit `macserial` et `ocvalidate` qu'en x86 alors que les mobiles sont en
+ARM, et a-Shell interdit de lancer un programme externe. L'outil détecte les deux
+cas, l'annonce et poursuit : l'EFI est construit normalement, mais
 `SystemSerialNumber` et `MLB` restent vides et le `config.plist` n'est pas validé
 automatiquement. Terminez ces deux étapes sur un ordinateur :
 

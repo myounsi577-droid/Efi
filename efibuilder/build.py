@@ -1,13 +1,13 @@
 """Orchestration: construit un EFI complet a partir d'un profil."""
 from __future__ import annotations
 
-import subprocess
 from pathlib import Path
 
 from efibuilder import acpi, configgen, kexts, oc, report, smbios, usbmap
 from efibuilder.net import Downloader
 from efibuilder.profile import Profile, set_boards_table
-from efibuilder.util import BuildError, info, ok, step, warn, write_plist
+from efibuilder.util import (NO_SUBPROCESS, BuildError, info, ok, run_tool,
+                             step, warn, write_plist)
 
 
 def build_efi(profile: Profile, out_dir: Path, dl: Downloader,
@@ -128,11 +128,10 @@ def validate_config(pkg: oc.OpenCorePackage, config_path: Path) -> str | None:
     if binary is None:
         warn("ocvalidate indisponible sur cet hote, validation ignoree")
         return None
-    try:
-        result = subprocess.run([str(binary), str(config_path)],
-                                capture_output=True, text=True, check=False)
-    except OSError as exc:
-        warn(f"ocvalidate n'a pas pu etre lance ({exc}), validation ignoree")
+    result = run_tool([str(binary), str(config_path)], capture_output=True, text=True)
+    if result is None:
+        warn(f"ocvalidate non lance: {NO_SUBPROCESS}. Validation a faire ailleurs "
+             f"avec: efibuild validate <config.plist>")
         return None
     output = (result.stdout + result.stderr).strip()
     for line in output.splitlines():

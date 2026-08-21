@@ -398,6 +398,44 @@ class HostArchTests(unittest.TestCase):
         self.assertIsNone(self._as("x86_64", oc.host_note))
 
 
+class NoSubprocessTests(unittest.TestCase):
+    """a-Shell (iOS) execute Python sans pouvoir creer de processus."""
+
+    def _refusing(self, call):
+        import subprocess
+        original = subprocess.run
+
+        def refuse(*args, **kwargs):
+            raise OSError(45, "Operation not supported")
+
+        subprocess.run = refuse
+        try:
+            return call()
+        finally:
+            subprocess.run = original
+
+    def test_run_tool_returns_none_instead_of_raising(self):
+        from efibuilder.util import run_tool
+        self.assertIsNone(self._refusing(lambda: run_tool(["echo", "salut"])))
+
+    def test_run_tool_works_normally(self):
+        from efibuilder.util import run_tool
+        result = run_tool(["echo", "salut"], capture_output=True, text=True)
+        self.assertIsNotNone(result)
+        self.assertEqual(result.stdout.strip(), "salut")
+
+    def test_serials_are_skipped_not_fatal(self):
+        from efibuilder.smbios import generate_serials
+        serials = self._refusing(lambda: generate_serials(Path("/bin/true"), "iMac19,1"))
+        self.assertEqual(serials["SystemSerialNumber"], "")
+        self.assertEqual(len(serials["ROM"]), 6)
+
+    def test_usb_detection_explains_the_refusal(self):
+        with self.assertRaises(BuildError) as caught:
+            self._refusing(lambda: usbflash._run(["lsblk"]))
+        self.assertIn("a-Shell", str(caught.exception))
+
+
 class MenuTests(unittest.TestCase):
     def _with_input(self, answers, call):
         import builtins

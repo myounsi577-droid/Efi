@@ -11,13 +11,13 @@ import os
 import platform
 import plistlib
 import shutil
-import subprocess
 import time
 import zipfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from efibuilder.util import BuildError, human_size, info, ok, step, warn
+from efibuilder.util import (NO_SUBPROCESS, BuildError, human_size, info, ok,
+                             run_tool, step, warn)
 
 SYSTEM = platform.system()
 FAT32_DISKPART_LIMIT = 32 * 1024**3  # diskpart refuse de formater au-dela
@@ -64,8 +64,15 @@ def list_devices() -> list[UsbDevice]:
     raise BuildError(f"systeme non pris en charge pour la detection USB: {SYSTEM}")
 
 
-def _run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess:
-    return subprocess.run(cmd, capture_output=True, text=True, check=False, **kwargs)
+def _run(cmd: list[str], **kwargs):
+    """Lance une commande systeme; leve une erreur claire si l'hote l'interdit."""
+    result = run_tool(cmd, capture_output=True, text=True, **kwargs)
+    if result is None:
+        raise BuildError(
+            f"{NO_SUBPROCESS}: la detection et le formatage des cles USB sont "
+            f"impossibles ici. Construisez l'EFI, puis ecrivez la cle depuis un "
+            f"ordinateur.")
+    return result
 
 
 def _list_windows() -> list[UsbDevice]:

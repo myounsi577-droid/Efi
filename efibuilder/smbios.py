@@ -3,27 +3,26 @@ from __future__ import annotations
 
 import re
 import secrets
-import subprocess
 import uuid
 from pathlib import Path
 
 from efibuilder import data_files
-from efibuilder.util import BuildError, info, ok, step, warn
+from efibuilder.util import NO_SUBPROCESS, info, ok, run_tool, step, warn
 
 
 def generate_serials(macserial: Path | None, model: str) -> dict:
     """Genere un couple numero de serie / MLB via macserial, plus UUID et ROM."""
     serial = mlb = ""
     if macserial is not None:
-        try:
-            out = subprocess.run([str(macserial), "-m", model, "-n", "1"],
-                                 capture_output=True, text=True, timeout=30, check=False)
+        out = run_tool([str(macserial), "-m", model, "-n", "1"],
+                       capture_output=True, text=True, timeout=30)
+        if out is None:
+            warn(f"macserial non lance: {NO_SUBPROCESS}")
+        else:
             for line in out.stdout.splitlines():
                 if "|" in line:
                     serial, mlb = (part.strip() for part in line.split("|", 1))
                     break
-        except Exception as exc:  # noqa: BLE001
-            warn(f"macserial indisponible ({exc}), numeros de serie a completer a la main")
     if not serial:
         warn("numeros de serie non generes: remplissez SystemSerialNumber / MLB manuellement")
     return {
