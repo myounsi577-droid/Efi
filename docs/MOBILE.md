@@ -2,6 +2,14 @@
 
 Trois usages, du plus simple au plus complet.
 
+> **Attention si le dépôt est privé** : `curl` n'est pas authentifié et
+> récupère une page HTML d'erreur au lieu du programme. Python affiche alors
+> `SyntaxError: invalid syntax` sur une ligne `<!DOCTYPE html>`. Vérifiez avec
+> `head -c 24 efibuild.pyz` : le fichier doit commencer par
+> `#!/usr/bin/env python3`. S'il affiche `<!DOCTYPE html>`, le téléchargement a
+> échoué. Passez alors le dépôt en public, ou transférez le fichier via l'app
+> Fichiers.
+
 ## 1. Le configurateur, sans rien installer
 
 Ouvrez [le site](https://myounsi577-droid.github.io/Efi/) : il calcule les SSDT,
@@ -23,7 +31,7 @@ Store dont la version est abandonnée) donne un vrai environnement Linux :
 
 ```bash
 pkg update && pkg install python
-curl -LO https://github.com/myounsi577-droid/Efi/raw/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+curl -LO https://raw.githubusercontent.com/myounsi577-droid/Efi/refs/heads/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
 python efibuild.pyz
 ```
 
@@ -38,7 +46,7 @@ Le menu numéroté s'ouvre, l'EFI se construit vraiment : OpenCore, SSDT, kexts 
 Installez **a-Shell** (gratuite, App Store), ouvrez-la et tapez :
 
 ```bash
-curl -LO https://github.com/myounsi577-droid/Efi/raw/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+curl -LO https://raw.githubusercontent.com/myounsi577-droid/Efi/refs/heads/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
 python3 efibuild.pyz
 ```
 
@@ -68,8 +76,18 @@ Quelques points propres à a-Shell :
 
 ```bash
 apk add python3 curl
-curl -LO https://github.com/myounsi577-droid/Efi/raw/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+curl -LO https://raw.githubusercontent.com/myounsi577-droid/Efi/refs/heads/claude/hackintosh-efi-command-9imz6g/dist/efibuild.pyz
+head -c 24 efibuild.pyz       # doit afficher #!/usr/bin/env python3
 python3 efibuild.pyz
+```
+
+Si le dépôt est privé, importez plutôt le fichier depuis l'app Fichiers :
+
+```bash
+mkdir -p ~/ios
+mount -t ios . ~/ios          # un sélecteur de dossier s'ouvre
+cp ~/ios/efibuild.pyz ~/
+python3 ~/efibuild.pyz
 ```
 
 Comme l'émulation est x86, `macserial` et `ocvalidate` **fonctionnent**, et

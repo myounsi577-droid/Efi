@@ -52,6 +52,12 @@ reste est construit normalement. Détails dans [docs/MOBILE.md](docs/MOBILE.md).
 
 ## Télécharger
 
+> **Le dépôt est privé.** Les liens ci-dessous ne fonctionnent qu'une fois
+> connecté à GitHub, et `curl` ou `wget` reçoivent une page HTML d'erreur au lieu
+> du fichier. Pour que les téléchargements en ligne de commande marchent — et
+> pour débloquer GitHub Pages —, passez le dépôt en public
+> (**Settings → General → Danger Zone → Change visibility**).
+
 | | |
 |---|---|
 | **Archive complète** | [`dist/efibuild-1.0.0.zip`](dist/efibuild-1.0.0.zip) — exécutable, sources, documentation |
