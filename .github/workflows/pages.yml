@@ -1,20 +1,16 @@
+# Deploiement du site via GitHub Actions.
+#
+# A n'utiliser que si Pages est regle sur la source "GitHub Actions".
+# Si Pages est regle sur "Deploy from a branch" (dossier /docs), ce workflow
+# est inutile: GitHub publie le dossier tout seul a chaque push.
+#
+# Il ne se declenche donc pas automatiquement: le lancer a la main depuis
+# l'onglet Actions une fois Pages active.
 name: Publier le site
 
 on:
-  push:
-    branches:
-      - claude/hackintosh-efi-command-9imz6g
-      - main
-    paths:
-      - "docs/**"
-      - "site/**"
-      - "efibuilder/data/**"
-      - "tools/make_site.py"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
-# configure-pages active GitHub Pages lui-meme (enablement), ce qui evite de
-# passer par les reglages du depot; deploy-pages a besoin de id-token.
 permissions:
   contents: read
   pages: write
@@ -38,15 +34,9 @@ jobs:
           python-version: "3.12"
 
       - name: Regenerer la page depuis les donnees
-        run: |
-          python tools/make_site.py
-          git diff --exit-code -- docs/index.html \
-            || (echo "docs/index.html etait perime, il vient d'etre regenere" && true)
+        run: python tools/make_site.py
 
-      - name: Activer et configurer Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:

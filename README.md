@@ -18,8 +18,20 @@ le moteur de décision porté en JavaScript : choisissez votre matériel, elle a
 les SSDT, les kexts, les quirks et les boot-args exigés, puis la commande à lancer.
 
 Elle **calcule** mais ne construit pas : un navigateur ne peut ni télécharger les
-kexts, ni générer les numéros de série, ni formater une clé. Pour la publier,
-activez GitHub Pages (**Settings → Pages → Source : branche, dossier `/docs`**).
+kexts, ni générer les numéros de série, ni formater une clé.
+
+### Mettre le site en ligne
+
+Une seule manipulation, à faire une fois dans le dépôt :
+
+**Settings → Pages → Build and deployment → Source : `Deploy from a branch`,
+branche `claude/hackintosh-efi-command-9imz6g`, dossier `/docs` → Save**
+
+Le site apparaît sous une minute sur `https://myounsi577-droid.github.io/Efi/`,
+et se met à jour à chaque push. Le workflow `pages.yml` existe pour l'autre mode
+(source « GitHub Actions ») et se lance à la main depuis l'onglet Actions ;
+il ne peut pas activer Pages lui-même, le jeton des workflows n'ayant pas ce
+droit sur ce dépôt.
 Régénérez-la après toute modification de `efibuilder/data/` :
 
 ```bash
