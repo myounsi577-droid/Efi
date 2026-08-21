@@ -1,0 +1,26 @@
+{
+  "name": "Nomenclature EFI",
+  "short_name": "Nomenclature",
+  "description": "Calcule les SSDT, kexts, quirks et boot-args exiges par votre machine.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#12161D",
+  "theme_color": "#12161D",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -28,8 +28,13 @@ def build_efi(profile: Profile, out_dir: Path, dl: Downloader,
 
     pkg = oc.fetch_opencore(dl, profile.oc_version)
     set_boards_table(pkg.boards())
+    host = oc.host_note()
+    if host:
+        warn(host)
 
     warnings = list(blockers) + profile.validate()
+    if host:
+        warnings.append(host)
     issue = smbios.check_model_supports(pkg.boards(), profile.smbios_model, profile.macos_data)
     if issue:
         warnings.append(issue)
@@ -121,10 +126,14 @@ def validate_config(pkg: oc.OpenCorePackage, config_path: Path) -> str | None:
     step("ocvalidate")
     binary = pkg.tool("ocvalidate")
     if binary is None:
-        warn("ocvalidate indisponible pour cet OS hote, validation ignoree")
+        warn("ocvalidate indisponible sur cet hote, validation ignoree")
         return None
-    result = subprocess.run([str(binary), str(config_path)],
-                            capture_output=True, text=True, check=False)
+    try:
+        result = subprocess.run([str(binary), str(config_path)],
+                                capture_output=True, text=True, check=False)
+    except OSError as exc:
+        warn(f"ocvalidate n'a pas pu etre lance ({exc}), validation ignoree")
+        return None
     output = (result.stdout + result.stderr).strip()
     for line in output.splitlines():
         if line.strip():

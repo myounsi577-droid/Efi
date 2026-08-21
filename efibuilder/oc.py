@@ -26,6 +26,25 @@ OPTIONAL_DRIVERS = {
 }
 
 
+def _is_x86() -> bool:
+    import platform as _platform
+
+    return _platform.machine().lower() in {"x86_64", "amd64", "i386", "i686", "x86"}
+
+
+def host_note() -> str | None:
+    """Explique, le cas echeant, pourquoi certains outils ne tourneront pas ici."""
+    import platform as _platform
+
+    system, machine = _platform.system(), _platform.machine()
+    if system in {"Linux", "Windows"} and not _is_x86():
+        return (f"hote {system} {machine}: OpenCorePkg ne fournit macserial et ocvalidate "
+                f"qu'en x86, ils seront ignores. L'EFI est construit normalement, mais les "
+                f"numeros de serie devront etre generes ailleurs et le config.plist ne sera "
+                f"pas valide automatiquement.")
+    return None
+
+
 @dataclass
 class OpenCorePackage:
     root: Path            # racine du zip extrait
@@ -58,16 +77,24 @@ class OpenCorePackage:
         return {}
 
     def tool(self, name: str) -> Path | None:
-        """Retourne le binaire ocvalidate/macserial adapte a l'hote."""
+        """Retourne le binaire ocvalidate/macserial utilisable sur cet hote.
+
+        OpenCorePkg ne fournit ces outils qu'en x86: universels sur macOS, mais
+        strictement x86-64 sur Linux et Windows. Sur une machine ARM (Android,
+        Raspberry Pi, Linux ARM) il n'y a rien a lancer, et tenter de le faire
+        leve une erreur de format d'executable.
+        """
         import platform as _platform
 
         system = _platform.system()
         suffix = {"Linux": ".linux", "Windows": ".exe"}.get(system, "")
         candidate = self.utilities / name / f"{name}{suffix}"
-        if candidate.exists():
-            candidate.chmod(0o755)
-            return candidate
-        return None
+        if not candidate.exists():
+            return None
+        if system in {"Linux", "Windows"} and not _is_x86():
+            return None
+        candidate.chmod(0o755)
+        return candidate
 
 
 def fetch_opencore(dl: Downloader, version: str = "latest",

@@ -8,7 +8,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from efibuilder import (acpi, configgen, data_files, importer, kexts, menu,
+from efibuilder import (acpi, configgen, data_files, importer, kexts, menu, oc,
                         smbios, usbflash, usbmap)
 from efibuilder.profile import Profile
 from efibuilder.util import BuildError, ascii_comment
@@ -367,6 +367,35 @@ class ZipappTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("tahoe", result.stdout)
             self.assertIn("sequoia", result.stdout)
+
+
+class HostArchTests(unittest.TestCase):
+    """Les outils livres par OpenCorePkg sont en x86: rien a lancer sur ARM."""
+
+    def _as(self, machine, call):
+        import platform as platform_mod
+        original = platform_mod.machine
+        platform_mod.machine = lambda: machine
+        try:
+            return call()
+        finally:
+            platform_mod.machine = original
+
+    def test_x86_is_recognised(self):
+        for machine in ("x86_64", "AMD64", "i686"):
+            self.assertTrue(self._as(machine, oc._is_x86), machine)
+
+    def test_arm_is_not_x86(self):
+        for machine in ("aarch64", "arm64", "armv7l"):
+            self.assertFalse(self._as(machine, oc._is_x86), machine)
+
+    def test_arm_host_is_explained(self):
+        note = self._as("aarch64", oc.host_note)
+        self.assertIsNotNone(note)
+        self.assertIn("macserial", note)
+
+    def test_x86_host_has_no_note(self):
+        self.assertIsNone(self._as("x86_64", oc.host_note))
 
 
 class MenuTests(unittest.TestCase):

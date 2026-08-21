@@ -157,6 +157,24 @@ legend{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform
 .closing ul{margin:0;padding-left:17px}
 .closing a{color:var(--accent-ink)}
 .dl{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+/* Ecrans tactiles: cibles d'au moins 44px, et 16px de police dans les champs
+   pour empecher iOS de zoomer automatiquement a la saisie. */
+@media (pointer:coarse){
+  .btn{min-height:44px;padding:10px 16px;font-size:14px}
+  .field select,.field input[type=text],.field input[type=number]{min-height:44px;font-size:16px}
+  .check{min-height:34px}
+  .check input{width:19px;height:19px}
+  .checks{grid-template-columns:1fr}
+  .masthead .wrap{padding-top:26px;padding-bottom:24px}
+  .tools{width:100%}
+  .tools .btn{flex:1;justify-content:center}
+}
+@media (max-width:560px){
+  .pairs{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr;gap:2px}
+  .row .val{text-align:left}
+  .wrap{padding:0 16px}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -313,6 +331,19 @@ legend{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform
       </ul>
     </div>
     <div>
+      <h3>Sur téléphone et tablette</h3>
+      <ul>
+        <li><strong>Cette page</strong> fonctionne partout et s'installe sur l'écran
+          d'accueil (Partager → Sur l'écran d'accueil sur iOS, Installer sur Android).</li>
+        <li><strong>Android</strong> : Termux (F-Droid) → <code>pkg install python</code>,
+          puis <code>python efibuild.pyz</code>. L'EFI se construit vraiment.</li>
+        <li><strong>iPhone / iPad</strong> : a-Shell exécute Python 3 ; iSH émule x86 et
+          fait tourner en plus <code>macserial</code> et <code>ocvalidate</code>.</li>
+        <li>Sur ARM, les numéros de série et la validation sont ignorés : l'outil le dit
+          et le reste est construit normalement.</li>
+      </ul>
+    </div>
+    <div>
       <h3>Sources</h3>
       <ul>
         <li><a href="https://dortania.github.io/OpenCore-Install-Guide/">Guide d'installation Dortania</a></li>
@@ -328,3 +359,12 @@ legend{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform
 <script>/*__ENGINE__*/</script>
 <script>const DATA = /*__DATA__*/;</script>
 <script>/*__APP__*/</script>
+<script>
+// Rend la page installable et utilisable hors ligne quand elle est servie depuis
+// un site (GitHub Pages). Sans service worker disponible, tout fonctionne pareil.
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>

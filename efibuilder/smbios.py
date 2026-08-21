@@ -54,8 +54,12 @@ def platform_info(profile, macserial: Path | None) -> dict:
         "SystemProductName": model,
     }
     if profile.serials:
-        generic.update(generate_serials(macserial, model))
-        ok(f"numeros de serie generes pour {model}")
+        serials = generate_serials(macserial, model)
+        generic.update(serials)
+        if serials["SystemSerialNumber"]:
+            ok(f"numeros de serie generes pour {model}")
+        else:
+            info("SystemSerialNumber et MLB restent a completer (voir le rapport)")
     else:
         generic.update({"SystemSerialNumber": "", "MLB": "", "SystemUUID": "", "ROM": b""})
         info("generation des numeros de serie desactivee (--no-serials)")

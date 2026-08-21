@@ -28,6 +28,16 @@ python3 tools/make_site.py
 
 La CI échoue si la page est périmée par rapport aux données.
 
+## Sur téléphone et tablette
+
+Le configurateur s'installe sur l'écran d'accueil (iOS : Partager → Sur l'écran
+d'accueil ; Android : Installer l'application) et fonctionne hors ligne.
+
+Pour construire réellement un EFI depuis un mobile : **Termux** sur Android,
+**a-Shell** ou **iSH** sur iOS. Sur ARM, `macserial` et `ocvalidate` — livrés en
+x86 uniquement par OpenCorePkg — sont ignorés avec un avertissement explicite, le
+reste est construit normalement. Détails dans [docs/MOBILE.md](docs/MOBILE.md).
+
 ## Télécharger
 
 | | |
