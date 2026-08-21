@@ -57,4 +57,4 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Adresse du site
-        run: echo "Site en ligne: ${{ steps.deploiement.outputs.page_url }}"
+        run: echo "Site en ligne ${{ steps.deploiement.outputs.page_url }}"
