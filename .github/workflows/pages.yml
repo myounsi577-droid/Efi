@@ -1,0 +1,60 @@
+name: Publier le site
+
+on:
+  push:
+    branches:
+      - claude/hackintosh-efi-command-9imz6g
+      - main
+    paths:
+      - "docs/**"
+      - "site/**"
+      - "efibuilder/data/**"
+      - "tools/make_site.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+# configure-pages active GitHub Pages lui-meme (enablement), ce qui evite de
+# passer par les reglages du depot; deploy-pages a besoin de id-token.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Regenerer la page depuis les donnees
+        run: |
+          python tools/make_site.py
+          git diff --exit-code -- docs/index.html \
+            || (echo "docs/index.html etait perime, il vient d'etre regenere" && true)
+
+      - name: Activer et configurer Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deployer
+        id: deploiement
+        uses: actions/deploy-pages@v4
+
+      - name: Adresse du site
+        run: echo "Site en ligne: ${{ steps.deploiement.outputs.page_url }}"
