@@ -24,7 +24,9 @@ def download_recovery(pkg: OpenCorePackage, macos_key: str, out_dir: Path,
     if not script.exists():
         raise BuildError(f"macrecovery.py introuvable dans {pkg.utilities}")
 
-    target = out_dir / RECOVERY_DIR
+    # macrecovery est lance depuis son propre dossier (cache): un chemin de sortie
+    # relatif serait resolu la-bas et non chez l'utilisateur.
+    target = (out_dir / RECOVERY_DIR).resolve()
     target.mkdir(parents=True, exist_ok=True)
 
     step(f"Image de recuperation Apple - {entry['name']}")
@@ -49,7 +51,9 @@ def download_recovery(pkg: OpenCorePackage, macos_key: str, out_dir: Path,
 
     files = sorted(p.name for p in target.iterdir())
     if not files:
-        raise BuildError("macrecovery n'a produit aucun fichier")
+        raise BuildError(
+            f"macrecovery s'est termine sans rien deposer dans {target}. "
+            f"Verifiez l'espace disque disponible.")
     ok(f"{entry['name']} telecharge dans {target}")
     for name in files:
         info(f"  {name}")

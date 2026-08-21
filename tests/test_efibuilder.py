@@ -436,6 +436,39 @@ class NoSubprocessTests(unittest.TestCase):
         self.assertIn("a-Shell", str(caught.exception))
 
 
+class RecoveryPathTests(unittest.TestCase):
+    """macrecovery tourne depuis son dossier: le -o doit etre absolu."""
+
+    def test_relative_output_lands_next_to_the_user(self):
+        import os
+        from efibuilder import oc, recovery
+
+        work = Path(tempfile.mkdtemp())
+        try:
+            tools = work / "cache" / "Utilities" / "macrecovery"
+            tools.mkdir(parents=True)
+            (tools / "macrecovery.py").write_text(
+                "import sys, pathlib\n"
+                "d = pathlib.Path(sys.argv[sys.argv.index('-o') + 1])\n"
+                "d.mkdir(parents=True, exist_ok=True)\n"
+                "(d / 'BaseSystem.dmg').write_bytes(b'x')\n")
+            pkg = oc.OpenCorePackage(work / "cache", "1.0.7", None)
+            project = work / "projet"
+            project.mkdir()
+            previous = os.getcwd()
+            os.chdir(project)
+            try:
+                target = recovery.download_recovery(pkg, "monterey", Path("efi-out"))
+            finally:
+                os.chdir(previous)
+            self.assertTrue(target.is_absolute())
+            self.assertTrue(
+                (project / "efi-out" / "com.apple.recovery.boot" / "BaseSystem.dmg").exists())
+            self.assertFalse((tools / "efi-out").exists())
+        finally:
+            shutil.rmtree(work, ignore_errors=True)
+
+
 class MenuTests(unittest.TestCase):
     def _with_input(self, answers, call):
         import builtins
