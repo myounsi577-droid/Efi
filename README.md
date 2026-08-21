@@ -232,6 +232,23 @@ Sous Windows, `diskpart` ne formate pas en FAT32 au-delà de 32 Go : la commande
 le détecte et vous le dit au lieu d'échouer à mi-parcours. Le formatage demande
 les droits administrateur sous Windows et `sudo` sous Linux.
 
+## Mettre à jour un EFI qui marche
+
+```bash
+./efibuild upgrade /Volumes/EFI/EFI --dry-run    # voir ce qui serait remplacé
+./efibuild upgrade /Volumes/EFI/EFI              # écrit dans EFI-maj-<date>
+```
+
+Remplace **OpenCore, les pilotes UEFI et les kexts du catalogue** par leurs
+versions récentes. Ne touche à **rien d'autre** : vos SSDT, votre `USBMap.kext`,
+vos numéros de série et votre `config.plist` sont conservés à l'octet près, et
+l'EFI d'origine n'est jamais modifié — la mise à jour part dans un nouveau
+dossier.
+
+Le bilan liste chaque kext avec sa version avant et après, ce qui a été conservé,
+et signale les PlugIns apparus ou disparus dans les nouvelles versions afin que
+vous ajustiez `Kernel → Add`.
+
 ## Repartir d'un EFI existant
 
 ```bash
@@ -257,6 +274,7 @@ et kexts récents) ou le **porter vers une version plus récente de macOS**
 efibuild             menu numéroté (aucune option à retenir)
 efibuild build       construire un EFI complet
 efibuild flash       choisir une clé USB, la sauvegarder, la formater, y copier l'EFI
+efibuild upgrade     mettre à jour un EFI existant sans rien casser
 efibuild import      déduire un profil d'un EFI existant
 efibuild check       verdict de compatibilité, sans téléchargement
 efibuild wizard      assistant interactif puis construction

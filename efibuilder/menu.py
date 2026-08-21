@@ -7,7 +7,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from efibuilder import data_files, importer, oc, recovery, usbdisk, usbflash, usbmap
+from efibuilder import (data_files, importer, oc, recovery, upgrade, usbdisk,
+                        usbflash, usbmap)
 from efibuilder.build import build_efi
 from efibuilder.net import Downloader, default_cache_dir
 from efibuilder.profile import (BLUETOOTH_CHOICES, DGPU_CHOICES, ETHERNET_CHOICES,
@@ -77,6 +78,7 @@ def main_menu() -> int:
             index = choose("Que voulez-vous faire ?", [
                 ("Construire un EFI pour ma machine", ""),
                 ("Repartir d'un EFI existant", "import + reconstruction"),
+                ("Mettre a jour un EFI existant", "OpenCore et kexts recents"),
                 ("Telecharger l'image de recuperation Apple", ""),
                 ("Preparer une cle USB", "sauvegarde, formatage FAT32, copie"),
                 ("Verifier si une machine est compatible", ""),
@@ -87,8 +89,8 @@ def main_menu() -> int:
             print("Au revoir.")
             return 0
         try:
-            {1: screen_build, 2: screen_import, 3: screen_recovery, 4: screen_usb,
-             5: screen_check, 6: screen_usbmap, 7: screen_lists}[index]()
+            {1: screen_build, 2: screen_import, 3: screen_upgrade, 4: screen_recovery,
+             5: screen_usb, 6: screen_check, 7: screen_usbmap, 8: screen_lists}[index]()
         except Cancelled:
             continue
         except BuildError as exc:
@@ -213,6 +215,18 @@ def screen_import() -> None:
     if yes_no("Reconstruire un EFI depuis ce profil maintenant ?"):
         target = Path(ask_text("Dossier de sortie", "efi-neuf"))
         build_efi(profile, target, _downloader())
+
+
+def screen_upgrade() -> None:
+    source = Path(ask_text("Chemin du dossier EFI a mettre a jour", "EFI"))
+    if not yes_no("Voir d'abord ce qui serait remplace, sans rien ecrire ?", default=True):
+        report = upgrade.upgrade_efi(source, _downloader())
+    else:
+        upgrade.print_report(upgrade.upgrade_efi(source, _downloader(), dry_run=True))
+        if not yes_no("Lancer la mise a jour pour de vrai ?", default=True):
+            raise Cancelled
+        report = upgrade.upgrade_efi(source, _downloader())
+    upgrade.print_report(report)
 
 
 def screen_recovery() -> None:

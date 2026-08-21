@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from efibuilder import (__version__, data_files, importer, menu, oc, recovery,
-                        smbios, usbdisk, usbflash, usbmap, wizard)
+                        smbios, upgrade, usbdisk, usbflash, usbmap, wizard)
 from efibuilder.build import build_efi, validate_config
 from efibuilder.net import Downloader, default_cache_dir
 from efibuilder.profile import (BLUETOOTH_CHOICES, DGPU_CHOICES, ETHERNET_CHOICES,
@@ -138,6 +138,17 @@ def build_parser() -> argparse.ArgumentParser:
     l = sub.add_parser("list", help="lister les donnees de reference")
     l.add_argument("what", choices=["platforms", "macos", "smbios", "kexts", "features"])
     l.add_argument("--macos", help="pour 'smbios': filtrer sur une version de macOS")
+
+    # ---------------------------------------------------------------- upgrade
+    up = sub.add_parser("upgrade", parents=[common],
+                        help="mettre a jour un EFI existant: OpenCore et kexts recents, "
+                             "SSDT, USBMap et config.plist conserves")
+    up.add_argument("efi", type=Path, help="dossier EFI a mettre a jour")
+    up.add_argument("-o", "--out", type=Path,
+                    help="dossier de sortie (defaut: EFI-maj-<date> a cote de l'original)")
+    up.add_argument("--oc-version", default="latest", help="version d'OpenCore visee")
+    up.add_argument("--dry-run", action="store_true",
+                    help="montrer ce qui serait remplace, sans rien ecrire")
 
     # ------------------------------------------------------------------- menu
     sub.add_parser("menu", help="menu interactif ou tout se choisit avec un numero "
@@ -348,6 +359,13 @@ def cmd_list(args) -> int:
     return 0
 
 
+def cmd_upgrade(args) -> int:
+    report = upgrade.upgrade_efi(args.efi, _downloader(args), args.out,
+                                 args.oc_version, args.dry_run)
+    upgrade.print_report(report)
+    return 0
+
+
 def cmd_menu(args) -> int:
     return menu.main_menu()
 
@@ -524,7 +542,7 @@ def main(argv: list[str] | None = None) -> int:
         "build": cmd_build, "wizard": cmd_wizard, "recovery": cmd_recovery,
         "usbmap": cmd_usbmap, "usb": cmd_usb, "list": cmd_list, "info": cmd_info,
         "check": cmd_check, "import": cmd_import,
-        "menu": cmd_menu, "flash": cmd_flash,
+        "menu": cmd_menu, "flash": cmd_flash, "upgrade": cmd_upgrade,
         "validate": cmd_validate,
     }
     try:

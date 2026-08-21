@@ -469,6 +469,56 @@ class RecoveryPathTests(unittest.TestCase):
             shutil.rmtree(work, ignore_errors=True)
 
 
+class UpgradeTests(unittest.TestCase):
+    """La mise a jour remplace les binaires et ne touche a rien d'autre."""
+
+    def _fake_efi(self, root: Path) -> Path:
+        from efibuilder.util import write_plist
+
+        efi = root / "EFI"
+        (efi / "BOOT").mkdir(parents=True)
+        for sub in ("ACPI", "Drivers", "Kexts", "Tools"):
+            (efi / "OC" / sub).mkdir(parents=True)
+        (efi / "BOOT" / "BOOTx64.efi").write_bytes(b"vieux")
+        (efi / "OC" / "OpenCore.efi").write_bytes(b"vieux")
+        (efi / "OC" / "ACPI" / "SSDT-MAISON.aml").write_bytes(b"fait main")
+        write_plist(efi / "OC" / "config.plist", {"ACPI": {"Add": []}})
+        for name, version in (("Lilu.kext", "1.0.0"), ("MonKext.kext", "0.1")):
+            bundle = efi / "OC" / "Kexts" / name / "Contents"
+            bundle.mkdir(parents=True)
+            write_plist(bundle / "Info.plist", {"CFBundleShortVersionString": version})
+        return efi
+
+    def test_locate_accepts_several_shapes(self):
+        from efibuilder import upgrade
+        with tempfile.TemporaryDirectory() as tmp:
+            efi = self._fake_efi(Path(tmp))
+            self.assertEqual(upgrade.locate_efi(efi), efi)
+            self.assertEqual(upgrade.locate_efi(Path(tmp)), efi)
+
+    def test_locate_refuses_a_folder_without_config(self):
+        from efibuilder import upgrade
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(BuildError):
+                upgrade.locate_efi(Path(tmp))
+
+    def test_kext_version_is_read_from_info_plist(self):
+        from efibuilder import upgrade
+        with tempfile.TemporaryDirectory() as tmp:
+            efi = self._fake_efi(Path(tmp))
+            self.assertEqual(upgrade.kext_version(efi / "OC" / "Kexts" / "Lilu.kext"),
+                             "1.0.0")
+            self.assertEqual(upgrade.kext_version(efi / "OC" / "Kexts" / "absent.kext"),
+                             "?")
+
+    def test_unknown_kext_is_not_in_the_catalogue(self):
+        from efibuilder import upgrade
+        index = upgrade._bundle_index()
+        self.assertIn("Lilu.kext", index)
+        self.assertNotIn("MonKext.kext", index)
+        self.assertNotIn("UTBMap.kext", index)
+
+
 class MenuTests(unittest.TestCase):
     def _with_input(self, answers, call):
         import builtins
